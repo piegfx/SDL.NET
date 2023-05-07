@@ -1,6 +1,5 @@
 using System;
 using System.Runtime.InteropServices;
-using static SDL.NET.SDL_bool;
 
 namespace SDL.NET
 {
@@ -8,6 +7,15 @@ namespace SDL.NET
     {
         [DllImport("SDL2", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_OpenURL", ExactSpelling = true)]
         public static extern int OpenURL([NativeTypeName("const char *")] sbyte* url);
+
+        [NativeTypeName("#define SDL_POWER_HARDWIRED 1")]
+        public const int SDL_POWER_HARDWIRED = 1;
+
+        [NativeTypeName("#define SDL_FILESYSTEM_XBOX 1")]
+        public const int SDL_FILESYSTEM_XBOX = 1;
+
+        [NativeTypeName("#define SDL_DISABLE_WINDOWS_IME 1")]
+        public const int SDL_DISABLE_WINDOWS_IME = 1;
 
         [DllImport("SDL2", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetTicks", ExactSpelling = true)]
         [return: NativeTypeName("Uint32")]
@@ -469,33 +477,6 @@ namespace SDL.NET
         [return: NativeTypeName("char *")]
         public static extern sbyte* iconv_string([NativeTypeName("const char *")] sbyte* tocode, [NativeTypeName("const char *")] sbyte* fromcode, [NativeTypeName("const char *")] sbyte* inbuf, [NativeTypeName("size_t")] nuint inbytesleft);
 
-        public static void* memcpy4(void* dst, [NativeTypeName("const void *")] void* src, [NativeTypeName("size_t")] nuint dwords)
-        {
-            return memcpy(dst, src, dwords * 4);
-        }
-
-        public static int size_mul_overflow([NativeTypeName("size_t")] nuint a, [NativeTypeName("size_t")] nuint b, [NativeTypeName("size_t *")] nuint* ret)
-        {
-            if (a != 0 && b > (18446744073709551615U) / a)
-            {
-                return -1;
-            }
-
-            *ret = a * b;
-            return 0;
-        }
-
-        public static int size_add_overflow([NativeTypeName("size_t")] nuint a, [NativeTypeName("size_t")] nuint b, [NativeTypeName("size_t *")] nuint* ret)
-        {
-            if (b > (18446744073709551615U) - a)
-            {
-                return -1;
-            }
-
-            *ret = a + b;
-            return 0;
-        }
-
         [DllImport("SDL2", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("bool")]
         public static extern byte __builtin_mul_overflow(__arglist);
@@ -503,6 +484,87 @@ namespace SDL.NET
         [DllImport("SDL2", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("bool")]
         public static extern byte __builtin_add_overflow(__arglist);
+
+        [NativeTypeName("#define SDL_MAX_SINT8 ((Sint8)0x7F)")]
+        public const sbyte SDL_MAX_SINT8 = ((sbyte)(0x7F));
+
+        [NativeTypeName("#define SDL_MIN_SINT8 ((Sint8)(~0x7F))")]
+        public const sbyte SDL_MIN_SINT8 = ((sbyte)(~0x7F));
+
+        [NativeTypeName("#define SDL_MAX_UINT8 ((Uint8)0xFF)")]
+        public const byte SDL_MAX_UINT8 = ((byte)(0xFF));
+
+        [NativeTypeName("#define SDL_MIN_UINT8 ((Uint8)0x00)")]
+        public const byte SDL_MIN_UINT8 = ((byte)(0x00));
+
+        [NativeTypeName("#define SDL_MAX_SINT16 ((Sint16)0x7FFF)")]
+        public const short SDL_MAX_SINT16 = ((short)(0x7FFF));
+
+        [NativeTypeName("#define SDL_MIN_SINT16 ((Sint16)(~0x7FFF))")]
+        public const short SDL_MIN_SINT16 = ((short)(~0x7FFF));
+
+        [NativeTypeName("#define SDL_MAX_UINT16 ((Uint16)0xFFFF)")]
+        public const ushort SDL_MAX_UINT16 = ((ushort)(0xFFFF));
+
+        [NativeTypeName("#define SDL_MIN_UINT16 ((Uint16)0x0000)")]
+        public const ushort SDL_MIN_UINT16 = ((ushort)(0x0000));
+
+        [NativeTypeName("#define SDL_MAX_SINT32 ((Sint32)0x7FFFFFFF)")]
+        public const int SDL_MAX_SINT32 = ((int)(0x7FFFFFFF));
+
+        [NativeTypeName("#define SDL_MIN_SINT32 ((Sint32)(~0x7FFFFFFF))")]
+        public const int SDL_MIN_SINT32 = ((int)(~0x7FFFFFFF));
+
+        [NativeTypeName("#define SDL_MAX_UINT32 ((Uint32)0xFFFFFFFFu)")]
+        public const uint SDL_MAX_UINT32 = ((uint)(0xFFFFFFFFU));
+
+        [NativeTypeName("#define SDL_MIN_UINT32 ((Uint32)0x00000000)")]
+        public const uint SDL_MIN_UINT32 = ((uint)(0x00000000));
+
+        [NativeTypeName("#define SDL_MIN_UINT64 ((Uint64)(0x0000000000000000ull))")]
+        public const nuint SDL_MIN_UINT64 = ((nuint)(0x0000000000000000UL));
+
+        [NativeTypeName("#define SDL_FLT_EPSILON 1.1920928955078125e-07F")]
+        public const float SDL_FLT_EPSILON = 1.1920928955078125e-07F;
+
+        [NativeTypeName("#define SDL_PRIs64 \"ld\"")]
+        public static ReadOnlySpan<byte> SDL_PRIs64 => new byte[] { 0x6C, 0x64, 0x00 };
+
+        [NativeTypeName("#define SDL_PRIu64 \"lu\"")]
+        public static ReadOnlySpan<byte> SDL_PRIu64 => new byte[] { 0x6C, 0x75, 0x00 };
+
+        [NativeTypeName("#define SDL_PRIx64 \"lx\"")]
+        public static ReadOnlySpan<byte> SDL_PRIx64 => new byte[] { 0x6C, 0x78, 0x00 };
+
+        [NativeTypeName("#define SDL_PRIX64 \"lX\"")]
+        public static ReadOnlySpan<byte> SDL_PRIX64 => new byte[] { 0x6C, 0x58, 0x00 };
+
+        [NativeTypeName("#define SDL_PRIs32 \"d\"")]
+        public static ReadOnlySpan<byte> SDL_PRIs32 => new byte[] { 0x64, 0x00 };
+
+        [NativeTypeName("#define SDL_PRIu32 \"u\"")]
+        public static ReadOnlySpan<byte> SDL_PRIu32 => new byte[] { 0x75, 0x00 };
+
+        [NativeTypeName("#define SDL_PRIx32 \"x\"")]
+        public static ReadOnlySpan<byte> SDL_PRIx32 => new byte[] { 0x78, 0x00 };
+
+        [NativeTypeName("#define SDL_PRIX32 \"X\"")]
+        public static ReadOnlySpan<byte> SDL_PRIX32 => new byte[] { 0x58, 0x00 };
+
+        [NativeTypeName("#define M_PI 3.14159265358979323846264338327950288")]
+        public const double M_PI = 3.14159265358979323846264338327950288;
+
+        [NativeTypeName("#define SDL_ICONV_ERROR (size_t)-1")]
+        public static readonly nuint SDL_ICONV_ERROR = unchecked((nuint)(-1));
+
+        [NativeTypeName("#define SDL_ICONV_E2BIG (size_t)-2")]
+        public static readonly nuint SDL_ICONV_E2BIG = unchecked((nuint)(-2));
+
+        [NativeTypeName("#define SDL_ICONV_EILSEQ (size_t)-3")]
+        public static readonly nuint SDL_ICONV_EILSEQ = unchecked((nuint)(-3));
+
+        [NativeTypeName("#define SDL_ICONV_EINVAL (size_t)-4")]
+        public static readonly nuint SDL_ICONV_EINVAL = unchecked((nuint)(-4));
 
         [DllImport("SDL2", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_LockSensors", ExactSpelling = true)]
         public static extern void LockSensors();
@@ -561,6 +623,9 @@ namespace SDL.NET
         [DllImport("SDL2", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_SensorUpdate", ExactSpelling = true)]
         public static extern void SensorUpdate();
 
+        [NativeTypeName("#define SDL_STANDARD_GRAVITY 9.80665f")]
+        public const float SDL_STANDARD_GRAVITY = 9.80665f;
+
         [DllImport("SDL2", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_CreateMutex", ExactSpelling = true)]
         public static extern SDL_mutex* CreateMutex();
 
@@ -616,6 +681,12 @@ namespace SDL.NET
 
         [DllImport("SDL2", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_CondWaitTimeout", ExactSpelling = true)]
         public static extern int CondWaitTimeout(SDL_cond* cond, SDL_mutex* mutex, [NativeTypeName("Uint32")] uint ms);
+
+        [NativeTypeName("#define SDL_MUTEX_TIMEDOUT 1")]
+        public const int SDL_MUTEX_TIMEDOUT = 1;
+
+        [NativeTypeName("#define SDL_MUTEX_MAXWAIT (~(Uint32)0)")]
+        public const uint SDL_MUTEX_MAXWAIT = (~(uint)(0));
 
         [DllImport("SDL2", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GameControllerAddMappingsFromRW", ExactSpelling = true)]
         public static extern int GameControllerAddMappingsFromRW(SDL_RWops* rw, int freerw);
@@ -811,28 +882,23 @@ namespace SDL.NET
         [return: NativeTypeName("const char *")]
         public static extern sbyte* GameControllerGetAppleSFSymbolsNameForAxis([NativeTypeName("SDL_GameController *")] _SDL_GameController* gamecontroller, SDL_GameControllerAxis axis);
 
-        public static int MostSignificantBitIndex32([NativeTypeName("Uint32")] uint x)
-        {
-            if (x == 0)
-            {
-                return -1;
-            }
+        [NativeTypeName("#define KHRONOS_SUPPORT_INT64 1")]
+        public const int KHRONOS_SUPPORT_INT64 = 1;
 
-            return 31 - __builtin_clz(x);
-        }
+        [NativeTypeName("#define KHRONOS_SUPPORT_FLOAT 1")]
+        public const int KHRONOS_SUPPORT_FLOAT = 1;
 
-        public static SDL_bool HasExactlyOneBitSet32([NativeTypeName("Uint32")] uint x)
-        {
-            if ((x) != 0 && (x & (x - 1)) == 0)
-            {
-                return SDL_TRUE;
-            }
-
-            return SDL_FALSE;
-        }
+        [NativeTypeName("#define KHRONOS_MAX_ENUM 0x7FFFFFFF")]
+        public const int KHRONOS_MAX_ENUM = 0x7FFFFFFF;
 
         [DllImport("SDL2", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern int __builtin_clz([NativeTypeName("unsigned int")] uint param0);
+
+        [NativeTypeName("#define HAVE_GCC_SYNC_LOCK_TEST_AND_SET 1")]
+        public const int HAVE_GCC_SYNC_LOCK_TEST_AND_SET = 1;
+
+        [NativeTypeName("#define SDL_TIMERS_DISABLED 1")]
+        public const int SDL_TIMERS_DISABLED = 1;
 
         [DllImport("SDL2", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetCPUCount", ExactSpelling = true)]
         public static extern int GetCPUCount();
@@ -903,6 +969,9 @@ namespace SDL.NET
 
         [DllImport("SDL2", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_SIMDFree", ExactSpelling = true)]
         public static extern void SIMDFree(void* ptr);
+
+        [NativeTypeName("#define SDL_CACHELINE_SIZE 128")]
+        public const int SDL_CACHELINE_SIZE = 128;
 
         [DllImport("SDL2", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_NumHaptics", ExactSpelling = true)]
         public static extern int NumHaptics();
@@ -999,23 +1068,71 @@ namespace SDL.NET
         [DllImport("SDL2", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_HapticRumbleStop", ExactSpelling = true)]
         public static extern int HapticRumbleStop([NativeTypeName("SDL_Haptic *")] _SDL_Haptic* haptic);
 
+        [NativeTypeName("#define SDL_HAPTIC_CONSTANT (1u<<0)")]
+        public const uint SDL_HAPTIC_CONSTANT = (1U << 0);
+
+        [NativeTypeName("#define SDL_HAPTIC_SINE (1u<<1)")]
+        public const uint SDL_HAPTIC_SINE = (1U << 1);
+
+        [NativeTypeName("#define SDL_HAPTIC_LEFTRIGHT (1u<<2)")]
+        public const uint SDL_HAPTIC_LEFTRIGHT = (1U << 2);
+
+        [NativeTypeName("#define SDL_HAPTIC_TRIANGLE (1u<<3)")]
+        public const uint SDL_HAPTIC_TRIANGLE = (1U << 3);
+
+        [NativeTypeName("#define SDL_HAPTIC_SAWTOOTHUP (1u<<4)")]
+        public const uint SDL_HAPTIC_SAWTOOTHUP = (1U << 4);
+
+        [NativeTypeName("#define SDL_HAPTIC_SAWTOOTHDOWN (1u<<5)")]
+        public const uint SDL_HAPTIC_SAWTOOTHDOWN = (1U << 5);
+
+        [NativeTypeName("#define SDL_HAPTIC_RAMP (1u<<6)")]
+        public const uint SDL_HAPTIC_RAMP = (1U << 6);
+
+        [NativeTypeName("#define SDL_HAPTIC_SPRING (1u<<7)")]
+        public const uint SDL_HAPTIC_SPRING = (1U << 7);
+
+        [NativeTypeName("#define SDL_HAPTIC_DAMPER (1u<<8)")]
+        public const uint SDL_HAPTIC_DAMPER = (1U << 8);
+
+        [NativeTypeName("#define SDL_HAPTIC_INERTIA (1u<<9)")]
+        public const uint SDL_HAPTIC_INERTIA = (1U << 9);
+
+        [NativeTypeName("#define SDL_HAPTIC_FRICTION (1u<<10)")]
+        public const uint SDL_HAPTIC_FRICTION = (1U << 10);
+
+        [NativeTypeName("#define SDL_HAPTIC_CUSTOM (1u<<11)")]
+        public const uint SDL_HAPTIC_CUSTOM = (1U << 11);
+
+        [NativeTypeName("#define SDL_HAPTIC_GAIN (1u<<12)")]
+        public const uint SDL_HAPTIC_GAIN = (1U << 12);
+
+        [NativeTypeName("#define SDL_HAPTIC_AUTOCENTER (1u<<13)")]
+        public const uint SDL_HAPTIC_AUTOCENTER = (1U << 13);
+
+        [NativeTypeName("#define SDL_HAPTIC_STATUS (1u<<14)")]
+        public const uint SDL_HAPTIC_STATUS = (1U << 14);
+
+        [NativeTypeName("#define SDL_HAPTIC_PAUSE (1u<<15)")]
+        public const uint SDL_HAPTIC_PAUSE = (1U << 15);
+
+        [NativeTypeName("#define SDL_HAPTIC_POLAR 0")]
+        public const int SDL_HAPTIC_POLAR = 0;
+
+        [NativeTypeName("#define SDL_HAPTIC_CARTESIAN 1")]
+        public const int SDL_HAPTIC_CARTESIAN = 1;
+
+        [NativeTypeName("#define SDL_HAPTIC_SPHERICAL 2")]
+        public const int SDL_HAPTIC_SPHERICAL = 2;
+
+        [NativeTypeName("#define SDL_HAPTIC_STEERING_AXIS 3")]
+        public const int SDL_HAPTIC_STEERING_AXIS = 3;
+
+        [NativeTypeName("#define SDL_HAPTIC_INFINITY 4294967295U")]
+        public const uint SDL_HAPTIC_INFINITY = 4294967295U;
+
         [DllImport("SDL2", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetPreferredLocales", ExactSpelling = true)]
         public static extern SDL_Locale* GetPreferredLocales();
-
-        public static SDL_bool PointInRect([NativeTypeName("const SDL_Point *")] SDL_Point* p, [NativeTypeName("const SDL_Rect *")] SDL_Rect* r)
-        {
-            return ((p->x >= r->x) && (p->x < (r->x + r->w)) && (p->y >= r->y) && (p->y < (r->y + r->h))) ? SDL_TRUE : SDL_FALSE;
-        }
-
-        public static SDL_bool RectEmpty([NativeTypeName("const SDL_Rect *")] SDL_Rect* r)
-        {
-            return ((r == null) || (r->w <= 0) || (r->h <= 0)) ? SDL_TRUE : SDL_FALSE;
-        }
-
-        public static SDL_bool RectEquals([NativeTypeName("const SDL_Rect *")] SDL_Rect* a, [NativeTypeName("const SDL_Rect *")] SDL_Rect* b)
-        {
-            return ((a) != null && (b) != null && (a->x == b->x) && (a->y == b->y) && (a->w == b->w) && (a->h == b->h)) ? SDL_TRUE : SDL_FALSE;
-        }
 
         [DllImport("SDL2", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_HasIntersection", ExactSpelling = true)]
         public static extern SDL_bool HasIntersection([NativeTypeName("const SDL_Rect *")] SDL_Rect* A, [NativeTypeName("const SDL_Rect *")] SDL_Rect* B);
@@ -1031,26 +1148,6 @@ namespace SDL.NET
 
         [DllImport("SDL2", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_IntersectRectAndLine", ExactSpelling = true)]
         public static extern SDL_bool IntersectRectAndLine([NativeTypeName("const SDL_Rect *")] SDL_Rect* rect, int* X1, int* Y1, int* X2, int* Y2);
-
-        public static SDL_bool PointInFRect([NativeTypeName("const SDL_FPoint *")] SDL_FPoint* p, [NativeTypeName("const SDL_FRect *")] SDL_FRect* r)
-        {
-            return ((p->x >= r->x) && (p->x < (r->x + r->w)) && (p->y >= r->y) && (p->y < (r->y + r->h))) ? SDL_TRUE : SDL_FALSE;
-        }
-
-        public static SDL_bool FRectEmpty([NativeTypeName("const SDL_FRect *")] SDL_FRect* r)
-        {
-            return ((r == null) || (r->w <= 0.0f) || (r->h <= 0.0f)) ? SDL_TRUE : SDL_FALSE;
-        }
-
-        public static SDL_bool FRectEqualsEpsilon([NativeTypeName("const SDL_FRect *")] SDL_FRect* a, [NativeTypeName("const SDL_FRect *")] SDL_FRect* b, [NativeTypeName("const float")] float epsilon)
-        {
-            return ((a) != null && (b) != null && ((a == b) || ((fabsf(a->x - b->x) <= epsilon) && (fabsf(a->y - b->y) <= epsilon) && (fabsf(a->w - b->w) <= epsilon) && (fabsf(a->h - b->h) <= epsilon)))) ? SDL_TRUE : SDL_FALSE;
-        }
-
-        public static SDL_bool FRectEquals([NativeTypeName("const SDL_FRect *")] SDL_FRect* a, [NativeTypeName("const SDL_FRect *")] SDL_FRect* b)
-        {
-            return FRectEqualsEpsilon(a, b, 1.1920928955078125e-07F);
-        }
 
         [DllImport("SDL2", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_HasIntersectionF", ExactSpelling = true)]
         public static extern SDL_bool HasIntersectionF([NativeTypeName("const SDL_FRect *")] SDL_FRect* A, [NativeTypeName("const SDL_FRect *")] SDL_FRect* B);
@@ -1264,6 +1361,72 @@ namespace SDL.NET
         [DllImport("SDL2", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_JoystickCurrentPowerLevel", ExactSpelling = true)]
         public static extern SDL_JoystickPowerLevel JoystickCurrentPowerLevel([NativeTypeName("SDL_Joystick *")] _SDL_Joystick* joystick);
 
+        [NativeTypeName("#define SDL_IPHONE_MAX_GFORCE 5.0")]
+        public const double SDL_IPHONE_MAX_GFORCE = 5.0;
+
+        [NativeTypeName("#define SDL_VIRTUAL_JOYSTICK_DESC_VERSION 1")]
+        public const int SDL_VIRTUAL_JOYSTICK_DESC_VERSION = 1;
+
+        [NativeTypeName("#define SDL_JOYSTICK_AXIS_MAX 32767")]
+        public const int SDL_JOYSTICK_AXIS_MAX = 32767;
+
+        [NativeTypeName("#define SDL_JOYSTICK_AXIS_MIN -32768")]
+        public const int SDL_JOYSTICK_AXIS_MIN = -32768;
+
+        [NativeTypeName("#define SDL_HAT_CENTERED 0x00")]
+        public const int SDL_HAT_CENTERED = 0x00;
+
+        [NativeTypeName("#define SDL_HAT_UP 0x01")]
+        public const int SDL_HAT_UP = 0x01;
+
+        [NativeTypeName("#define SDL_HAT_RIGHT 0x02")]
+        public const int SDL_HAT_RIGHT = 0x02;
+
+        [NativeTypeName("#define SDL_HAT_DOWN 0x04")]
+        public const int SDL_HAT_DOWN = 0x04;
+
+        [NativeTypeName("#define SDL_HAT_LEFT 0x08")]
+        public const int SDL_HAT_LEFT = 0x08;
+
+        [NativeTypeName("#define SDL_HAT_RIGHTUP (SDL_HAT_RIGHT|SDL_HAT_UP)")]
+        public const int SDL_HAT_RIGHTUP = (0x02 | 0x01);
+
+        [NativeTypeName("#define SDL_HAT_RIGHTDOWN (SDL_HAT_RIGHT|SDL_HAT_DOWN)")]
+        public const int SDL_HAT_RIGHTDOWN = (0x02 | 0x04);
+
+        [NativeTypeName("#define SDL_HAT_LEFTUP (SDL_HAT_LEFT|SDL_HAT_UP)")]
+        public const int SDL_HAT_LEFTUP = (0x08 | 0x01);
+
+        [NativeTypeName("#define SDL_HAT_LEFTDOWN (SDL_HAT_LEFT|SDL_HAT_DOWN)")]
+        public const int SDL_HAT_LEFTDOWN = (0x08 | 0x04);
+
+        [NativeTypeName("#define SDL_AUDIO_DRIVER_ANDROID 1")]
+        public const int SDL_AUDIO_DRIVER_ANDROID = 1;
+
+        [NativeTypeName("#define SDL_AUDIO_DRIVER_OPENSLES 1")]
+        public const int SDL_AUDIO_DRIVER_OPENSLES = 1;
+
+        [NativeTypeName("#define SDL_AUDIO_DRIVER_AAUDIO 1")]
+        public const int SDL_AUDIO_DRIVER_AAUDIO = 1;
+
+        [NativeTypeName("#define SDL_JOYSTICK_ANDROID 1")]
+        public const int SDL_JOYSTICK_ANDROID = 1;
+
+        [NativeTypeName("#define SDL_HAPTIC_ANDROID 1")]
+        public const int SDL_HAPTIC_ANDROID = 1;
+
+        [NativeTypeName("#define SDL_SENSOR_ANDROID 1")]
+        public const int SDL_SENSOR_ANDROID = 1;
+
+        [NativeTypeName("#define SDL_VIDEO_DRIVER_ANDROID 1")]
+        public const int SDL_VIDEO_DRIVER_ANDROID = 1;
+
+        [NativeTypeName("#define SDL_POWER_ANDROID 1")]
+        public const int SDL_POWER_ANDROID = 1;
+
+        [NativeTypeName("#define SDL_FILESYSTEM_ANDROID 1")]
+        public const int SDL_FILESYSTEM_ANDROID = 1;
+
         [DllImport("SDL2", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_CreateRGBSurface", ExactSpelling = true)]
         public static extern SDL_Surface* CreateRGBSurface([NativeTypeName("Uint32")] uint flags, int width, int height, int depth, [NativeTypeName("Uint32")] uint Rmask, [NativeTypeName("Uint32")] uint Gmask, [NativeTypeName("Uint32")] uint Bmask, [NativeTypeName("Uint32")] uint Amask);
 
@@ -1380,6 +1543,27 @@ namespace SDL.NET
 
         [DllImport("SDL2", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetYUVConversionModeForResolution", ExactSpelling = true)]
         public static extern SDL_YUV_CONVERSION_MODE GetYUVConversionModeForResolution(int width, int height);
+
+        [NativeTypeName("#define SDL_SWSURFACE 0")]
+        public const int SDL_SWSURFACE = 0;
+
+        [NativeTypeName("#define SDL_PREALLOC 0x00000001")]
+        public const int SDL_PREALLOC = 0x00000001;
+
+        [NativeTypeName("#define SDL_RLEACCEL 0x00000002")]
+        public const int SDL_RLEACCEL = 0x00000002;
+
+        [NativeTypeName("#define SDL_DONTFREE 0x00000004")]
+        public const int SDL_DONTFREE = 0x00000004;
+
+        [NativeTypeName("#define SDL_SIMD_ALIGNED 0x00000008")]
+        public const int SDL_SIMD_ALIGNED = 0x00000008;
+
+        [NativeTypeName("#define SDL_BlitSurface SDL_UpperBlit")]
+        public static readonly delegate*<SDL_Surface*, SDL_Rect*, SDL_Surface*, SDL_Rect*, int> SDL_BlitSurface = &UpperBlit;
+
+        [NativeTypeName("#define SDL_BlitScaled SDL_UpperBlitScaled")]
+        public static readonly delegate*<SDL_Surface*, SDL_Rect*, SDL_Surface*, SDL_Rect*, int> SDL_BlitScaled = &UpperBlitScaled;
 
         [DllImport("SDL2", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_AtomicTryLock", ExactSpelling = true)]
         public static extern SDL_bool AtomicTryLock([NativeTypeName("SDL_SpinLock *")] int* @lock);
@@ -2787,6 +2971,2349 @@ namespace SDL.NET
         [DllImport("SDL2", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern void glMultiTexCoord4svARB([NativeTypeName("GLenum")] uint target, [NativeTypeName("const GLshort *")] short* v);
 
+        [NativeTypeName("#define GL_VERSION_1_1 1")]
+        public const int GL_VERSION_1_1 = 1;
+
+        [NativeTypeName("#define GL_VERSION_1_2 1")]
+        public const int GL_VERSION_1_2 = 1;
+
+        [NativeTypeName("#define GL_VERSION_1_3 1")]
+        public const int GL_VERSION_1_3 = 1;
+
+        [NativeTypeName("#define GL_ARB_imaging 1")]
+        public const int GL_ARB_imaging = 1;
+
+        [NativeTypeName("#define GL_FALSE 0")]
+        public const int GL_FALSE = 0;
+
+        [NativeTypeName("#define GL_TRUE 1")]
+        public const int GL_TRUE = 1;
+
+        [NativeTypeName("#define GL_BYTE 0x1400")]
+        public const int GL_BYTE = 0x1400;
+
+        [NativeTypeName("#define GL_UNSIGNED_BYTE 0x1401")]
+        public const int GL_UNSIGNED_BYTE = 0x1401;
+
+        [NativeTypeName("#define GL_SHORT 0x1402")]
+        public const int GL_SHORT = 0x1402;
+
+        [NativeTypeName("#define GL_UNSIGNED_SHORT 0x1403")]
+        public const int GL_UNSIGNED_SHORT = 0x1403;
+
+        [NativeTypeName("#define GL_INT 0x1404")]
+        public const int GL_INT = 0x1404;
+
+        [NativeTypeName("#define GL_UNSIGNED_INT 0x1405")]
+        public const int GL_UNSIGNED_INT = 0x1405;
+
+        [NativeTypeName("#define GL_FLOAT 0x1406")]
+        public const int GL_FLOAT = 0x1406;
+
+        [NativeTypeName("#define GL_2_BYTES 0x1407")]
+        public const int GL_2_BYTES = 0x1407;
+
+        [NativeTypeName("#define GL_3_BYTES 0x1408")]
+        public const int GL_3_BYTES = 0x1408;
+
+        [NativeTypeName("#define GL_4_BYTES 0x1409")]
+        public const int GL_4_BYTES = 0x1409;
+
+        [NativeTypeName("#define GL_DOUBLE 0x140A")]
+        public const int GL_DOUBLE = 0x140A;
+
+        [NativeTypeName("#define GL_POINTS 0x0000")]
+        public const int GL_POINTS = 0x0000;
+
+        [NativeTypeName("#define GL_LINES 0x0001")]
+        public const int GL_LINES = 0x0001;
+
+        [NativeTypeName("#define GL_LINE_LOOP 0x0002")]
+        public const int GL_LINE_LOOP = 0x0002;
+
+        [NativeTypeName("#define GL_LINE_STRIP 0x0003")]
+        public const int GL_LINE_STRIP = 0x0003;
+
+        [NativeTypeName("#define GL_TRIANGLES 0x0004")]
+        public const int GL_TRIANGLES = 0x0004;
+
+        [NativeTypeName("#define GL_TRIANGLE_STRIP 0x0005")]
+        public const int GL_TRIANGLE_STRIP = 0x0005;
+
+        [NativeTypeName("#define GL_TRIANGLE_FAN 0x0006")]
+        public const int GL_TRIANGLE_FAN = 0x0006;
+
+        [NativeTypeName("#define GL_QUADS 0x0007")]
+        public const int GL_QUADS = 0x0007;
+
+        [NativeTypeName("#define GL_QUAD_STRIP 0x0008")]
+        public const int GL_QUAD_STRIP = 0x0008;
+
+        [NativeTypeName("#define GL_POLYGON 0x0009")]
+        public const int GL_POLYGON = 0x0009;
+
+        [NativeTypeName("#define GL_VERTEX_ARRAY 0x8074")]
+        public const int GL_VERTEX_ARRAY = 0x8074;
+
+        [NativeTypeName("#define GL_NORMAL_ARRAY 0x8075")]
+        public const int GL_NORMAL_ARRAY = 0x8075;
+
+        [NativeTypeName("#define GL_COLOR_ARRAY 0x8076")]
+        public const int GL_COLOR_ARRAY = 0x8076;
+
+        [NativeTypeName("#define GL_INDEX_ARRAY 0x8077")]
+        public const int GL_INDEX_ARRAY = 0x8077;
+
+        [NativeTypeName("#define GL_TEXTURE_COORD_ARRAY 0x8078")]
+        public const int GL_TEXTURE_COORD_ARRAY = 0x8078;
+
+        [NativeTypeName("#define GL_EDGE_FLAG_ARRAY 0x8079")]
+        public const int GL_EDGE_FLAG_ARRAY = 0x8079;
+
+        [NativeTypeName("#define GL_VERTEX_ARRAY_SIZE 0x807A")]
+        public const int GL_VERTEX_ARRAY_SIZE = 0x807A;
+
+        [NativeTypeName("#define GL_VERTEX_ARRAY_TYPE 0x807B")]
+        public const int GL_VERTEX_ARRAY_TYPE = 0x807B;
+
+        [NativeTypeName("#define GL_VERTEX_ARRAY_STRIDE 0x807C")]
+        public const int GL_VERTEX_ARRAY_STRIDE = 0x807C;
+
+        [NativeTypeName("#define GL_NORMAL_ARRAY_TYPE 0x807E")]
+        public const int GL_NORMAL_ARRAY_TYPE = 0x807E;
+
+        [NativeTypeName("#define GL_NORMAL_ARRAY_STRIDE 0x807F")]
+        public const int GL_NORMAL_ARRAY_STRIDE = 0x807F;
+
+        [NativeTypeName("#define GL_COLOR_ARRAY_SIZE 0x8081")]
+        public const int GL_COLOR_ARRAY_SIZE = 0x8081;
+
+        [NativeTypeName("#define GL_COLOR_ARRAY_TYPE 0x8082")]
+        public const int GL_COLOR_ARRAY_TYPE = 0x8082;
+
+        [NativeTypeName("#define GL_COLOR_ARRAY_STRIDE 0x8083")]
+        public const int GL_COLOR_ARRAY_STRIDE = 0x8083;
+
+        [NativeTypeName("#define GL_INDEX_ARRAY_TYPE 0x8085")]
+        public const int GL_INDEX_ARRAY_TYPE = 0x8085;
+
+        [NativeTypeName("#define GL_INDEX_ARRAY_STRIDE 0x8086")]
+        public const int GL_INDEX_ARRAY_STRIDE = 0x8086;
+
+        [NativeTypeName("#define GL_TEXTURE_COORD_ARRAY_SIZE 0x8088")]
+        public const int GL_TEXTURE_COORD_ARRAY_SIZE = 0x8088;
+
+        [NativeTypeName("#define GL_TEXTURE_COORD_ARRAY_TYPE 0x8089")]
+        public const int GL_TEXTURE_COORD_ARRAY_TYPE = 0x8089;
+
+        [NativeTypeName("#define GL_TEXTURE_COORD_ARRAY_STRIDE 0x808A")]
+        public const int GL_TEXTURE_COORD_ARRAY_STRIDE = 0x808A;
+
+        [NativeTypeName("#define GL_EDGE_FLAG_ARRAY_STRIDE 0x808C")]
+        public const int GL_EDGE_FLAG_ARRAY_STRIDE = 0x808C;
+
+        [NativeTypeName("#define GL_VERTEX_ARRAY_POINTER 0x808E")]
+        public const int GL_VERTEX_ARRAY_POINTER = 0x808E;
+
+        [NativeTypeName("#define GL_NORMAL_ARRAY_POINTER 0x808F")]
+        public const int GL_NORMAL_ARRAY_POINTER = 0x808F;
+
+        [NativeTypeName("#define GL_COLOR_ARRAY_POINTER 0x8090")]
+        public const int GL_COLOR_ARRAY_POINTER = 0x8090;
+
+        [NativeTypeName("#define GL_INDEX_ARRAY_POINTER 0x8091")]
+        public const int GL_INDEX_ARRAY_POINTER = 0x8091;
+
+        [NativeTypeName("#define GL_TEXTURE_COORD_ARRAY_POINTER 0x8092")]
+        public const int GL_TEXTURE_COORD_ARRAY_POINTER = 0x8092;
+
+        [NativeTypeName("#define GL_EDGE_FLAG_ARRAY_POINTER 0x8093")]
+        public const int GL_EDGE_FLAG_ARRAY_POINTER = 0x8093;
+
+        [NativeTypeName("#define GL_V2F 0x2A20")]
+        public const int GL_V2F = 0x2A20;
+
+        [NativeTypeName("#define GL_V3F 0x2A21")]
+        public const int GL_V3F = 0x2A21;
+
+        [NativeTypeName("#define GL_C4UB_V2F 0x2A22")]
+        public const int GL_C4UB_V2F = 0x2A22;
+
+        [NativeTypeName("#define GL_C4UB_V3F 0x2A23")]
+        public const int GL_C4UB_V3F = 0x2A23;
+
+        [NativeTypeName("#define GL_C3F_V3F 0x2A24")]
+        public const int GL_C3F_V3F = 0x2A24;
+
+        [NativeTypeName("#define GL_N3F_V3F 0x2A25")]
+        public const int GL_N3F_V3F = 0x2A25;
+
+        [NativeTypeName("#define GL_C4F_N3F_V3F 0x2A26")]
+        public const int GL_C4F_N3F_V3F = 0x2A26;
+
+        [NativeTypeName("#define GL_T2F_V3F 0x2A27")]
+        public const int GL_T2F_V3F = 0x2A27;
+
+        [NativeTypeName("#define GL_T4F_V4F 0x2A28")]
+        public const int GL_T4F_V4F = 0x2A28;
+
+        [NativeTypeName("#define GL_T2F_C4UB_V3F 0x2A29")]
+        public const int GL_T2F_C4UB_V3F = 0x2A29;
+
+        [NativeTypeName("#define GL_T2F_C3F_V3F 0x2A2A")]
+        public const int GL_T2F_C3F_V3F = 0x2A2A;
+
+        [NativeTypeName("#define GL_T2F_N3F_V3F 0x2A2B")]
+        public const int GL_T2F_N3F_V3F = 0x2A2B;
+
+        [NativeTypeName("#define GL_T2F_C4F_N3F_V3F 0x2A2C")]
+        public const int GL_T2F_C4F_N3F_V3F = 0x2A2C;
+
+        [NativeTypeName("#define GL_T4F_C4F_N3F_V4F 0x2A2D")]
+        public const int GL_T4F_C4F_N3F_V4F = 0x2A2D;
+
+        [NativeTypeName("#define GL_MATRIX_MODE 0x0BA0")]
+        public const int GL_MATRIX_MODE = 0x0BA0;
+
+        [NativeTypeName("#define GL_MODELVIEW 0x1700")]
+        public const int GL_MODELVIEW = 0x1700;
+
+        [NativeTypeName("#define GL_PROJECTION 0x1701")]
+        public const int GL_PROJECTION = 0x1701;
+
+        [NativeTypeName("#define GL_TEXTURE 0x1702")]
+        public const int GL_TEXTURE = 0x1702;
+
+        [NativeTypeName("#define GL_POINT_SMOOTH 0x0B10")]
+        public const int GL_POINT_SMOOTH = 0x0B10;
+
+        [NativeTypeName("#define GL_POINT_SIZE 0x0B11")]
+        public const int GL_POINT_SIZE = 0x0B11;
+
+        [NativeTypeName("#define GL_POINT_SIZE_GRANULARITY 0x0B13")]
+        public const int GL_POINT_SIZE_GRANULARITY = 0x0B13;
+
+        [NativeTypeName("#define GL_POINT_SIZE_RANGE 0x0B12")]
+        public const int GL_POINT_SIZE_RANGE = 0x0B12;
+
+        [NativeTypeName("#define GL_LINE_SMOOTH 0x0B20")]
+        public const int GL_LINE_SMOOTH = 0x0B20;
+
+        [NativeTypeName("#define GL_LINE_STIPPLE 0x0B24")]
+        public const int GL_LINE_STIPPLE = 0x0B24;
+
+        [NativeTypeName("#define GL_LINE_STIPPLE_PATTERN 0x0B25")]
+        public const int GL_LINE_STIPPLE_PATTERN = 0x0B25;
+
+        [NativeTypeName("#define GL_LINE_STIPPLE_REPEAT 0x0B26")]
+        public const int GL_LINE_STIPPLE_REPEAT = 0x0B26;
+
+        [NativeTypeName("#define GL_LINE_WIDTH 0x0B21")]
+        public const int GL_LINE_WIDTH = 0x0B21;
+
+        [NativeTypeName("#define GL_LINE_WIDTH_GRANULARITY 0x0B23")]
+        public const int GL_LINE_WIDTH_GRANULARITY = 0x0B23;
+
+        [NativeTypeName("#define GL_LINE_WIDTH_RANGE 0x0B22")]
+        public const int GL_LINE_WIDTH_RANGE = 0x0B22;
+
+        [NativeTypeName("#define GL_POINT 0x1B00")]
+        public const int GL_POINT = 0x1B00;
+
+        [NativeTypeName("#define GL_LINE 0x1B01")]
+        public const int GL_LINE = 0x1B01;
+
+        [NativeTypeName("#define GL_FILL 0x1B02")]
+        public const int GL_FILL = 0x1B02;
+
+        [NativeTypeName("#define GL_CW 0x0900")]
+        public const int GL_CW = 0x0900;
+
+        [NativeTypeName("#define GL_CCW 0x0901")]
+        public const int GL_CCW = 0x0901;
+
+        [NativeTypeName("#define GL_FRONT 0x0404")]
+        public const int GL_FRONT = 0x0404;
+
+        [NativeTypeName("#define GL_BACK 0x0405")]
+        public const int GL_BACK = 0x0405;
+
+        [NativeTypeName("#define GL_POLYGON_MODE 0x0B40")]
+        public const int GL_POLYGON_MODE = 0x0B40;
+
+        [NativeTypeName("#define GL_POLYGON_SMOOTH 0x0B41")]
+        public const int GL_POLYGON_SMOOTH = 0x0B41;
+
+        [NativeTypeName("#define GL_POLYGON_STIPPLE 0x0B42")]
+        public const int GL_POLYGON_STIPPLE = 0x0B42;
+
+        [NativeTypeName("#define GL_EDGE_FLAG 0x0B43")]
+        public const int GL_EDGE_FLAG = 0x0B43;
+
+        [NativeTypeName("#define GL_CULL_FACE 0x0B44")]
+        public const int GL_CULL_FACE = 0x0B44;
+
+        [NativeTypeName("#define GL_CULL_FACE_MODE 0x0B45")]
+        public const int GL_CULL_FACE_MODE = 0x0B45;
+
+        [NativeTypeName("#define GL_FRONT_FACE 0x0B46")]
+        public const int GL_FRONT_FACE = 0x0B46;
+
+        [NativeTypeName("#define GL_POLYGON_OFFSET_FACTOR 0x8038")]
+        public const int GL_POLYGON_OFFSET_FACTOR = 0x8038;
+
+        [NativeTypeName("#define GL_POLYGON_OFFSET_UNITS 0x2A00")]
+        public const int GL_POLYGON_OFFSET_UNITS = 0x2A00;
+
+        [NativeTypeName("#define GL_POLYGON_OFFSET_POINT 0x2A01")]
+        public const int GL_POLYGON_OFFSET_POINT = 0x2A01;
+
+        [NativeTypeName("#define GL_POLYGON_OFFSET_LINE 0x2A02")]
+        public const int GL_POLYGON_OFFSET_LINE = 0x2A02;
+
+        [NativeTypeName("#define GL_POLYGON_OFFSET_FILL 0x8037")]
+        public const int GL_POLYGON_OFFSET_FILL = 0x8037;
+
+        [NativeTypeName("#define GL_COMPILE 0x1300")]
+        public const int GL_COMPILE = 0x1300;
+
+        [NativeTypeName("#define GL_COMPILE_AND_EXECUTE 0x1301")]
+        public const int GL_COMPILE_AND_EXECUTE = 0x1301;
+
+        [NativeTypeName("#define GL_LIST_BASE 0x0B32")]
+        public const int GL_LIST_BASE = 0x0B32;
+
+        [NativeTypeName("#define GL_LIST_INDEX 0x0B33")]
+        public const int GL_LIST_INDEX = 0x0B33;
+
+        [NativeTypeName("#define GL_LIST_MODE 0x0B30")]
+        public const int GL_LIST_MODE = 0x0B30;
+
+        [NativeTypeName("#define GL_NEVER 0x0200")]
+        public const int GL_NEVER = 0x0200;
+
+        [NativeTypeName("#define GL_LESS 0x0201")]
+        public const int GL_LESS = 0x0201;
+
+        [NativeTypeName("#define GL_EQUAL 0x0202")]
+        public const int GL_EQUAL = 0x0202;
+
+        [NativeTypeName("#define GL_LEQUAL 0x0203")]
+        public const int GL_LEQUAL = 0x0203;
+
+        [NativeTypeName("#define GL_GREATER 0x0204")]
+        public const int GL_GREATER = 0x0204;
+
+        [NativeTypeName("#define GL_NOTEQUAL 0x0205")]
+        public const int GL_NOTEQUAL = 0x0205;
+
+        [NativeTypeName("#define GL_GEQUAL 0x0206")]
+        public const int GL_GEQUAL = 0x0206;
+
+        [NativeTypeName("#define GL_ALWAYS 0x0207")]
+        public const int GL_ALWAYS = 0x0207;
+
+        [NativeTypeName("#define GL_DEPTH_TEST 0x0B71")]
+        public const int GL_DEPTH_TEST = 0x0B71;
+
+        [NativeTypeName("#define GL_DEPTH_BITS 0x0D56")]
+        public const int GL_DEPTH_BITS = 0x0D56;
+
+        [NativeTypeName("#define GL_DEPTH_CLEAR_VALUE 0x0B73")]
+        public const int GL_DEPTH_CLEAR_VALUE = 0x0B73;
+
+        [NativeTypeName("#define GL_DEPTH_FUNC 0x0B74")]
+        public const int GL_DEPTH_FUNC = 0x0B74;
+
+        [NativeTypeName("#define GL_DEPTH_RANGE 0x0B70")]
+        public const int GL_DEPTH_RANGE = 0x0B70;
+
+        [NativeTypeName("#define GL_DEPTH_WRITEMASK 0x0B72")]
+        public const int GL_DEPTH_WRITEMASK = 0x0B72;
+
+        [NativeTypeName("#define GL_DEPTH_COMPONENT 0x1902")]
+        public const int GL_DEPTH_COMPONENT = 0x1902;
+
+        [NativeTypeName("#define GL_LIGHTING 0x0B50")]
+        public const int GL_LIGHTING = 0x0B50;
+
+        [NativeTypeName("#define GL_LIGHT0 0x4000")]
+        public const int GL_LIGHT0 = 0x4000;
+
+        [NativeTypeName("#define GL_LIGHT1 0x4001")]
+        public const int GL_LIGHT1 = 0x4001;
+
+        [NativeTypeName("#define GL_LIGHT2 0x4002")]
+        public const int GL_LIGHT2 = 0x4002;
+
+        [NativeTypeName("#define GL_LIGHT3 0x4003")]
+        public const int GL_LIGHT3 = 0x4003;
+
+        [NativeTypeName("#define GL_LIGHT4 0x4004")]
+        public const int GL_LIGHT4 = 0x4004;
+
+        [NativeTypeName("#define GL_LIGHT5 0x4005")]
+        public const int GL_LIGHT5 = 0x4005;
+
+        [NativeTypeName("#define GL_LIGHT6 0x4006")]
+        public const int GL_LIGHT6 = 0x4006;
+
+        [NativeTypeName("#define GL_LIGHT7 0x4007")]
+        public const int GL_LIGHT7 = 0x4007;
+
+        [NativeTypeName("#define GL_SPOT_EXPONENT 0x1205")]
+        public const int GL_SPOT_EXPONENT = 0x1205;
+
+        [NativeTypeName("#define GL_SPOT_CUTOFF 0x1206")]
+        public const int GL_SPOT_CUTOFF = 0x1206;
+
+        [NativeTypeName("#define GL_CONSTANT_ATTENUATION 0x1207")]
+        public const int GL_CONSTANT_ATTENUATION = 0x1207;
+
+        [NativeTypeName("#define GL_LINEAR_ATTENUATION 0x1208")]
+        public const int GL_LINEAR_ATTENUATION = 0x1208;
+
+        [NativeTypeName("#define GL_QUADRATIC_ATTENUATION 0x1209")]
+        public const int GL_QUADRATIC_ATTENUATION = 0x1209;
+
+        [NativeTypeName("#define GL_AMBIENT 0x1200")]
+        public const int GL_AMBIENT = 0x1200;
+
+        [NativeTypeName("#define GL_DIFFUSE 0x1201")]
+        public const int GL_DIFFUSE = 0x1201;
+
+        [NativeTypeName("#define GL_SPECULAR 0x1202")]
+        public const int GL_SPECULAR = 0x1202;
+
+        [NativeTypeName("#define GL_SHININESS 0x1601")]
+        public const int GL_SHININESS = 0x1601;
+
+        [NativeTypeName("#define GL_EMISSION 0x1600")]
+        public const int GL_EMISSION = 0x1600;
+
+        [NativeTypeName("#define GL_POSITION 0x1203")]
+        public const int GL_POSITION = 0x1203;
+
+        [NativeTypeName("#define GL_SPOT_DIRECTION 0x1204")]
+        public const int GL_SPOT_DIRECTION = 0x1204;
+
+        [NativeTypeName("#define GL_AMBIENT_AND_DIFFUSE 0x1602")]
+        public const int GL_AMBIENT_AND_DIFFUSE = 0x1602;
+
+        [NativeTypeName("#define GL_COLOR_INDEXES 0x1603")]
+        public const int GL_COLOR_INDEXES = 0x1603;
+
+        [NativeTypeName("#define GL_LIGHT_MODEL_TWO_SIDE 0x0B52")]
+        public const int GL_LIGHT_MODEL_TWO_SIDE = 0x0B52;
+
+        [NativeTypeName("#define GL_LIGHT_MODEL_LOCAL_VIEWER 0x0B51")]
+        public const int GL_LIGHT_MODEL_LOCAL_VIEWER = 0x0B51;
+
+        [NativeTypeName("#define GL_LIGHT_MODEL_AMBIENT 0x0B53")]
+        public const int GL_LIGHT_MODEL_AMBIENT = 0x0B53;
+
+        [NativeTypeName("#define GL_FRONT_AND_BACK 0x0408")]
+        public const int GL_FRONT_AND_BACK = 0x0408;
+
+        [NativeTypeName("#define GL_SHADE_MODEL 0x0B54")]
+        public const int GL_SHADE_MODEL = 0x0B54;
+
+        [NativeTypeName("#define GL_FLAT 0x1D00")]
+        public const int GL_FLAT = 0x1D00;
+
+        [NativeTypeName("#define GL_SMOOTH 0x1D01")]
+        public const int GL_SMOOTH = 0x1D01;
+
+        [NativeTypeName("#define GL_COLOR_MATERIAL 0x0B57")]
+        public const int GL_COLOR_MATERIAL = 0x0B57;
+
+        [NativeTypeName("#define GL_COLOR_MATERIAL_FACE 0x0B55")]
+        public const int GL_COLOR_MATERIAL_FACE = 0x0B55;
+
+        [NativeTypeName("#define GL_COLOR_MATERIAL_PARAMETER 0x0B56")]
+        public const int GL_COLOR_MATERIAL_PARAMETER = 0x0B56;
+
+        [NativeTypeName("#define GL_NORMALIZE 0x0BA1")]
+        public const int GL_NORMALIZE = 0x0BA1;
+
+        [NativeTypeName("#define GL_CLIP_PLANE0 0x3000")]
+        public const int GL_CLIP_PLANE0 = 0x3000;
+
+        [NativeTypeName("#define GL_CLIP_PLANE1 0x3001")]
+        public const int GL_CLIP_PLANE1 = 0x3001;
+
+        [NativeTypeName("#define GL_CLIP_PLANE2 0x3002")]
+        public const int GL_CLIP_PLANE2 = 0x3002;
+
+        [NativeTypeName("#define GL_CLIP_PLANE3 0x3003")]
+        public const int GL_CLIP_PLANE3 = 0x3003;
+
+        [NativeTypeName("#define GL_CLIP_PLANE4 0x3004")]
+        public const int GL_CLIP_PLANE4 = 0x3004;
+
+        [NativeTypeName("#define GL_CLIP_PLANE5 0x3005")]
+        public const int GL_CLIP_PLANE5 = 0x3005;
+
+        [NativeTypeName("#define GL_ACCUM_RED_BITS 0x0D58")]
+        public const int GL_ACCUM_RED_BITS = 0x0D58;
+
+        [NativeTypeName("#define GL_ACCUM_GREEN_BITS 0x0D59")]
+        public const int GL_ACCUM_GREEN_BITS = 0x0D59;
+
+        [NativeTypeName("#define GL_ACCUM_BLUE_BITS 0x0D5A")]
+        public const int GL_ACCUM_BLUE_BITS = 0x0D5A;
+
+        [NativeTypeName("#define GL_ACCUM_ALPHA_BITS 0x0D5B")]
+        public const int GL_ACCUM_ALPHA_BITS = 0x0D5B;
+
+        [NativeTypeName("#define GL_ACCUM_CLEAR_VALUE 0x0B80")]
+        public const int GL_ACCUM_CLEAR_VALUE = 0x0B80;
+
+        [NativeTypeName("#define GL_ACCUM 0x0100")]
+        public const int GL_ACCUM = 0x0100;
+
+        [NativeTypeName("#define GL_ADD 0x0104")]
+        public const int GL_ADD = 0x0104;
+
+        [NativeTypeName("#define GL_LOAD 0x0101")]
+        public const int GL_LOAD = 0x0101;
+
+        [NativeTypeName("#define GL_MULT 0x0103")]
+        public const int GL_MULT = 0x0103;
+
+        [NativeTypeName("#define GL_RETURN 0x0102")]
+        public const int GL_RETURN = 0x0102;
+
+        [NativeTypeName("#define GL_ALPHA_TEST 0x0BC0")]
+        public const int GL_ALPHA_TEST = 0x0BC0;
+
+        [NativeTypeName("#define GL_ALPHA_TEST_REF 0x0BC2")]
+        public const int GL_ALPHA_TEST_REF = 0x0BC2;
+
+        [NativeTypeName("#define GL_ALPHA_TEST_FUNC 0x0BC1")]
+        public const int GL_ALPHA_TEST_FUNC = 0x0BC1;
+
+        [NativeTypeName("#define GL_BLEND 0x0BE2")]
+        public const int GL_BLEND = 0x0BE2;
+
+        [NativeTypeName("#define GL_BLEND_SRC 0x0BE1")]
+        public const int GL_BLEND_SRC = 0x0BE1;
+
+        [NativeTypeName("#define GL_BLEND_DST 0x0BE0")]
+        public const int GL_BLEND_DST = 0x0BE0;
+
+        [NativeTypeName("#define GL_ZERO 0")]
+        public const int GL_ZERO = 0;
+
+        [NativeTypeName("#define GL_ONE 1")]
+        public const int GL_ONE = 1;
+
+        [NativeTypeName("#define GL_SRC_COLOR 0x0300")]
+        public const int GL_SRC_COLOR = 0x0300;
+
+        [NativeTypeName("#define GL_ONE_MINUS_SRC_COLOR 0x0301")]
+        public const int GL_ONE_MINUS_SRC_COLOR = 0x0301;
+
+        [NativeTypeName("#define GL_SRC_ALPHA 0x0302")]
+        public const int GL_SRC_ALPHA = 0x0302;
+
+        [NativeTypeName("#define GL_ONE_MINUS_SRC_ALPHA 0x0303")]
+        public const int GL_ONE_MINUS_SRC_ALPHA = 0x0303;
+
+        [NativeTypeName("#define GL_DST_ALPHA 0x0304")]
+        public const int GL_DST_ALPHA = 0x0304;
+
+        [NativeTypeName("#define GL_ONE_MINUS_DST_ALPHA 0x0305")]
+        public const int GL_ONE_MINUS_DST_ALPHA = 0x0305;
+
+        [NativeTypeName("#define GL_DST_COLOR 0x0306")]
+        public const int GL_DST_COLOR = 0x0306;
+
+        [NativeTypeName("#define GL_ONE_MINUS_DST_COLOR 0x0307")]
+        public const int GL_ONE_MINUS_DST_COLOR = 0x0307;
+
+        [NativeTypeName("#define GL_SRC_ALPHA_SATURATE 0x0308")]
+        public const int GL_SRC_ALPHA_SATURATE = 0x0308;
+
+        [NativeTypeName("#define GL_FEEDBACK 0x1C01")]
+        public const int GL_FEEDBACK = 0x1C01;
+
+        [NativeTypeName("#define GL_RENDER 0x1C00")]
+        public const int GL_RENDER = 0x1C00;
+
+        [NativeTypeName("#define GL_SELECT 0x1C02")]
+        public const int GL_SELECT = 0x1C02;
+
+        [NativeTypeName("#define GL_2D 0x0600")]
+        public const int GL_2D = 0x0600;
+
+        [NativeTypeName("#define GL_3D 0x0601")]
+        public const int GL_3D = 0x0601;
+
+        [NativeTypeName("#define GL_3D_COLOR 0x0602")]
+        public const int GL_3D_COLOR = 0x0602;
+
+        [NativeTypeName("#define GL_3D_COLOR_TEXTURE 0x0603")]
+        public const int GL_3D_COLOR_TEXTURE = 0x0603;
+
+        [NativeTypeName("#define GL_4D_COLOR_TEXTURE 0x0604")]
+        public const int GL_4D_COLOR_TEXTURE = 0x0604;
+
+        [NativeTypeName("#define GL_POINT_TOKEN 0x0701")]
+        public const int GL_POINT_TOKEN = 0x0701;
+
+        [NativeTypeName("#define GL_LINE_TOKEN 0x0702")]
+        public const int GL_LINE_TOKEN = 0x0702;
+
+        [NativeTypeName("#define GL_LINE_RESET_TOKEN 0x0707")]
+        public const int GL_LINE_RESET_TOKEN = 0x0707;
+
+        [NativeTypeName("#define GL_POLYGON_TOKEN 0x0703")]
+        public const int GL_POLYGON_TOKEN = 0x0703;
+
+        [NativeTypeName("#define GL_BITMAP_TOKEN 0x0704")]
+        public const int GL_BITMAP_TOKEN = 0x0704;
+
+        [NativeTypeName("#define GL_DRAW_PIXEL_TOKEN 0x0705")]
+        public const int GL_DRAW_PIXEL_TOKEN = 0x0705;
+
+        [NativeTypeName("#define GL_COPY_PIXEL_TOKEN 0x0706")]
+        public const int GL_COPY_PIXEL_TOKEN = 0x0706;
+
+        [NativeTypeName("#define GL_PASS_THROUGH_TOKEN 0x0700")]
+        public const int GL_PASS_THROUGH_TOKEN = 0x0700;
+
+        [NativeTypeName("#define GL_FEEDBACK_BUFFER_POINTER 0x0DF0")]
+        public const int GL_FEEDBACK_BUFFER_POINTER = 0x0DF0;
+
+        [NativeTypeName("#define GL_FEEDBACK_BUFFER_SIZE 0x0DF1")]
+        public const int GL_FEEDBACK_BUFFER_SIZE = 0x0DF1;
+
+        [NativeTypeName("#define GL_FEEDBACK_BUFFER_TYPE 0x0DF2")]
+        public const int GL_FEEDBACK_BUFFER_TYPE = 0x0DF2;
+
+        [NativeTypeName("#define GL_SELECTION_BUFFER_POINTER 0x0DF3")]
+        public const int GL_SELECTION_BUFFER_POINTER = 0x0DF3;
+
+        [NativeTypeName("#define GL_SELECTION_BUFFER_SIZE 0x0DF4")]
+        public const int GL_SELECTION_BUFFER_SIZE = 0x0DF4;
+
+        [NativeTypeName("#define GL_FOG 0x0B60")]
+        public const int GL_FOG = 0x0B60;
+
+        [NativeTypeName("#define GL_FOG_MODE 0x0B65")]
+        public const int GL_FOG_MODE = 0x0B65;
+
+        [NativeTypeName("#define GL_FOG_DENSITY 0x0B62")]
+        public const int GL_FOG_DENSITY = 0x0B62;
+
+        [NativeTypeName("#define GL_FOG_COLOR 0x0B66")]
+        public const int GL_FOG_COLOR = 0x0B66;
+
+        [NativeTypeName("#define GL_FOG_INDEX 0x0B61")]
+        public const int GL_FOG_INDEX = 0x0B61;
+
+        [NativeTypeName("#define GL_FOG_START 0x0B63")]
+        public const int GL_FOG_START = 0x0B63;
+
+        [NativeTypeName("#define GL_FOG_END 0x0B64")]
+        public const int GL_FOG_END = 0x0B64;
+
+        [NativeTypeName("#define GL_LINEAR 0x2601")]
+        public const int GL_LINEAR = 0x2601;
+
+        [NativeTypeName("#define GL_EXP 0x0800")]
+        public const int GL_EXP = 0x0800;
+
+        [NativeTypeName("#define GL_EXP2 0x0801")]
+        public const int GL_EXP2 = 0x0801;
+
+        [NativeTypeName("#define GL_LOGIC_OP 0x0BF1")]
+        public const int GL_LOGIC_OP = 0x0BF1;
+
+        [NativeTypeName("#define GL_INDEX_LOGIC_OP 0x0BF1")]
+        public const int GL_INDEX_LOGIC_OP = 0x0BF1;
+
+        [NativeTypeName("#define GL_COLOR_LOGIC_OP 0x0BF2")]
+        public const int GL_COLOR_LOGIC_OP = 0x0BF2;
+
+        [NativeTypeName("#define GL_LOGIC_OP_MODE 0x0BF0")]
+        public const int GL_LOGIC_OP_MODE = 0x0BF0;
+
+        [NativeTypeName("#define GL_CLEAR 0x1500")]
+        public const int GL_CLEAR = 0x1500;
+
+        [NativeTypeName("#define GL_SET 0x150F")]
+        public const int GL_SET = 0x150F;
+
+        [NativeTypeName("#define GL_COPY 0x1503")]
+        public const int GL_COPY = 0x1503;
+
+        [NativeTypeName("#define GL_COPY_INVERTED 0x150C")]
+        public const int GL_COPY_INVERTED = 0x150C;
+
+        [NativeTypeName("#define GL_NOOP 0x1505")]
+        public const int GL_NOOP = 0x1505;
+
+        [NativeTypeName("#define GL_INVERT 0x150A")]
+        public const int GL_INVERT = 0x150A;
+
+        [NativeTypeName("#define GL_AND 0x1501")]
+        public const int GL_AND = 0x1501;
+
+        [NativeTypeName("#define GL_NAND 0x150E")]
+        public const int GL_NAND = 0x150E;
+
+        [NativeTypeName("#define GL_OR 0x1507")]
+        public const int GL_OR = 0x1507;
+
+        [NativeTypeName("#define GL_NOR 0x1508")]
+        public const int GL_NOR = 0x1508;
+
+        [NativeTypeName("#define GL_XOR 0x1506")]
+        public const int GL_XOR = 0x1506;
+
+        [NativeTypeName("#define GL_EQUIV 0x1509")]
+        public const int GL_EQUIV = 0x1509;
+
+        [NativeTypeName("#define GL_AND_REVERSE 0x1502")]
+        public const int GL_AND_REVERSE = 0x1502;
+
+        [NativeTypeName("#define GL_AND_INVERTED 0x1504")]
+        public const int GL_AND_INVERTED = 0x1504;
+
+        [NativeTypeName("#define GL_OR_REVERSE 0x150B")]
+        public const int GL_OR_REVERSE = 0x150B;
+
+        [NativeTypeName("#define GL_OR_INVERTED 0x150D")]
+        public const int GL_OR_INVERTED = 0x150D;
+
+        [NativeTypeName("#define GL_STENCIL_BITS 0x0D57")]
+        public const int GL_STENCIL_BITS = 0x0D57;
+
+        [NativeTypeName("#define GL_STENCIL_TEST 0x0B90")]
+        public const int GL_STENCIL_TEST = 0x0B90;
+
+        [NativeTypeName("#define GL_STENCIL_CLEAR_VALUE 0x0B91")]
+        public const int GL_STENCIL_CLEAR_VALUE = 0x0B91;
+
+        [NativeTypeName("#define GL_STENCIL_FUNC 0x0B92")]
+        public const int GL_STENCIL_FUNC = 0x0B92;
+
+        [NativeTypeName("#define GL_STENCIL_VALUE_MASK 0x0B93")]
+        public const int GL_STENCIL_VALUE_MASK = 0x0B93;
+
+        [NativeTypeName("#define GL_STENCIL_FAIL 0x0B94")]
+        public const int GL_STENCIL_FAIL = 0x0B94;
+
+        [NativeTypeName("#define GL_STENCIL_PASS_DEPTH_FAIL 0x0B95")]
+        public const int GL_STENCIL_PASS_DEPTH_FAIL = 0x0B95;
+
+        [NativeTypeName("#define GL_STENCIL_PASS_DEPTH_PASS 0x0B96")]
+        public const int GL_STENCIL_PASS_DEPTH_PASS = 0x0B96;
+
+        [NativeTypeName("#define GL_STENCIL_REF 0x0B97")]
+        public const int GL_STENCIL_REF = 0x0B97;
+
+        [NativeTypeName("#define GL_STENCIL_WRITEMASK 0x0B98")]
+        public const int GL_STENCIL_WRITEMASK = 0x0B98;
+
+        [NativeTypeName("#define GL_STENCIL_INDEX 0x1901")]
+        public const int GL_STENCIL_INDEX = 0x1901;
+
+        [NativeTypeName("#define GL_KEEP 0x1E00")]
+        public const int GL_KEEP = 0x1E00;
+
+        [NativeTypeName("#define GL_REPLACE 0x1E01")]
+        public const int GL_REPLACE = 0x1E01;
+
+        [NativeTypeName("#define GL_INCR 0x1E02")]
+        public const int GL_INCR = 0x1E02;
+
+        [NativeTypeName("#define GL_DECR 0x1E03")]
+        public const int GL_DECR = 0x1E03;
+
+        [NativeTypeName("#define GL_NONE 0")]
+        public const int GL_NONE = 0;
+
+        [NativeTypeName("#define GL_LEFT 0x0406")]
+        public const int GL_LEFT = 0x0406;
+
+        [NativeTypeName("#define GL_RIGHT 0x0407")]
+        public const int GL_RIGHT = 0x0407;
+
+        [NativeTypeName("#define GL_FRONT_LEFT 0x0400")]
+        public const int GL_FRONT_LEFT = 0x0400;
+
+        [NativeTypeName("#define GL_FRONT_RIGHT 0x0401")]
+        public const int GL_FRONT_RIGHT = 0x0401;
+
+        [NativeTypeName("#define GL_BACK_LEFT 0x0402")]
+        public const int GL_BACK_LEFT = 0x0402;
+
+        [NativeTypeName("#define GL_BACK_RIGHT 0x0403")]
+        public const int GL_BACK_RIGHT = 0x0403;
+
+        [NativeTypeName("#define GL_AUX0 0x0409")]
+        public const int GL_AUX0 = 0x0409;
+
+        [NativeTypeName("#define GL_AUX1 0x040A")]
+        public const int GL_AUX1 = 0x040A;
+
+        [NativeTypeName("#define GL_AUX2 0x040B")]
+        public const int GL_AUX2 = 0x040B;
+
+        [NativeTypeName("#define GL_AUX3 0x040C")]
+        public const int GL_AUX3 = 0x040C;
+
+        [NativeTypeName("#define GL_COLOR_INDEX 0x1900")]
+        public const int GL_COLOR_INDEX = 0x1900;
+
+        [NativeTypeName("#define GL_RED 0x1903")]
+        public const int GL_RED = 0x1903;
+
+        [NativeTypeName("#define GL_GREEN 0x1904")]
+        public const int GL_GREEN = 0x1904;
+
+        [NativeTypeName("#define GL_BLUE 0x1905")]
+        public const int GL_BLUE = 0x1905;
+
+        [NativeTypeName("#define GL_ALPHA 0x1906")]
+        public const int GL_ALPHA = 0x1906;
+
+        [NativeTypeName("#define GL_LUMINANCE 0x1909")]
+        public const int GL_LUMINANCE = 0x1909;
+
+        [NativeTypeName("#define GL_LUMINANCE_ALPHA 0x190A")]
+        public const int GL_LUMINANCE_ALPHA = 0x190A;
+
+        [NativeTypeName("#define GL_ALPHA_BITS 0x0D55")]
+        public const int GL_ALPHA_BITS = 0x0D55;
+
+        [NativeTypeName("#define GL_RED_BITS 0x0D52")]
+        public const int GL_RED_BITS = 0x0D52;
+
+        [NativeTypeName("#define GL_GREEN_BITS 0x0D53")]
+        public const int GL_GREEN_BITS = 0x0D53;
+
+        [NativeTypeName("#define GL_BLUE_BITS 0x0D54")]
+        public const int GL_BLUE_BITS = 0x0D54;
+
+        [NativeTypeName("#define GL_INDEX_BITS 0x0D51")]
+        public const int GL_INDEX_BITS = 0x0D51;
+
+        [NativeTypeName("#define GL_SUBPIXEL_BITS 0x0D50")]
+        public const int GL_SUBPIXEL_BITS = 0x0D50;
+
+        [NativeTypeName("#define GL_AUX_BUFFERS 0x0C00")]
+        public const int GL_AUX_BUFFERS = 0x0C00;
+
+        [NativeTypeName("#define GL_READ_BUFFER 0x0C02")]
+        public const int GL_READ_BUFFER = 0x0C02;
+
+        [NativeTypeName("#define GL_DRAW_BUFFER 0x0C01")]
+        public const int GL_DRAW_BUFFER = 0x0C01;
+
+        [NativeTypeName("#define GL_DOUBLEBUFFER 0x0C32")]
+        public const int GL_DOUBLEBUFFER = 0x0C32;
+
+        [NativeTypeName("#define GL_STEREO 0x0C33")]
+        public const int GL_STEREO = 0x0C33;
+
+        [NativeTypeName("#define GL_BITMAP 0x1A00")]
+        public const int GL_BITMAP = 0x1A00;
+
+        [NativeTypeName("#define GL_COLOR 0x1800")]
+        public const int GL_COLOR = 0x1800;
+
+        [NativeTypeName("#define GL_DEPTH 0x1801")]
+        public const int GL_DEPTH = 0x1801;
+
+        [NativeTypeName("#define GL_STENCIL 0x1802")]
+        public const int GL_STENCIL = 0x1802;
+
+        [NativeTypeName("#define GL_DITHER 0x0BD0")]
+        public const int GL_DITHER = 0x0BD0;
+
+        [NativeTypeName("#define GL_RGB 0x1907")]
+        public const int GL_RGB = 0x1907;
+
+        [NativeTypeName("#define GL_RGBA 0x1908")]
+        public const int GL_RGBA = 0x1908;
+
+        [NativeTypeName("#define GL_MAX_LIST_NESTING 0x0B31")]
+        public const int GL_MAX_LIST_NESTING = 0x0B31;
+
+        [NativeTypeName("#define GL_MAX_EVAL_ORDER 0x0D30")]
+        public const int GL_MAX_EVAL_ORDER = 0x0D30;
+
+        [NativeTypeName("#define GL_MAX_LIGHTS 0x0D31")]
+        public const int GL_MAX_LIGHTS = 0x0D31;
+
+        [NativeTypeName("#define GL_MAX_CLIP_PLANES 0x0D32")]
+        public const int GL_MAX_CLIP_PLANES = 0x0D32;
+
+        [NativeTypeName("#define GL_MAX_TEXTURE_SIZE 0x0D33")]
+        public const int GL_MAX_TEXTURE_SIZE = 0x0D33;
+
+        [NativeTypeName("#define GL_MAX_PIXEL_MAP_TABLE 0x0D34")]
+        public const int GL_MAX_PIXEL_MAP_TABLE = 0x0D34;
+
+        [NativeTypeName("#define GL_MAX_ATTRIB_STACK_DEPTH 0x0D35")]
+        public const int GL_MAX_ATTRIB_STACK_DEPTH = 0x0D35;
+
+        [NativeTypeName("#define GL_MAX_MODELVIEW_STACK_DEPTH 0x0D36")]
+        public const int GL_MAX_MODELVIEW_STACK_DEPTH = 0x0D36;
+
+        [NativeTypeName("#define GL_MAX_NAME_STACK_DEPTH 0x0D37")]
+        public const int GL_MAX_NAME_STACK_DEPTH = 0x0D37;
+
+        [NativeTypeName("#define GL_MAX_PROJECTION_STACK_DEPTH 0x0D38")]
+        public const int GL_MAX_PROJECTION_STACK_DEPTH = 0x0D38;
+
+        [NativeTypeName("#define GL_MAX_TEXTURE_STACK_DEPTH 0x0D39")]
+        public const int GL_MAX_TEXTURE_STACK_DEPTH = 0x0D39;
+
+        [NativeTypeName("#define GL_MAX_VIEWPORT_DIMS 0x0D3A")]
+        public const int GL_MAX_VIEWPORT_DIMS = 0x0D3A;
+
+        [NativeTypeName("#define GL_MAX_CLIENT_ATTRIB_STACK_DEPTH 0x0D3B")]
+        public const int GL_MAX_CLIENT_ATTRIB_STACK_DEPTH = 0x0D3B;
+
+        [NativeTypeName("#define GL_ATTRIB_STACK_DEPTH 0x0BB0")]
+        public const int GL_ATTRIB_STACK_DEPTH = 0x0BB0;
+
+        [NativeTypeName("#define GL_CLIENT_ATTRIB_STACK_DEPTH 0x0BB1")]
+        public const int GL_CLIENT_ATTRIB_STACK_DEPTH = 0x0BB1;
+
+        [NativeTypeName("#define GL_COLOR_CLEAR_VALUE 0x0C22")]
+        public const int GL_COLOR_CLEAR_VALUE = 0x0C22;
+
+        [NativeTypeName("#define GL_COLOR_WRITEMASK 0x0C23")]
+        public const int GL_COLOR_WRITEMASK = 0x0C23;
+
+        [NativeTypeName("#define GL_CURRENT_INDEX 0x0B01")]
+        public const int GL_CURRENT_INDEX = 0x0B01;
+
+        [NativeTypeName("#define GL_CURRENT_COLOR 0x0B00")]
+        public const int GL_CURRENT_COLOR = 0x0B00;
+
+        [NativeTypeName("#define GL_CURRENT_NORMAL 0x0B02")]
+        public const int GL_CURRENT_NORMAL = 0x0B02;
+
+        [NativeTypeName("#define GL_CURRENT_RASTER_COLOR 0x0B04")]
+        public const int GL_CURRENT_RASTER_COLOR = 0x0B04;
+
+        [NativeTypeName("#define GL_CURRENT_RASTER_DISTANCE 0x0B09")]
+        public const int GL_CURRENT_RASTER_DISTANCE = 0x0B09;
+
+        [NativeTypeName("#define GL_CURRENT_RASTER_INDEX 0x0B05")]
+        public const int GL_CURRENT_RASTER_INDEX = 0x0B05;
+
+        [NativeTypeName("#define GL_CURRENT_RASTER_POSITION 0x0B07")]
+        public const int GL_CURRENT_RASTER_POSITION = 0x0B07;
+
+        [NativeTypeName("#define GL_CURRENT_RASTER_TEXTURE_COORDS 0x0B06")]
+        public const int GL_CURRENT_RASTER_TEXTURE_COORDS = 0x0B06;
+
+        [NativeTypeName("#define GL_CURRENT_RASTER_POSITION_VALID 0x0B08")]
+        public const int GL_CURRENT_RASTER_POSITION_VALID = 0x0B08;
+
+        [NativeTypeName("#define GL_CURRENT_TEXTURE_COORDS 0x0B03")]
+        public const int GL_CURRENT_TEXTURE_COORDS = 0x0B03;
+
+        [NativeTypeName("#define GL_INDEX_CLEAR_VALUE 0x0C20")]
+        public const int GL_INDEX_CLEAR_VALUE = 0x0C20;
+
+        [NativeTypeName("#define GL_INDEX_MODE 0x0C30")]
+        public const int GL_INDEX_MODE = 0x0C30;
+
+        [NativeTypeName("#define GL_INDEX_WRITEMASK 0x0C21")]
+        public const int GL_INDEX_WRITEMASK = 0x0C21;
+
+        [NativeTypeName("#define GL_MODELVIEW_MATRIX 0x0BA6")]
+        public const int GL_MODELVIEW_MATRIX = 0x0BA6;
+
+        [NativeTypeName("#define GL_MODELVIEW_STACK_DEPTH 0x0BA3")]
+        public const int GL_MODELVIEW_STACK_DEPTH = 0x0BA3;
+
+        [NativeTypeName("#define GL_NAME_STACK_DEPTH 0x0D70")]
+        public const int GL_NAME_STACK_DEPTH = 0x0D70;
+
+        [NativeTypeName("#define GL_PROJECTION_MATRIX 0x0BA7")]
+        public const int GL_PROJECTION_MATRIX = 0x0BA7;
+
+        [NativeTypeName("#define GL_PROJECTION_STACK_DEPTH 0x0BA4")]
+        public const int GL_PROJECTION_STACK_DEPTH = 0x0BA4;
+
+        [NativeTypeName("#define GL_RENDER_MODE 0x0C40")]
+        public const int GL_RENDER_MODE = 0x0C40;
+
+        [NativeTypeName("#define GL_RGBA_MODE 0x0C31")]
+        public const int GL_RGBA_MODE = 0x0C31;
+
+        [NativeTypeName("#define GL_TEXTURE_MATRIX 0x0BA8")]
+        public const int GL_TEXTURE_MATRIX = 0x0BA8;
+
+        [NativeTypeName("#define GL_TEXTURE_STACK_DEPTH 0x0BA5")]
+        public const int GL_TEXTURE_STACK_DEPTH = 0x0BA5;
+
+        [NativeTypeName("#define GL_VIEWPORT 0x0BA2")]
+        public const int GL_VIEWPORT = 0x0BA2;
+
+        [NativeTypeName("#define GL_AUTO_NORMAL 0x0D80")]
+        public const int GL_AUTO_NORMAL = 0x0D80;
+
+        [NativeTypeName("#define GL_MAP1_COLOR_4 0x0D90")]
+        public const int GL_MAP1_COLOR_4 = 0x0D90;
+
+        [NativeTypeName("#define GL_MAP1_INDEX 0x0D91")]
+        public const int GL_MAP1_INDEX = 0x0D91;
+
+        [NativeTypeName("#define GL_MAP1_NORMAL 0x0D92")]
+        public const int GL_MAP1_NORMAL = 0x0D92;
+
+        [NativeTypeName("#define GL_MAP1_TEXTURE_COORD_1 0x0D93")]
+        public const int GL_MAP1_TEXTURE_COORD_1 = 0x0D93;
+
+        [NativeTypeName("#define GL_MAP1_TEXTURE_COORD_2 0x0D94")]
+        public const int GL_MAP1_TEXTURE_COORD_2 = 0x0D94;
+
+        [NativeTypeName("#define GL_MAP1_TEXTURE_COORD_3 0x0D95")]
+        public const int GL_MAP1_TEXTURE_COORD_3 = 0x0D95;
+
+        [NativeTypeName("#define GL_MAP1_TEXTURE_COORD_4 0x0D96")]
+        public const int GL_MAP1_TEXTURE_COORD_4 = 0x0D96;
+
+        [NativeTypeName("#define GL_MAP1_VERTEX_3 0x0D97")]
+        public const int GL_MAP1_VERTEX_3 = 0x0D97;
+
+        [NativeTypeName("#define GL_MAP1_VERTEX_4 0x0D98")]
+        public const int GL_MAP1_VERTEX_4 = 0x0D98;
+
+        [NativeTypeName("#define GL_MAP2_COLOR_4 0x0DB0")]
+        public const int GL_MAP2_COLOR_4 = 0x0DB0;
+
+        [NativeTypeName("#define GL_MAP2_INDEX 0x0DB1")]
+        public const int GL_MAP2_INDEX = 0x0DB1;
+
+        [NativeTypeName("#define GL_MAP2_NORMAL 0x0DB2")]
+        public const int GL_MAP2_NORMAL = 0x0DB2;
+
+        [NativeTypeName("#define GL_MAP2_TEXTURE_COORD_1 0x0DB3")]
+        public const int GL_MAP2_TEXTURE_COORD_1 = 0x0DB3;
+
+        [NativeTypeName("#define GL_MAP2_TEXTURE_COORD_2 0x0DB4")]
+        public const int GL_MAP2_TEXTURE_COORD_2 = 0x0DB4;
+
+        [NativeTypeName("#define GL_MAP2_TEXTURE_COORD_3 0x0DB5")]
+        public const int GL_MAP2_TEXTURE_COORD_3 = 0x0DB5;
+
+        [NativeTypeName("#define GL_MAP2_TEXTURE_COORD_4 0x0DB6")]
+        public const int GL_MAP2_TEXTURE_COORD_4 = 0x0DB6;
+
+        [NativeTypeName("#define GL_MAP2_VERTEX_3 0x0DB7")]
+        public const int GL_MAP2_VERTEX_3 = 0x0DB7;
+
+        [NativeTypeName("#define GL_MAP2_VERTEX_4 0x0DB8")]
+        public const int GL_MAP2_VERTEX_4 = 0x0DB8;
+
+        [NativeTypeName("#define GL_MAP1_GRID_DOMAIN 0x0DD0")]
+        public const int GL_MAP1_GRID_DOMAIN = 0x0DD0;
+
+        [NativeTypeName("#define GL_MAP1_GRID_SEGMENTS 0x0DD1")]
+        public const int GL_MAP1_GRID_SEGMENTS = 0x0DD1;
+
+        [NativeTypeName("#define GL_MAP2_GRID_DOMAIN 0x0DD2")]
+        public const int GL_MAP2_GRID_DOMAIN = 0x0DD2;
+
+        [NativeTypeName("#define GL_MAP2_GRID_SEGMENTS 0x0DD3")]
+        public const int GL_MAP2_GRID_SEGMENTS = 0x0DD3;
+
+        [NativeTypeName("#define GL_COEFF 0x0A00")]
+        public const int GL_COEFF = 0x0A00;
+
+        [NativeTypeName("#define GL_ORDER 0x0A01")]
+        public const int GL_ORDER = 0x0A01;
+
+        [NativeTypeName("#define GL_DOMAIN 0x0A02")]
+        public const int GL_DOMAIN = 0x0A02;
+
+        [NativeTypeName("#define GL_PERSPECTIVE_CORRECTION_HINT 0x0C50")]
+        public const int GL_PERSPECTIVE_CORRECTION_HINT = 0x0C50;
+
+        [NativeTypeName("#define GL_POINT_SMOOTH_HINT 0x0C51")]
+        public const int GL_POINT_SMOOTH_HINT = 0x0C51;
+
+        [NativeTypeName("#define GL_LINE_SMOOTH_HINT 0x0C52")]
+        public const int GL_LINE_SMOOTH_HINT = 0x0C52;
+
+        [NativeTypeName("#define GL_POLYGON_SMOOTH_HINT 0x0C53")]
+        public const int GL_POLYGON_SMOOTH_HINT = 0x0C53;
+
+        [NativeTypeName("#define GL_FOG_HINT 0x0C54")]
+        public const int GL_FOG_HINT = 0x0C54;
+
+        [NativeTypeName("#define GL_DONT_CARE 0x1100")]
+        public const int GL_DONT_CARE = 0x1100;
+
+        [NativeTypeName("#define GL_FASTEST 0x1101")]
+        public const int GL_FASTEST = 0x1101;
+
+        [NativeTypeName("#define GL_NICEST 0x1102")]
+        public const int GL_NICEST = 0x1102;
+
+        [NativeTypeName("#define GL_SCISSOR_BOX 0x0C10")]
+        public const int GL_SCISSOR_BOX = 0x0C10;
+
+        [NativeTypeName("#define GL_SCISSOR_TEST 0x0C11")]
+        public const int GL_SCISSOR_TEST = 0x0C11;
+
+        [NativeTypeName("#define GL_MAP_COLOR 0x0D10")]
+        public const int GL_MAP_COLOR = 0x0D10;
+
+        [NativeTypeName("#define GL_MAP_STENCIL 0x0D11")]
+        public const int GL_MAP_STENCIL = 0x0D11;
+
+        [NativeTypeName("#define GL_INDEX_SHIFT 0x0D12")]
+        public const int GL_INDEX_SHIFT = 0x0D12;
+
+        [NativeTypeName("#define GL_INDEX_OFFSET 0x0D13")]
+        public const int GL_INDEX_OFFSET = 0x0D13;
+
+        [NativeTypeName("#define GL_RED_SCALE 0x0D14")]
+        public const int GL_RED_SCALE = 0x0D14;
+
+        [NativeTypeName("#define GL_RED_BIAS 0x0D15")]
+        public const int GL_RED_BIAS = 0x0D15;
+
+        [NativeTypeName("#define GL_GREEN_SCALE 0x0D18")]
+        public const int GL_GREEN_SCALE = 0x0D18;
+
+        [NativeTypeName("#define GL_GREEN_BIAS 0x0D19")]
+        public const int GL_GREEN_BIAS = 0x0D19;
+
+        [NativeTypeName("#define GL_BLUE_SCALE 0x0D1A")]
+        public const int GL_BLUE_SCALE = 0x0D1A;
+
+        [NativeTypeName("#define GL_BLUE_BIAS 0x0D1B")]
+        public const int GL_BLUE_BIAS = 0x0D1B;
+
+        [NativeTypeName("#define GL_ALPHA_SCALE 0x0D1C")]
+        public const int GL_ALPHA_SCALE = 0x0D1C;
+
+        [NativeTypeName("#define GL_ALPHA_BIAS 0x0D1D")]
+        public const int GL_ALPHA_BIAS = 0x0D1D;
+
+        [NativeTypeName("#define GL_DEPTH_SCALE 0x0D1E")]
+        public const int GL_DEPTH_SCALE = 0x0D1E;
+
+        [NativeTypeName("#define GL_DEPTH_BIAS 0x0D1F")]
+        public const int GL_DEPTH_BIAS = 0x0D1F;
+
+        [NativeTypeName("#define GL_PIXEL_MAP_S_TO_S_SIZE 0x0CB1")]
+        public const int GL_PIXEL_MAP_S_TO_S_SIZE = 0x0CB1;
+
+        [NativeTypeName("#define GL_PIXEL_MAP_I_TO_I_SIZE 0x0CB0")]
+        public const int GL_PIXEL_MAP_I_TO_I_SIZE = 0x0CB0;
+
+        [NativeTypeName("#define GL_PIXEL_MAP_I_TO_R_SIZE 0x0CB2")]
+        public const int GL_PIXEL_MAP_I_TO_R_SIZE = 0x0CB2;
+
+        [NativeTypeName("#define GL_PIXEL_MAP_I_TO_G_SIZE 0x0CB3")]
+        public const int GL_PIXEL_MAP_I_TO_G_SIZE = 0x0CB3;
+
+        [NativeTypeName("#define GL_PIXEL_MAP_I_TO_B_SIZE 0x0CB4")]
+        public const int GL_PIXEL_MAP_I_TO_B_SIZE = 0x0CB4;
+
+        [NativeTypeName("#define GL_PIXEL_MAP_I_TO_A_SIZE 0x0CB5")]
+        public const int GL_PIXEL_MAP_I_TO_A_SIZE = 0x0CB5;
+
+        [NativeTypeName("#define GL_PIXEL_MAP_R_TO_R_SIZE 0x0CB6")]
+        public const int GL_PIXEL_MAP_R_TO_R_SIZE = 0x0CB6;
+
+        [NativeTypeName("#define GL_PIXEL_MAP_G_TO_G_SIZE 0x0CB7")]
+        public const int GL_PIXEL_MAP_G_TO_G_SIZE = 0x0CB7;
+
+        [NativeTypeName("#define GL_PIXEL_MAP_B_TO_B_SIZE 0x0CB8")]
+        public const int GL_PIXEL_MAP_B_TO_B_SIZE = 0x0CB8;
+
+        [NativeTypeName("#define GL_PIXEL_MAP_A_TO_A_SIZE 0x0CB9")]
+        public const int GL_PIXEL_MAP_A_TO_A_SIZE = 0x0CB9;
+
+        [NativeTypeName("#define GL_PIXEL_MAP_S_TO_S 0x0C71")]
+        public const int GL_PIXEL_MAP_S_TO_S = 0x0C71;
+
+        [NativeTypeName("#define GL_PIXEL_MAP_I_TO_I 0x0C70")]
+        public const int GL_PIXEL_MAP_I_TO_I = 0x0C70;
+
+        [NativeTypeName("#define GL_PIXEL_MAP_I_TO_R 0x0C72")]
+        public const int GL_PIXEL_MAP_I_TO_R = 0x0C72;
+
+        [NativeTypeName("#define GL_PIXEL_MAP_I_TO_G 0x0C73")]
+        public const int GL_PIXEL_MAP_I_TO_G = 0x0C73;
+
+        [NativeTypeName("#define GL_PIXEL_MAP_I_TO_B 0x0C74")]
+        public const int GL_PIXEL_MAP_I_TO_B = 0x0C74;
+
+        [NativeTypeName("#define GL_PIXEL_MAP_I_TO_A 0x0C75")]
+        public const int GL_PIXEL_MAP_I_TO_A = 0x0C75;
+
+        [NativeTypeName("#define GL_PIXEL_MAP_R_TO_R 0x0C76")]
+        public const int GL_PIXEL_MAP_R_TO_R = 0x0C76;
+
+        [NativeTypeName("#define GL_PIXEL_MAP_G_TO_G 0x0C77")]
+        public const int GL_PIXEL_MAP_G_TO_G = 0x0C77;
+
+        [NativeTypeName("#define GL_PIXEL_MAP_B_TO_B 0x0C78")]
+        public const int GL_PIXEL_MAP_B_TO_B = 0x0C78;
+
+        [NativeTypeName("#define GL_PIXEL_MAP_A_TO_A 0x0C79")]
+        public const int GL_PIXEL_MAP_A_TO_A = 0x0C79;
+
+        [NativeTypeName("#define GL_PACK_ALIGNMENT 0x0D05")]
+        public const int GL_PACK_ALIGNMENT = 0x0D05;
+
+        [NativeTypeName("#define GL_PACK_LSB_FIRST 0x0D01")]
+        public const int GL_PACK_LSB_FIRST = 0x0D01;
+
+        [NativeTypeName("#define GL_PACK_ROW_LENGTH 0x0D02")]
+        public const int GL_PACK_ROW_LENGTH = 0x0D02;
+
+        [NativeTypeName("#define GL_PACK_SKIP_PIXELS 0x0D04")]
+        public const int GL_PACK_SKIP_PIXELS = 0x0D04;
+
+        [NativeTypeName("#define GL_PACK_SKIP_ROWS 0x0D03")]
+        public const int GL_PACK_SKIP_ROWS = 0x0D03;
+
+        [NativeTypeName("#define GL_PACK_SWAP_BYTES 0x0D00")]
+        public const int GL_PACK_SWAP_BYTES = 0x0D00;
+
+        [NativeTypeName("#define GL_UNPACK_ALIGNMENT 0x0CF5")]
+        public const int GL_UNPACK_ALIGNMENT = 0x0CF5;
+
+        [NativeTypeName("#define GL_UNPACK_LSB_FIRST 0x0CF1")]
+        public const int GL_UNPACK_LSB_FIRST = 0x0CF1;
+
+        [NativeTypeName("#define GL_UNPACK_ROW_LENGTH 0x0CF2")]
+        public const int GL_UNPACK_ROW_LENGTH = 0x0CF2;
+
+        [NativeTypeName("#define GL_UNPACK_SKIP_PIXELS 0x0CF4")]
+        public const int GL_UNPACK_SKIP_PIXELS = 0x0CF4;
+
+        [NativeTypeName("#define GL_UNPACK_SKIP_ROWS 0x0CF3")]
+        public const int GL_UNPACK_SKIP_ROWS = 0x0CF3;
+
+        [NativeTypeName("#define GL_UNPACK_SWAP_BYTES 0x0CF0")]
+        public const int GL_UNPACK_SWAP_BYTES = 0x0CF0;
+
+        [NativeTypeName("#define GL_ZOOM_X 0x0D16")]
+        public const int GL_ZOOM_X = 0x0D16;
+
+        [NativeTypeName("#define GL_ZOOM_Y 0x0D17")]
+        public const int GL_ZOOM_Y = 0x0D17;
+
+        [NativeTypeName("#define GL_TEXTURE_ENV 0x2300")]
+        public const int GL_TEXTURE_ENV = 0x2300;
+
+        [NativeTypeName("#define GL_TEXTURE_ENV_MODE 0x2200")]
+        public const int GL_TEXTURE_ENV_MODE = 0x2200;
+
+        [NativeTypeName("#define GL_TEXTURE_1D 0x0DE0")]
+        public const int GL_TEXTURE_1D = 0x0DE0;
+
+        [NativeTypeName("#define GL_TEXTURE_2D 0x0DE1")]
+        public const int GL_TEXTURE_2D = 0x0DE1;
+
+        [NativeTypeName("#define GL_TEXTURE_WRAP_S 0x2802")]
+        public const int GL_TEXTURE_WRAP_S = 0x2802;
+
+        [NativeTypeName("#define GL_TEXTURE_WRAP_T 0x2803")]
+        public const int GL_TEXTURE_WRAP_T = 0x2803;
+
+        [NativeTypeName("#define GL_TEXTURE_MAG_FILTER 0x2800")]
+        public const int GL_TEXTURE_MAG_FILTER = 0x2800;
+
+        [NativeTypeName("#define GL_TEXTURE_MIN_FILTER 0x2801")]
+        public const int GL_TEXTURE_MIN_FILTER = 0x2801;
+
+        [NativeTypeName("#define GL_TEXTURE_ENV_COLOR 0x2201")]
+        public const int GL_TEXTURE_ENV_COLOR = 0x2201;
+
+        [NativeTypeName("#define GL_TEXTURE_GEN_S 0x0C60")]
+        public const int GL_TEXTURE_GEN_S = 0x0C60;
+
+        [NativeTypeName("#define GL_TEXTURE_GEN_T 0x0C61")]
+        public const int GL_TEXTURE_GEN_T = 0x0C61;
+
+        [NativeTypeName("#define GL_TEXTURE_GEN_R 0x0C62")]
+        public const int GL_TEXTURE_GEN_R = 0x0C62;
+
+        [NativeTypeName("#define GL_TEXTURE_GEN_Q 0x0C63")]
+        public const int GL_TEXTURE_GEN_Q = 0x0C63;
+
+        [NativeTypeName("#define GL_TEXTURE_GEN_MODE 0x2500")]
+        public const int GL_TEXTURE_GEN_MODE = 0x2500;
+
+        [NativeTypeName("#define GL_TEXTURE_BORDER_COLOR 0x1004")]
+        public const int GL_TEXTURE_BORDER_COLOR = 0x1004;
+
+        [NativeTypeName("#define GL_TEXTURE_WIDTH 0x1000")]
+        public const int GL_TEXTURE_WIDTH = 0x1000;
+
+        [NativeTypeName("#define GL_TEXTURE_HEIGHT 0x1001")]
+        public const int GL_TEXTURE_HEIGHT = 0x1001;
+
+        [NativeTypeName("#define GL_TEXTURE_BORDER 0x1005")]
+        public const int GL_TEXTURE_BORDER = 0x1005;
+
+        [NativeTypeName("#define GL_TEXTURE_COMPONENTS 0x1003")]
+        public const int GL_TEXTURE_COMPONENTS = 0x1003;
+
+        [NativeTypeName("#define GL_TEXTURE_RED_SIZE 0x805C")]
+        public const int GL_TEXTURE_RED_SIZE = 0x805C;
+
+        [NativeTypeName("#define GL_TEXTURE_GREEN_SIZE 0x805D")]
+        public const int GL_TEXTURE_GREEN_SIZE = 0x805D;
+
+        [NativeTypeName("#define GL_TEXTURE_BLUE_SIZE 0x805E")]
+        public const int GL_TEXTURE_BLUE_SIZE = 0x805E;
+
+        [NativeTypeName("#define GL_TEXTURE_ALPHA_SIZE 0x805F")]
+        public const int GL_TEXTURE_ALPHA_SIZE = 0x805F;
+
+        [NativeTypeName("#define GL_TEXTURE_LUMINANCE_SIZE 0x8060")]
+        public const int GL_TEXTURE_LUMINANCE_SIZE = 0x8060;
+
+        [NativeTypeName("#define GL_TEXTURE_INTENSITY_SIZE 0x8061")]
+        public const int GL_TEXTURE_INTENSITY_SIZE = 0x8061;
+
+        [NativeTypeName("#define GL_NEAREST_MIPMAP_NEAREST 0x2700")]
+        public const int GL_NEAREST_MIPMAP_NEAREST = 0x2700;
+
+        [NativeTypeName("#define GL_NEAREST_MIPMAP_LINEAR 0x2702")]
+        public const int GL_NEAREST_MIPMAP_LINEAR = 0x2702;
+
+        [NativeTypeName("#define GL_LINEAR_MIPMAP_NEAREST 0x2701")]
+        public const int GL_LINEAR_MIPMAP_NEAREST = 0x2701;
+
+        [NativeTypeName("#define GL_LINEAR_MIPMAP_LINEAR 0x2703")]
+        public const int GL_LINEAR_MIPMAP_LINEAR = 0x2703;
+
+        [NativeTypeName("#define GL_OBJECT_LINEAR 0x2401")]
+        public const int GL_OBJECT_LINEAR = 0x2401;
+
+        [NativeTypeName("#define GL_OBJECT_PLANE 0x2501")]
+        public const int GL_OBJECT_PLANE = 0x2501;
+
+        [NativeTypeName("#define GL_EYE_LINEAR 0x2400")]
+        public const int GL_EYE_LINEAR = 0x2400;
+
+        [NativeTypeName("#define GL_EYE_PLANE 0x2502")]
+        public const int GL_EYE_PLANE = 0x2502;
+
+        [NativeTypeName("#define GL_SPHERE_MAP 0x2402")]
+        public const int GL_SPHERE_MAP = 0x2402;
+
+        [NativeTypeName("#define GL_DECAL 0x2101")]
+        public const int GL_DECAL = 0x2101;
+
+        [NativeTypeName("#define GL_MODULATE 0x2100")]
+        public const int GL_MODULATE = 0x2100;
+
+        [NativeTypeName("#define GL_NEAREST 0x2600")]
+        public const int GL_NEAREST = 0x2600;
+
+        [NativeTypeName("#define GL_REPEAT 0x2901")]
+        public const int GL_REPEAT = 0x2901;
+
+        [NativeTypeName("#define GL_CLAMP 0x2900")]
+        public const int GL_CLAMP = 0x2900;
+
+        [NativeTypeName("#define GL_S 0x2000")]
+        public const int GL_S = 0x2000;
+
+        [NativeTypeName("#define GL_T 0x2001")]
+        public const int GL_T = 0x2001;
+
+        [NativeTypeName("#define GL_R 0x2002")]
+        public const int GL_R = 0x2002;
+
+        [NativeTypeName("#define GL_Q 0x2003")]
+        public const int GL_Q = 0x2003;
+
+        [NativeTypeName("#define GL_VENDOR 0x1F00")]
+        public const int GL_VENDOR = 0x1F00;
+
+        [NativeTypeName("#define GL_RENDERER 0x1F01")]
+        public const int GL_RENDERER = 0x1F01;
+
+        [NativeTypeName("#define GL_VERSION 0x1F02")]
+        public const int GL_VERSION = 0x1F02;
+
+        [NativeTypeName("#define GL_EXTENSIONS 0x1F03")]
+        public const int GL_EXTENSIONS = 0x1F03;
+
+        [NativeTypeName("#define GL_NO_ERROR 0")]
+        public const int GL_NO_ERROR = 0;
+
+        [NativeTypeName("#define GL_INVALID_ENUM 0x0500")]
+        public const int GL_INVALID_ENUM = 0x0500;
+
+        [NativeTypeName("#define GL_INVALID_VALUE 0x0501")]
+        public const int GL_INVALID_VALUE = 0x0501;
+
+        [NativeTypeName("#define GL_INVALID_OPERATION 0x0502")]
+        public const int GL_INVALID_OPERATION = 0x0502;
+
+        [NativeTypeName("#define GL_STACK_OVERFLOW 0x0503")]
+        public const int GL_STACK_OVERFLOW = 0x0503;
+
+        [NativeTypeName("#define GL_STACK_UNDERFLOW 0x0504")]
+        public const int GL_STACK_UNDERFLOW = 0x0504;
+
+        [NativeTypeName("#define GL_OUT_OF_MEMORY 0x0505")]
+        public const int GL_OUT_OF_MEMORY = 0x0505;
+
+        [NativeTypeName("#define GL_CURRENT_BIT 0x00000001")]
+        public const int GL_CURRENT_BIT = 0x00000001;
+
+        [NativeTypeName("#define GL_POINT_BIT 0x00000002")]
+        public const int GL_POINT_BIT = 0x00000002;
+
+        [NativeTypeName("#define GL_LINE_BIT 0x00000004")]
+        public const int GL_LINE_BIT = 0x00000004;
+
+        [NativeTypeName("#define GL_POLYGON_BIT 0x00000008")]
+        public const int GL_POLYGON_BIT = 0x00000008;
+
+        [NativeTypeName("#define GL_POLYGON_STIPPLE_BIT 0x00000010")]
+        public const int GL_POLYGON_STIPPLE_BIT = 0x00000010;
+
+        [NativeTypeName("#define GL_PIXEL_MODE_BIT 0x00000020")]
+        public const int GL_PIXEL_MODE_BIT = 0x00000020;
+
+        [NativeTypeName("#define GL_LIGHTING_BIT 0x00000040")]
+        public const int GL_LIGHTING_BIT = 0x00000040;
+
+        [NativeTypeName("#define GL_FOG_BIT 0x00000080")]
+        public const int GL_FOG_BIT = 0x00000080;
+
+        [NativeTypeName("#define GL_DEPTH_BUFFER_BIT 0x00000100")]
+        public const int GL_DEPTH_BUFFER_BIT = 0x00000100;
+
+        [NativeTypeName("#define GL_ACCUM_BUFFER_BIT 0x00000200")]
+        public const int GL_ACCUM_BUFFER_BIT = 0x00000200;
+
+        [NativeTypeName("#define GL_STENCIL_BUFFER_BIT 0x00000400")]
+        public const int GL_STENCIL_BUFFER_BIT = 0x00000400;
+
+        [NativeTypeName("#define GL_VIEWPORT_BIT 0x00000800")]
+        public const int GL_VIEWPORT_BIT = 0x00000800;
+
+        [NativeTypeName("#define GL_TRANSFORM_BIT 0x00001000")]
+        public const int GL_TRANSFORM_BIT = 0x00001000;
+
+        [NativeTypeName("#define GL_ENABLE_BIT 0x00002000")]
+        public const int GL_ENABLE_BIT = 0x00002000;
+
+        [NativeTypeName("#define GL_COLOR_BUFFER_BIT 0x00004000")]
+        public const int GL_COLOR_BUFFER_BIT = 0x00004000;
+
+        [NativeTypeName("#define GL_HINT_BIT 0x00008000")]
+        public const int GL_HINT_BIT = 0x00008000;
+
+        [NativeTypeName("#define GL_EVAL_BIT 0x00010000")]
+        public const int GL_EVAL_BIT = 0x00010000;
+
+        [NativeTypeName("#define GL_LIST_BIT 0x00020000")]
+        public const int GL_LIST_BIT = 0x00020000;
+
+        [NativeTypeName("#define GL_TEXTURE_BIT 0x00040000")]
+        public const int GL_TEXTURE_BIT = 0x00040000;
+
+        [NativeTypeName("#define GL_SCISSOR_BIT 0x00080000")]
+        public const int GL_SCISSOR_BIT = 0x00080000;
+
+        [NativeTypeName("#define GL_ALL_ATTRIB_BITS 0x000FFFFF")]
+        public const int GL_ALL_ATTRIB_BITS = 0x000FFFFF;
+
+        [NativeTypeName("#define GL_PROXY_TEXTURE_1D 0x8063")]
+        public const int GL_PROXY_TEXTURE_1D = 0x8063;
+
+        [NativeTypeName("#define GL_PROXY_TEXTURE_2D 0x8064")]
+        public const int GL_PROXY_TEXTURE_2D = 0x8064;
+
+        [NativeTypeName("#define GL_TEXTURE_PRIORITY 0x8066")]
+        public const int GL_TEXTURE_PRIORITY = 0x8066;
+
+        [NativeTypeName("#define GL_TEXTURE_RESIDENT 0x8067")]
+        public const int GL_TEXTURE_RESIDENT = 0x8067;
+
+        [NativeTypeName("#define GL_TEXTURE_BINDING_1D 0x8068")]
+        public const int GL_TEXTURE_BINDING_1D = 0x8068;
+
+        [NativeTypeName("#define GL_TEXTURE_BINDING_2D 0x8069")]
+        public const int GL_TEXTURE_BINDING_2D = 0x8069;
+
+        [NativeTypeName("#define GL_TEXTURE_INTERNAL_FORMAT 0x1003")]
+        public const int GL_TEXTURE_INTERNAL_FORMAT = 0x1003;
+
+        [NativeTypeName("#define GL_ALPHA4 0x803B")]
+        public const int GL_ALPHA4 = 0x803B;
+
+        [NativeTypeName("#define GL_ALPHA8 0x803C")]
+        public const int GL_ALPHA8 = 0x803C;
+
+        [NativeTypeName("#define GL_ALPHA12 0x803D")]
+        public const int GL_ALPHA12 = 0x803D;
+
+        [NativeTypeName("#define GL_ALPHA16 0x803E")]
+        public const int GL_ALPHA16 = 0x803E;
+
+        [NativeTypeName("#define GL_LUMINANCE4 0x803F")]
+        public const int GL_LUMINANCE4 = 0x803F;
+
+        [NativeTypeName("#define GL_LUMINANCE8 0x8040")]
+        public const int GL_LUMINANCE8 = 0x8040;
+
+        [NativeTypeName("#define GL_LUMINANCE12 0x8041")]
+        public const int GL_LUMINANCE12 = 0x8041;
+
+        [NativeTypeName("#define GL_LUMINANCE16 0x8042")]
+        public const int GL_LUMINANCE16 = 0x8042;
+
+        [NativeTypeName("#define GL_LUMINANCE4_ALPHA4 0x8043")]
+        public const int GL_LUMINANCE4_ALPHA4 = 0x8043;
+
+        [NativeTypeName("#define GL_LUMINANCE6_ALPHA2 0x8044")]
+        public const int GL_LUMINANCE6_ALPHA2 = 0x8044;
+
+        [NativeTypeName("#define GL_LUMINANCE8_ALPHA8 0x8045")]
+        public const int GL_LUMINANCE8_ALPHA8 = 0x8045;
+
+        [NativeTypeName("#define GL_LUMINANCE12_ALPHA4 0x8046")]
+        public const int GL_LUMINANCE12_ALPHA4 = 0x8046;
+
+        [NativeTypeName("#define GL_LUMINANCE12_ALPHA12 0x8047")]
+        public const int GL_LUMINANCE12_ALPHA12 = 0x8047;
+
+        [NativeTypeName("#define GL_LUMINANCE16_ALPHA16 0x8048")]
+        public const int GL_LUMINANCE16_ALPHA16 = 0x8048;
+
+        [NativeTypeName("#define GL_INTENSITY 0x8049")]
+        public const int GL_INTENSITY = 0x8049;
+
+        [NativeTypeName("#define GL_INTENSITY4 0x804A")]
+        public const int GL_INTENSITY4 = 0x804A;
+
+        [NativeTypeName("#define GL_INTENSITY8 0x804B")]
+        public const int GL_INTENSITY8 = 0x804B;
+
+        [NativeTypeName("#define GL_INTENSITY12 0x804C")]
+        public const int GL_INTENSITY12 = 0x804C;
+
+        [NativeTypeName("#define GL_INTENSITY16 0x804D")]
+        public const int GL_INTENSITY16 = 0x804D;
+
+        [NativeTypeName("#define GL_R3_G3_B2 0x2A10")]
+        public const int GL_R3_G3_B2 = 0x2A10;
+
+        [NativeTypeName("#define GL_RGB4 0x804F")]
+        public const int GL_RGB4 = 0x804F;
+
+        [NativeTypeName("#define GL_RGB5 0x8050")]
+        public const int GL_RGB5 = 0x8050;
+
+        [NativeTypeName("#define GL_RGB8 0x8051")]
+        public const int GL_RGB8 = 0x8051;
+
+        [NativeTypeName("#define GL_RGB10 0x8052")]
+        public const int GL_RGB10 = 0x8052;
+
+        [NativeTypeName("#define GL_RGB12 0x8053")]
+        public const int GL_RGB12 = 0x8053;
+
+        [NativeTypeName("#define GL_RGB16 0x8054")]
+        public const int GL_RGB16 = 0x8054;
+
+        [NativeTypeName("#define GL_RGBA2 0x8055")]
+        public const int GL_RGBA2 = 0x8055;
+
+        [NativeTypeName("#define GL_RGBA4 0x8056")]
+        public const int GL_RGBA4 = 0x8056;
+
+        [NativeTypeName("#define GL_RGB5_A1 0x8057")]
+        public const int GL_RGB5_A1 = 0x8057;
+
+        [NativeTypeName("#define GL_RGBA8 0x8058")]
+        public const int GL_RGBA8 = 0x8058;
+
+        [NativeTypeName("#define GL_RGB10_A2 0x8059")]
+        public const int GL_RGB10_A2 = 0x8059;
+
+        [NativeTypeName("#define GL_RGBA12 0x805A")]
+        public const int GL_RGBA12 = 0x805A;
+
+        [NativeTypeName("#define GL_RGBA16 0x805B")]
+        public const int GL_RGBA16 = 0x805B;
+
+        [NativeTypeName("#define GL_CLIENT_PIXEL_STORE_BIT 0x00000001")]
+        public const int GL_CLIENT_PIXEL_STORE_BIT = 0x00000001;
+
+        [NativeTypeName("#define GL_CLIENT_VERTEX_ARRAY_BIT 0x00000002")]
+        public const int GL_CLIENT_VERTEX_ARRAY_BIT = 0x00000002;
+
+        [NativeTypeName("#define GL_ALL_CLIENT_ATTRIB_BITS 0xFFFFFFFF")]
+        public const uint GL_ALL_CLIENT_ATTRIB_BITS = 0xFFFFFFFF;
+
+        [NativeTypeName("#define GL_CLIENT_ALL_ATTRIB_BITS 0xFFFFFFFF")]
+        public const uint GL_CLIENT_ALL_ATTRIB_BITS = 0xFFFFFFFF;
+
+        [NativeTypeName("#define GL_RESCALE_NORMAL 0x803A")]
+        public const int GL_RESCALE_NORMAL = 0x803A;
+
+        [NativeTypeName("#define GL_CLAMP_TO_EDGE 0x812F")]
+        public const int GL_CLAMP_TO_EDGE = 0x812F;
+
+        [NativeTypeName("#define GL_MAX_ELEMENTS_VERTICES 0x80E8")]
+        public const int GL_MAX_ELEMENTS_VERTICES = 0x80E8;
+
+        [NativeTypeName("#define GL_MAX_ELEMENTS_INDICES 0x80E9")]
+        public const int GL_MAX_ELEMENTS_INDICES = 0x80E9;
+
+        [NativeTypeName("#define GL_BGR 0x80E0")]
+        public const int GL_BGR = 0x80E0;
+
+        [NativeTypeName("#define GL_BGRA 0x80E1")]
+        public const int GL_BGRA = 0x80E1;
+
+        [NativeTypeName("#define GL_UNSIGNED_BYTE_3_3_2 0x8032")]
+        public const int GL_UNSIGNED_BYTE_3_3_2 = 0x8032;
+
+        [NativeTypeName("#define GL_UNSIGNED_BYTE_2_3_3_REV 0x8362")]
+        public const int GL_UNSIGNED_BYTE_2_3_3_REV = 0x8362;
+
+        [NativeTypeName("#define GL_UNSIGNED_SHORT_5_6_5 0x8363")]
+        public const int GL_UNSIGNED_SHORT_5_6_5 = 0x8363;
+
+        [NativeTypeName("#define GL_UNSIGNED_SHORT_5_6_5_REV 0x8364")]
+        public const int GL_UNSIGNED_SHORT_5_6_5_REV = 0x8364;
+
+        [NativeTypeName("#define GL_UNSIGNED_SHORT_4_4_4_4 0x8033")]
+        public const int GL_UNSIGNED_SHORT_4_4_4_4 = 0x8033;
+
+        [NativeTypeName("#define GL_UNSIGNED_SHORT_4_4_4_4_REV 0x8365")]
+        public const int GL_UNSIGNED_SHORT_4_4_4_4_REV = 0x8365;
+
+        [NativeTypeName("#define GL_UNSIGNED_SHORT_5_5_5_1 0x8034")]
+        public const int GL_UNSIGNED_SHORT_5_5_5_1 = 0x8034;
+
+        [NativeTypeName("#define GL_UNSIGNED_SHORT_1_5_5_5_REV 0x8366")]
+        public const int GL_UNSIGNED_SHORT_1_5_5_5_REV = 0x8366;
+
+        [NativeTypeName("#define GL_UNSIGNED_INT_8_8_8_8 0x8035")]
+        public const int GL_UNSIGNED_INT_8_8_8_8 = 0x8035;
+
+        [NativeTypeName("#define GL_UNSIGNED_INT_8_8_8_8_REV 0x8367")]
+        public const int GL_UNSIGNED_INT_8_8_8_8_REV = 0x8367;
+
+        [NativeTypeName("#define GL_UNSIGNED_INT_10_10_10_2 0x8036")]
+        public const int GL_UNSIGNED_INT_10_10_10_2 = 0x8036;
+
+        [NativeTypeName("#define GL_UNSIGNED_INT_2_10_10_10_REV 0x8368")]
+        public const int GL_UNSIGNED_INT_2_10_10_10_REV = 0x8368;
+
+        [NativeTypeName("#define GL_LIGHT_MODEL_COLOR_CONTROL 0x81F8")]
+        public const int GL_LIGHT_MODEL_COLOR_CONTROL = 0x81F8;
+
+        [NativeTypeName("#define GL_SINGLE_COLOR 0x81F9")]
+        public const int GL_SINGLE_COLOR = 0x81F9;
+
+        [NativeTypeName("#define GL_SEPARATE_SPECULAR_COLOR 0x81FA")]
+        public const int GL_SEPARATE_SPECULAR_COLOR = 0x81FA;
+
+        [NativeTypeName("#define GL_TEXTURE_MIN_LOD 0x813A")]
+        public const int GL_TEXTURE_MIN_LOD = 0x813A;
+
+        [NativeTypeName("#define GL_TEXTURE_MAX_LOD 0x813B")]
+        public const int GL_TEXTURE_MAX_LOD = 0x813B;
+
+        [NativeTypeName("#define GL_TEXTURE_BASE_LEVEL 0x813C")]
+        public const int GL_TEXTURE_BASE_LEVEL = 0x813C;
+
+        [NativeTypeName("#define GL_TEXTURE_MAX_LEVEL 0x813D")]
+        public const int GL_TEXTURE_MAX_LEVEL = 0x813D;
+
+        [NativeTypeName("#define GL_SMOOTH_POINT_SIZE_RANGE 0x0B12")]
+        public const int GL_SMOOTH_POINT_SIZE_RANGE = 0x0B12;
+
+        [NativeTypeName("#define GL_SMOOTH_POINT_SIZE_GRANULARITY 0x0B13")]
+        public const int GL_SMOOTH_POINT_SIZE_GRANULARITY = 0x0B13;
+
+        [NativeTypeName("#define GL_SMOOTH_LINE_WIDTH_RANGE 0x0B22")]
+        public const int GL_SMOOTH_LINE_WIDTH_RANGE = 0x0B22;
+
+        [NativeTypeName("#define GL_SMOOTH_LINE_WIDTH_GRANULARITY 0x0B23")]
+        public const int GL_SMOOTH_LINE_WIDTH_GRANULARITY = 0x0B23;
+
+        [NativeTypeName("#define GL_ALIASED_POINT_SIZE_RANGE 0x846D")]
+        public const int GL_ALIASED_POINT_SIZE_RANGE = 0x846D;
+
+        [NativeTypeName("#define GL_ALIASED_LINE_WIDTH_RANGE 0x846E")]
+        public const int GL_ALIASED_LINE_WIDTH_RANGE = 0x846E;
+
+        [NativeTypeName("#define GL_PACK_SKIP_IMAGES 0x806B")]
+        public const int GL_PACK_SKIP_IMAGES = 0x806B;
+
+        [NativeTypeName("#define GL_PACK_IMAGE_HEIGHT 0x806C")]
+        public const int GL_PACK_IMAGE_HEIGHT = 0x806C;
+
+        [NativeTypeName("#define GL_UNPACK_SKIP_IMAGES 0x806D")]
+        public const int GL_UNPACK_SKIP_IMAGES = 0x806D;
+
+        [NativeTypeName("#define GL_UNPACK_IMAGE_HEIGHT 0x806E")]
+        public const int GL_UNPACK_IMAGE_HEIGHT = 0x806E;
+
+        [NativeTypeName("#define GL_TEXTURE_3D 0x806F")]
+        public const int GL_TEXTURE_3D = 0x806F;
+
+        [NativeTypeName("#define GL_PROXY_TEXTURE_3D 0x8070")]
+        public const int GL_PROXY_TEXTURE_3D = 0x8070;
+
+        [NativeTypeName("#define GL_TEXTURE_DEPTH 0x8071")]
+        public const int GL_TEXTURE_DEPTH = 0x8071;
+
+        [NativeTypeName("#define GL_TEXTURE_WRAP_R 0x8072")]
+        public const int GL_TEXTURE_WRAP_R = 0x8072;
+
+        [NativeTypeName("#define GL_MAX_3D_TEXTURE_SIZE 0x8073")]
+        public const int GL_MAX_3D_TEXTURE_SIZE = 0x8073;
+
+        [NativeTypeName("#define GL_TEXTURE_BINDING_3D 0x806A")]
+        public const int GL_TEXTURE_BINDING_3D = 0x806A;
+
+        [NativeTypeName("#define GL_CONSTANT_COLOR 0x8001")]
+        public const int GL_CONSTANT_COLOR = 0x8001;
+
+        [NativeTypeName("#define GL_ONE_MINUS_CONSTANT_COLOR 0x8002")]
+        public const int GL_ONE_MINUS_CONSTANT_COLOR = 0x8002;
+
+        [NativeTypeName("#define GL_CONSTANT_ALPHA 0x8003")]
+        public const int GL_CONSTANT_ALPHA = 0x8003;
+
+        [NativeTypeName("#define GL_ONE_MINUS_CONSTANT_ALPHA 0x8004")]
+        public const int GL_ONE_MINUS_CONSTANT_ALPHA = 0x8004;
+
+        [NativeTypeName("#define GL_COLOR_TABLE 0x80D0")]
+        public const int GL_COLOR_TABLE = 0x80D0;
+
+        [NativeTypeName("#define GL_POST_CONVOLUTION_COLOR_TABLE 0x80D1")]
+        public const int GL_POST_CONVOLUTION_COLOR_TABLE = 0x80D1;
+
+        [NativeTypeName("#define GL_POST_COLOR_MATRIX_COLOR_TABLE 0x80D2")]
+        public const int GL_POST_COLOR_MATRIX_COLOR_TABLE = 0x80D2;
+
+        [NativeTypeName("#define GL_PROXY_COLOR_TABLE 0x80D3")]
+        public const int GL_PROXY_COLOR_TABLE = 0x80D3;
+
+        [NativeTypeName("#define GL_PROXY_POST_CONVOLUTION_COLOR_TABLE 0x80D4")]
+        public const int GL_PROXY_POST_CONVOLUTION_COLOR_TABLE = 0x80D4;
+
+        [NativeTypeName("#define GL_PROXY_POST_COLOR_MATRIX_COLOR_TABLE 0x80D5")]
+        public const int GL_PROXY_POST_COLOR_MATRIX_COLOR_TABLE = 0x80D5;
+
+        [NativeTypeName("#define GL_COLOR_TABLE_SCALE 0x80D6")]
+        public const int GL_COLOR_TABLE_SCALE = 0x80D6;
+
+        [NativeTypeName("#define GL_COLOR_TABLE_BIAS 0x80D7")]
+        public const int GL_COLOR_TABLE_BIAS = 0x80D7;
+
+        [NativeTypeName("#define GL_COLOR_TABLE_FORMAT 0x80D8")]
+        public const int GL_COLOR_TABLE_FORMAT = 0x80D8;
+
+        [NativeTypeName("#define GL_COLOR_TABLE_WIDTH 0x80D9")]
+        public const int GL_COLOR_TABLE_WIDTH = 0x80D9;
+
+        [NativeTypeName("#define GL_COLOR_TABLE_RED_SIZE 0x80DA")]
+        public const int GL_COLOR_TABLE_RED_SIZE = 0x80DA;
+
+        [NativeTypeName("#define GL_COLOR_TABLE_GREEN_SIZE 0x80DB")]
+        public const int GL_COLOR_TABLE_GREEN_SIZE = 0x80DB;
+
+        [NativeTypeName("#define GL_COLOR_TABLE_BLUE_SIZE 0x80DC")]
+        public const int GL_COLOR_TABLE_BLUE_SIZE = 0x80DC;
+
+        [NativeTypeName("#define GL_COLOR_TABLE_ALPHA_SIZE 0x80DD")]
+        public const int GL_COLOR_TABLE_ALPHA_SIZE = 0x80DD;
+
+        [NativeTypeName("#define GL_COLOR_TABLE_LUMINANCE_SIZE 0x80DE")]
+        public const int GL_COLOR_TABLE_LUMINANCE_SIZE = 0x80DE;
+
+        [NativeTypeName("#define GL_COLOR_TABLE_INTENSITY_SIZE 0x80DF")]
+        public const int GL_COLOR_TABLE_INTENSITY_SIZE = 0x80DF;
+
+        [NativeTypeName("#define GL_CONVOLUTION_1D 0x8010")]
+        public const int GL_CONVOLUTION_1D = 0x8010;
+
+        [NativeTypeName("#define GL_CONVOLUTION_2D 0x8011")]
+        public const int GL_CONVOLUTION_2D = 0x8011;
+
+        [NativeTypeName("#define GL_SEPARABLE_2D 0x8012")]
+        public const int GL_SEPARABLE_2D = 0x8012;
+
+        [NativeTypeName("#define GL_CONVOLUTION_BORDER_MODE 0x8013")]
+        public const int GL_CONVOLUTION_BORDER_MODE = 0x8013;
+
+        [NativeTypeName("#define GL_CONVOLUTION_FILTER_SCALE 0x8014")]
+        public const int GL_CONVOLUTION_FILTER_SCALE = 0x8014;
+
+        [NativeTypeName("#define GL_CONVOLUTION_FILTER_BIAS 0x8015")]
+        public const int GL_CONVOLUTION_FILTER_BIAS = 0x8015;
+
+        [NativeTypeName("#define GL_REDUCE 0x8016")]
+        public const int GL_REDUCE = 0x8016;
+
+        [NativeTypeName("#define GL_CONVOLUTION_FORMAT 0x8017")]
+        public const int GL_CONVOLUTION_FORMAT = 0x8017;
+
+        [NativeTypeName("#define GL_CONVOLUTION_WIDTH 0x8018")]
+        public const int GL_CONVOLUTION_WIDTH = 0x8018;
+
+        [NativeTypeName("#define GL_CONVOLUTION_HEIGHT 0x8019")]
+        public const int GL_CONVOLUTION_HEIGHT = 0x8019;
+
+        [NativeTypeName("#define GL_MAX_CONVOLUTION_WIDTH 0x801A")]
+        public const int GL_MAX_CONVOLUTION_WIDTH = 0x801A;
+
+        [NativeTypeName("#define GL_MAX_CONVOLUTION_HEIGHT 0x801B")]
+        public const int GL_MAX_CONVOLUTION_HEIGHT = 0x801B;
+
+        [NativeTypeName("#define GL_POST_CONVOLUTION_RED_SCALE 0x801C")]
+        public const int GL_POST_CONVOLUTION_RED_SCALE = 0x801C;
+
+        [NativeTypeName("#define GL_POST_CONVOLUTION_GREEN_SCALE 0x801D")]
+        public const int GL_POST_CONVOLUTION_GREEN_SCALE = 0x801D;
+
+        [NativeTypeName("#define GL_POST_CONVOLUTION_BLUE_SCALE 0x801E")]
+        public const int GL_POST_CONVOLUTION_BLUE_SCALE = 0x801E;
+
+        [NativeTypeName("#define GL_POST_CONVOLUTION_ALPHA_SCALE 0x801F")]
+        public const int GL_POST_CONVOLUTION_ALPHA_SCALE = 0x801F;
+
+        [NativeTypeName("#define GL_POST_CONVOLUTION_RED_BIAS 0x8020")]
+        public const int GL_POST_CONVOLUTION_RED_BIAS = 0x8020;
+
+        [NativeTypeName("#define GL_POST_CONVOLUTION_GREEN_BIAS 0x8021")]
+        public const int GL_POST_CONVOLUTION_GREEN_BIAS = 0x8021;
+
+        [NativeTypeName("#define GL_POST_CONVOLUTION_BLUE_BIAS 0x8022")]
+        public const int GL_POST_CONVOLUTION_BLUE_BIAS = 0x8022;
+
+        [NativeTypeName("#define GL_POST_CONVOLUTION_ALPHA_BIAS 0x8023")]
+        public const int GL_POST_CONVOLUTION_ALPHA_BIAS = 0x8023;
+
+        [NativeTypeName("#define GL_CONSTANT_BORDER 0x8151")]
+        public const int GL_CONSTANT_BORDER = 0x8151;
+
+        [NativeTypeName("#define GL_REPLICATE_BORDER 0x8153")]
+        public const int GL_REPLICATE_BORDER = 0x8153;
+
+        [NativeTypeName("#define GL_CONVOLUTION_BORDER_COLOR 0x8154")]
+        public const int GL_CONVOLUTION_BORDER_COLOR = 0x8154;
+
+        [NativeTypeName("#define GL_COLOR_MATRIX 0x80B1")]
+        public const int GL_COLOR_MATRIX = 0x80B1;
+
+        [NativeTypeName("#define GL_COLOR_MATRIX_STACK_DEPTH 0x80B2")]
+        public const int GL_COLOR_MATRIX_STACK_DEPTH = 0x80B2;
+
+        [NativeTypeName("#define GL_MAX_COLOR_MATRIX_STACK_DEPTH 0x80B3")]
+        public const int GL_MAX_COLOR_MATRIX_STACK_DEPTH = 0x80B3;
+
+        [NativeTypeName("#define GL_POST_COLOR_MATRIX_RED_SCALE 0x80B4")]
+        public const int GL_POST_COLOR_MATRIX_RED_SCALE = 0x80B4;
+
+        [NativeTypeName("#define GL_POST_COLOR_MATRIX_GREEN_SCALE 0x80B5")]
+        public const int GL_POST_COLOR_MATRIX_GREEN_SCALE = 0x80B5;
+
+        [NativeTypeName("#define GL_POST_COLOR_MATRIX_BLUE_SCALE 0x80B6")]
+        public const int GL_POST_COLOR_MATRIX_BLUE_SCALE = 0x80B6;
+
+        [NativeTypeName("#define GL_POST_COLOR_MATRIX_ALPHA_SCALE 0x80B7")]
+        public const int GL_POST_COLOR_MATRIX_ALPHA_SCALE = 0x80B7;
+
+        [NativeTypeName("#define GL_POST_COLOR_MATRIX_RED_BIAS 0x80B8")]
+        public const int GL_POST_COLOR_MATRIX_RED_BIAS = 0x80B8;
+
+        [NativeTypeName("#define GL_POST_COLOR_MATRIX_GREEN_BIAS 0x80B9")]
+        public const int GL_POST_COLOR_MATRIX_GREEN_BIAS = 0x80B9;
+
+        [NativeTypeName("#define GL_POST_COLOR_MATRIX_BLUE_BIAS 0x80BA")]
+        public const int GL_POST_COLOR_MATRIX_BLUE_BIAS = 0x80BA;
+
+        [NativeTypeName("#define GL_POST_COLOR_MATRIX_ALPHA_BIAS 0x80BB")]
+        public const int GL_POST_COLOR_MATRIX_ALPHA_BIAS = 0x80BB;
+
+        [NativeTypeName("#define GL_HISTOGRAM 0x8024")]
+        public const int GL_HISTOGRAM = 0x8024;
+
+        [NativeTypeName("#define GL_PROXY_HISTOGRAM 0x8025")]
+        public const int GL_PROXY_HISTOGRAM = 0x8025;
+
+        [NativeTypeName("#define GL_HISTOGRAM_WIDTH 0x8026")]
+        public const int GL_HISTOGRAM_WIDTH = 0x8026;
+
+        [NativeTypeName("#define GL_HISTOGRAM_FORMAT 0x8027")]
+        public const int GL_HISTOGRAM_FORMAT = 0x8027;
+
+        [NativeTypeName("#define GL_HISTOGRAM_RED_SIZE 0x8028")]
+        public const int GL_HISTOGRAM_RED_SIZE = 0x8028;
+
+        [NativeTypeName("#define GL_HISTOGRAM_GREEN_SIZE 0x8029")]
+        public const int GL_HISTOGRAM_GREEN_SIZE = 0x8029;
+
+        [NativeTypeName("#define GL_HISTOGRAM_BLUE_SIZE 0x802A")]
+        public const int GL_HISTOGRAM_BLUE_SIZE = 0x802A;
+
+        [NativeTypeName("#define GL_HISTOGRAM_ALPHA_SIZE 0x802B")]
+        public const int GL_HISTOGRAM_ALPHA_SIZE = 0x802B;
+
+        [NativeTypeName("#define GL_HISTOGRAM_LUMINANCE_SIZE 0x802C")]
+        public const int GL_HISTOGRAM_LUMINANCE_SIZE = 0x802C;
+
+        [NativeTypeName("#define GL_HISTOGRAM_SINK 0x802D")]
+        public const int GL_HISTOGRAM_SINK = 0x802D;
+
+        [NativeTypeName("#define GL_MINMAX 0x802E")]
+        public const int GL_MINMAX = 0x802E;
+
+        [NativeTypeName("#define GL_MINMAX_FORMAT 0x802F")]
+        public const int GL_MINMAX_FORMAT = 0x802F;
+
+        [NativeTypeName("#define GL_MINMAX_SINK 0x8030")]
+        public const int GL_MINMAX_SINK = 0x8030;
+
+        [NativeTypeName("#define GL_TABLE_TOO_LARGE 0x8031")]
+        public const int GL_TABLE_TOO_LARGE = 0x8031;
+
+        [NativeTypeName("#define GL_BLEND_EQUATION 0x8009")]
+        public const int GL_BLEND_EQUATION = 0x8009;
+
+        [NativeTypeName("#define GL_MIN 0x8007")]
+        public const int GL_MIN = 0x8007;
+
+        [NativeTypeName("#define GL_MAX 0x8008")]
+        public const int GL_MAX = 0x8008;
+
+        [NativeTypeName("#define GL_FUNC_ADD 0x8006")]
+        public const int GL_FUNC_ADD = 0x8006;
+
+        [NativeTypeName("#define GL_FUNC_SUBTRACT 0x800A")]
+        public const int GL_FUNC_SUBTRACT = 0x800A;
+
+        [NativeTypeName("#define GL_FUNC_REVERSE_SUBTRACT 0x800B")]
+        public const int GL_FUNC_REVERSE_SUBTRACT = 0x800B;
+
+        [NativeTypeName("#define GL_BLEND_COLOR 0x8005")]
+        public const int GL_BLEND_COLOR = 0x8005;
+
+        [NativeTypeName("#define GL_TEXTURE0 0x84C0")]
+        public const int GL_TEXTURE0 = 0x84C0;
+
+        [NativeTypeName("#define GL_TEXTURE1 0x84C1")]
+        public const int GL_TEXTURE1 = 0x84C1;
+
+        [NativeTypeName("#define GL_TEXTURE2 0x84C2")]
+        public const int GL_TEXTURE2 = 0x84C2;
+
+        [NativeTypeName("#define GL_TEXTURE3 0x84C3")]
+        public const int GL_TEXTURE3 = 0x84C3;
+
+        [NativeTypeName("#define GL_TEXTURE4 0x84C4")]
+        public const int GL_TEXTURE4 = 0x84C4;
+
+        [NativeTypeName("#define GL_TEXTURE5 0x84C5")]
+        public const int GL_TEXTURE5 = 0x84C5;
+
+        [NativeTypeName("#define GL_TEXTURE6 0x84C6")]
+        public const int GL_TEXTURE6 = 0x84C6;
+
+        [NativeTypeName("#define GL_TEXTURE7 0x84C7")]
+        public const int GL_TEXTURE7 = 0x84C7;
+
+        [NativeTypeName("#define GL_TEXTURE8 0x84C8")]
+        public const int GL_TEXTURE8 = 0x84C8;
+
+        [NativeTypeName("#define GL_TEXTURE9 0x84C9")]
+        public const int GL_TEXTURE9 = 0x84C9;
+
+        [NativeTypeName("#define GL_TEXTURE10 0x84CA")]
+        public const int GL_TEXTURE10 = 0x84CA;
+
+        [NativeTypeName("#define GL_TEXTURE11 0x84CB")]
+        public const int GL_TEXTURE11 = 0x84CB;
+
+        [NativeTypeName("#define GL_TEXTURE12 0x84CC")]
+        public const int GL_TEXTURE12 = 0x84CC;
+
+        [NativeTypeName("#define GL_TEXTURE13 0x84CD")]
+        public const int GL_TEXTURE13 = 0x84CD;
+
+        [NativeTypeName("#define GL_TEXTURE14 0x84CE")]
+        public const int GL_TEXTURE14 = 0x84CE;
+
+        [NativeTypeName("#define GL_TEXTURE15 0x84CF")]
+        public const int GL_TEXTURE15 = 0x84CF;
+
+        [NativeTypeName("#define GL_TEXTURE16 0x84D0")]
+        public const int GL_TEXTURE16 = 0x84D0;
+
+        [NativeTypeName("#define GL_TEXTURE17 0x84D1")]
+        public const int GL_TEXTURE17 = 0x84D1;
+
+        [NativeTypeName("#define GL_TEXTURE18 0x84D2")]
+        public const int GL_TEXTURE18 = 0x84D2;
+
+        [NativeTypeName("#define GL_TEXTURE19 0x84D3")]
+        public const int GL_TEXTURE19 = 0x84D3;
+
+        [NativeTypeName("#define GL_TEXTURE20 0x84D4")]
+        public const int GL_TEXTURE20 = 0x84D4;
+
+        [NativeTypeName("#define GL_TEXTURE21 0x84D5")]
+        public const int GL_TEXTURE21 = 0x84D5;
+
+        [NativeTypeName("#define GL_TEXTURE22 0x84D6")]
+        public const int GL_TEXTURE22 = 0x84D6;
+
+        [NativeTypeName("#define GL_TEXTURE23 0x84D7")]
+        public const int GL_TEXTURE23 = 0x84D7;
+
+        [NativeTypeName("#define GL_TEXTURE24 0x84D8")]
+        public const int GL_TEXTURE24 = 0x84D8;
+
+        [NativeTypeName("#define GL_TEXTURE25 0x84D9")]
+        public const int GL_TEXTURE25 = 0x84D9;
+
+        [NativeTypeName("#define GL_TEXTURE26 0x84DA")]
+        public const int GL_TEXTURE26 = 0x84DA;
+
+        [NativeTypeName("#define GL_TEXTURE27 0x84DB")]
+        public const int GL_TEXTURE27 = 0x84DB;
+
+        [NativeTypeName("#define GL_TEXTURE28 0x84DC")]
+        public const int GL_TEXTURE28 = 0x84DC;
+
+        [NativeTypeName("#define GL_TEXTURE29 0x84DD")]
+        public const int GL_TEXTURE29 = 0x84DD;
+
+        [NativeTypeName("#define GL_TEXTURE30 0x84DE")]
+        public const int GL_TEXTURE30 = 0x84DE;
+
+        [NativeTypeName("#define GL_TEXTURE31 0x84DF")]
+        public const int GL_TEXTURE31 = 0x84DF;
+
+        [NativeTypeName("#define GL_ACTIVE_TEXTURE 0x84E0")]
+        public const int GL_ACTIVE_TEXTURE = 0x84E0;
+
+        [NativeTypeName("#define GL_CLIENT_ACTIVE_TEXTURE 0x84E1")]
+        public const int GL_CLIENT_ACTIVE_TEXTURE = 0x84E1;
+
+        [NativeTypeName("#define GL_MAX_TEXTURE_UNITS 0x84E2")]
+        public const int GL_MAX_TEXTURE_UNITS = 0x84E2;
+
+        [NativeTypeName("#define GL_NORMAL_MAP 0x8511")]
+        public const int GL_NORMAL_MAP = 0x8511;
+
+        [NativeTypeName("#define GL_REFLECTION_MAP 0x8512")]
+        public const int GL_REFLECTION_MAP = 0x8512;
+
+        [NativeTypeName("#define GL_TEXTURE_CUBE_MAP 0x8513")]
+        public const int GL_TEXTURE_CUBE_MAP = 0x8513;
+
+        [NativeTypeName("#define GL_TEXTURE_BINDING_CUBE_MAP 0x8514")]
+        public const int GL_TEXTURE_BINDING_CUBE_MAP = 0x8514;
+
+        [NativeTypeName("#define GL_TEXTURE_CUBE_MAP_POSITIVE_X 0x8515")]
+        public const int GL_TEXTURE_CUBE_MAP_POSITIVE_X = 0x8515;
+
+        [NativeTypeName("#define GL_TEXTURE_CUBE_MAP_NEGATIVE_X 0x8516")]
+        public const int GL_TEXTURE_CUBE_MAP_NEGATIVE_X = 0x8516;
+
+        [NativeTypeName("#define GL_TEXTURE_CUBE_MAP_POSITIVE_Y 0x8517")]
+        public const int GL_TEXTURE_CUBE_MAP_POSITIVE_Y = 0x8517;
+
+        [NativeTypeName("#define GL_TEXTURE_CUBE_MAP_NEGATIVE_Y 0x8518")]
+        public const int GL_TEXTURE_CUBE_MAP_NEGATIVE_Y = 0x8518;
+
+        [NativeTypeName("#define GL_TEXTURE_CUBE_MAP_POSITIVE_Z 0x8519")]
+        public const int GL_TEXTURE_CUBE_MAP_POSITIVE_Z = 0x8519;
+
+        [NativeTypeName("#define GL_TEXTURE_CUBE_MAP_NEGATIVE_Z 0x851A")]
+        public const int GL_TEXTURE_CUBE_MAP_NEGATIVE_Z = 0x851A;
+
+        [NativeTypeName("#define GL_PROXY_TEXTURE_CUBE_MAP 0x851B")]
+        public const int GL_PROXY_TEXTURE_CUBE_MAP = 0x851B;
+
+        [NativeTypeName("#define GL_MAX_CUBE_MAP_TEXTURE_SIZE 0x851C")]
+        public const int GL_MAX_CUBE_MAP_TEXTURE_SIZE = 0x851C;
+
+        [NativeTypeName("#define GL_COMPRESSED_ALPHA 0x84E9")]
+        public const int GL_COMPRESSED_ALPHA = 0x84E9;
+
+        [NativeTypeName("#define GL_COMPRESSED_LUMINANCE 0x84EA")]
+        public const int GL_COMPRESSED_LUMINANCE = 0x84EA;
+
+        [NativeTypeName("#define GL_COMPRESSED_LUMINANCE_ALPHA 0x84EB")]
+        public const int GL_COMPRESSED_LUMINANCE_ALPHA = 0x84EB;
+
+        [NativeTypeName("#define GL_COMPRESSED_INTENSITY 0x84EC")]
+        public const int GL_COMPRESSED_INTENSITY = 0x84EC;
+
+        [NativeTypeName("#define GL_COMPRESSED_RGB 0x84ED")]
+        public const int GL_COMPRESSED_RGB = 0x84ED;
+
+        [NativeTypeName("#define GL_COMPRESSED_RGBA 0x84EE")]
+        public const int GL_COMPRESSED_RGBA = 0x84EE;
+
+        [NativeTypeName("#define GL_TEXTURE_COMPRESSION_HINT 0x84EF")]
+        public const int GL_TEXTURE_COMPRESSION_HINT = 0x84EF;
+
+        [NativeTypeName("#define GL_TEXTURE_COMPRESSED_IMAGE_SIZE 0x86A0")]
+        public const int GL_TEXTURE_COMPRESSED_IMAGE_SIZE = 0x86A0;
+
+        [NativeTypeName("#define GL_TEXTURE_COMPRESSED 0x86A1")]
+        public const int GL_TEXTURE_COMPRESSED = 0x86A1;
+
+        [NativeTypeName("#define GL_NUM_COMPRESSED_TEXTURE_FORMATS 0x86A2")]
+        public const int GL_NUM_COMPRESSED_TEXTURE_FORMATS = 0x86A2;
+
+        [NativeTypeName("#define GL_COMPRESSED_TEXTURE_FORMATS 0x86A3")]
+        public const int GL_COMPRESSED_TEXTURE_FORMATS = 0x86A3;
+
+        [NativeTypeName("#define GL_MULTISAMPLE 0x809D")]
+        public const int GL_MULTISAMPLE = 0x809D;
+
+        [NativeTypeName("#define GL_SAMPLE_ALPHA_TO_COVERAGE 0x809E")]
+        public const int GL_SAMPLE_ALPHA_TO_COVERAGE = 0x809E;
+
+        [NativeTypeName("#define GL_SAMPLE_ALPHA_TO_ONE 0x809F")]
+        public const int GL_SAMPLE_ALPHA_TO_ONE = 0x809F;
+
+        [NativeTypeName("#define GL_SAMPLE_COVERAGE 0x80A0")]
+        public const int GL_SAMPLE_COVERAGE = 0x80A0;
+
+        [NativeTypeName("#define GL_SAMPLE_BUFFERS 0x80A8")]
+        public const int GL_SAMPLE_BUFFERS = 0x80A8;
+
+        [NativeTypeName("#define GL_SAMPLES 0x80A9")]
+        public const int GL_SAMPLES = 0x80A9;
+
+        [NativeTypeName("#define GL_SAMPLE_COVERAGE_VALUE 0x80AA")]
+        public const int GL_SAMPLE_COVERAGE_VALUE = 0x80AA;
+
+        [NativeTypeName("#define GL_SAMPLE_COVERAGE_INVERT 0x80AB")]
+        public const int GL_SAMPLE_COVERAGE_INVERT = 0x80AB;
+
+        [NativeTypeName("#define GL_MULTISAMPLE_BIT 0x20000000")]
+        public const int GL_MULTISAMPLE_BIT = 0x20000000;
+
+        [NativeTypeName("#define GL_TRANSPOSE_MODELVIEW_MATRIX 0x84E3")]
+        public const int GL_TRANSPOSE_MODELVIEW_MATRIX = 0x84E3;
+
+        [NativeTypeName("#define GL_TRANSPOSE_PROJECTION_MATRIX 0x84E4")]
+        public const int GL_TRANSPOSE_PROJECTION_MATRIX = 0x84E4;
+
+        [NativeTypeName("#define GL_TRANSPOSE_TEXTURE_MATRIX 0x84E5")]
+        public const int GL_TRANSPOSE_TEXTURE_MATRIX = 0x84E5;
+
+        [NativeTypeName("#define GL_TRANSPOSE_COLOR_MATRIX 0x84E6")]
+        public const int GL_TRANSPOSE_COLOR_MATRIX = 0x84E6;
+
+        [NativeTypeName("#define GL_COMBINE 0x8570")]
+        public const int GL_COMBINE = 0x8570;
+
+        [NativeTypeName("#define GL_COMBINE_RGB 0x8571")]
+        public const int GL_COMBINE_RGB = 0x8571;
+
+        [NativeTypeName("#define GL_COMBINE_ALPHA 0x8572")]
+        public const int GL_COMBINE_ALPHA = 0x8572;
+
+        [NativeTypeName("#define GL_SOURCE0_RGB 0x8580")]
+        public const int GL_SOURCE0_RGB = 0x8580;
+
+        [NativeTypeName("#define GL_SOURCE1_RGB 0x8581")]
+        public const int GL_SOURCE1_RGB = 0x8581;
+
+        [NativeTypeName("#define GL_SOURCE2_RGB 0x8582")]
+        public const int GL_SOURCE2_RGB = 0x8582;
+
+        [NativeTypeName("#define GL_SOURCE0_ALPHA 0x8588")]
+        public const int GL_SOURCE0_ALPHA = 0x8588;
+
+        [NativeTypeName("#define GL_SOURCE1_ALPHA 0x8589")]
+        public const int GL_SOURCE1_ALPHA = 0x8589;
+
+        [NativeTypeName("#define GL_SOURCE2_ALPHA 0x858A")]
+        public const int GL_SOURCE2_ALPHA = 0x858A;
+
+        [NativeTypeName("#define GL_OPERAND0_RGB 0x8590")]
+        public const int GL_OPERAND0_RGB = 0x8590;
+
+        [NativeTypeName("#define GL_OPERAND1_RGB 0x8591")]
+        public const int GL_OPERAND1_RGB = 0x8591;
+
+        [NativeTypeName("#define GL_OPERAND2_RGB 0x8592")]
+        public const int GL_OPERAND2_RGB = 0x8592;
+
+        [NativeTypeName("#define GL_OPERAND0_ALPHA 0x8598")]
+        public const int GL_OPERAND0_ALPHA = 0x8598;
+
+        [NativeTypeName("#define GL_OPERAND1_ALPHA 0x8599")]
+        public const int GL_OPERAND1_ALPHA = 0x8599;
+
+        [NativeTypeName("#define GL_OPERAND2_ALPHA 0x859A")]
+        public const int GL_OPERAND2_ALPHA = 0x859A;
+
+        [NativeTypeName("#define GL_RGB_SCALE 0x8573")]
+        public const int GL_RGB_SCALE = 0x8573;
+
+        [NativeTypeName("#define GL_ADD_SIGNED 0x8574")]
+        public const int GL_ADD_SIGNED = 0x8574;
+
+        [NativeTypeName("#define GL_INTERPOLATE 0x8575")]
+        public const int GL_INTERPOLATE = 0x8575;
+
+        [NativeTypeName("#define GL_SUBTRACT 0x84E7")]
+        public const int GL_SUBTRACT = 0x84E7;
+
+        [NativeTypeName("#define GL_CONSTANT 0x8576")]
+        public const int GL_CONSTANT = 0x8576;
+
+        [NativeTypeName("#define GL_PRIMARY_COLOR 0x8577")]
+        public const int GL_PRIMARY_COLOR = 0x8577;
+
+        [NativeTypeName("#define GL_PREVIOUS 0x8578")]
+        public const int GL_PREVIOUS = 0x8578;
+
+        [NativeTypeName("#define GL_DOT3_RGB 0x86AE")]
+        public const int GL_DOT3_RGB = 0x86AE;
+
+        [NativeTypeName("#define GL_DOT3_RGBA 0x86AF")]
+        public const int GL_DOT3_RGBA = 0x86AF;
+
+        [NativeTypeName("#define GL_CLAMP_TO_BORDER 0x812D")]
+        public const int GL_CLAMP_TO_BORDER = 0x812D;
+
+        [NativeTypeName("#define GL_ARB_multitexture 1")]
+        public const int GL_ARB_multitexture = 1;
+
+        [NativeTypeName("#define GL_TEXTURE0_ARB 0x84C0")]
+        public const int GL_TEXTURE0_ARB = 0x84C0;
+
+        [NativeTypeName("#define GL_TEXTURE1_ARB 0x84C1")]
+        public const int GL_TEXTURE1_ARB = 0x84C1;
+
+        [NativeTypeName("#define GL_TEXTURE2_ARB 0x84C2")]
+        public const int GL_TEXTURE2_ARB = 0x84C2;
+
+        [NativeTypeName("#define GL_TEXTURE3_ARB 0x84C3")]
+        public const int GL_TEXTURE3_ARB = 0x84C3;
+
+        [NativeTypeName("#define GL_TEXTURE4_ARB 0x84C4")]
+        public const int GL_TEXTURE4_ARB = 0x84C4;
+
+        [NativeTypeName("#define GL_TEXTURE5_ARB 0x84C5")]
+        public const int GL_TEXTURE5_ARB = 0x84C5;
+
+        [NativeTypeName("#define GL_TEXTURE6_ARB 0x84C6")]
+        public const int GL_TEXTURE6_ARB = 0x84C6;
+
+        [NativeTypeName("#define GL_TEXTURE7_ARB 0x84C7")]
+        public const int GL_TEXTURE7_ARB = 0x84C7;
+
+        [NativeTypeName("#define GL_TEXTURE8_ARB 0x84C8")]
+        public const int GL_TEXTURE8_ARB = 0x84C8;
+
+        [NativeTypeName("#define GL_TEXTURE9_ARB 0x84C9")]
+        public const int GL_TEXTURE9_ARB = 0x84C9;
+
+        [NativeTypeName("#define GL_TEXTURE10_ARB 0x84CA")]
+        public const int GL_TEXTURE10_ARB = 0x84CA;
+
+        [NativeTypeName("#define GL_TEXTURE11_ARB 0x84CB")]
+        public const int GL_TEXTURE11_ARB = 0x84CB;
+
+        [NativeTypeName("#define GL_TEXTURE12_ARB 0x84CC")]
+        public const int GL_TEXTURE12_ARB = 0x84CC;
+
+        [NativeTypeName("#define GL_TEXTURE13_ARB 0x84CD")]
+        public const int GL_TEXTURE13_ARB = 0x84CD;
+
+        [NativeTypeName("#define GL_TEXTURE14_ARB 0x84CE")]
+        public const int GL_TEXTURE14_ARB = 0x84CE;
+
+        [NativeTypeName("#define GL_TEXTURE15_ARB 0x84CF")]
+        public const int GL_TEXTURE15_ARB = 0x84CF;
+
+        [NativeTypeName("#define GL_TEXTURE16_ARB 0x84D0")]
+        public const int GL_TEXTURE16_ARB = 0x84D0;
+
+        [NativeTypeName("#define GL_TEXTURE17_ARB 0x84D1")]
+        public const int GL_TEXTURE17_ARB = 0x84D1;
+
+        [NativeTypeName("#define GL_TEXTURE18_ARB 0x84D2")]
+        public const int GL_TEXTURE18_ARB = 0x84D2;
+
+        [NativeTypeName("#define GL_TEXTURE19_ARB 0x84D3")]
+        public const int GL_TEXTURE19_ARB = 0x84D3;
+
+        [NativeTypeName("#define GL_TEXTURE20_ARB 0x84D4")]
+        public const int GL_TEXTURE20_ARB = 0x84D4;
+
+        [NativeTypeName("#define GL_TEXTURE21_ARB 0x84D5")]
+        public const int GL_TEXTURE21_ARB = 0x84D5;
+
+        [NativeTypeName("#define GL_TEXTURE22_ARB 0x84D6")]
+        public const int GL_TEXTURE22_ARB = 0x84D6;
+
+        [NativeTypeName("#define GL_TEXTURE23_ARB 0x84D7")]
+        public const int GL_TEXTURE23_ARB = 0x84D7;
+
+        [NativeTypeName("#define GL_TEXTURE24_ARB 0x84D8")]
+        public const int GL_TEXTURE24_ARB = 0x84D8;
+
+        [NativeTypeName("#define GL_TEXTURE25_ARB 0x84D9")]
+        public const int GL_TEXTURE25_ARB = 0x84D9;
+
+        [NativeTypeName("#define GL_TEXTURE26_ARB 0x84DA")]
+        public const int GL_TEXTURE26_ARB = 0x84DA;
+
+        [NativeTypeName("#define GL_TEXTURE27_ARB 0x84DB")]
+        public const int GL_TEXTURE27_ARB = 0x84DB;
+
+        [NativeTypeName("#define GL_TEXTURE28_ARB 0x84DC")]
+        public const int GL_TEXTURE28_ARB = 0x84DC;
+
+        [NativeTypeName("#define GL_TEXTURE29_ARB 0x84DD")]
+        public const int GL_TEXTURE29_ARB = 0x84DD;
+
+        [NativeTypeName("#define GL_TEXTURE30_ARB 0x84DE")]
+        public const int GL_TEXTURE30_ARB = 0x84DE;
+
+        [NativeTypeName("#define GL_TEXTURE31_ARB 0x84DF")]
+        public const int GL_TEXTURE31_ARB = 0x84DF;
+
+        [NativeTypeName("#define GL_ACTIVE_TEXTURE_ARB 0x84E0")]
+        public const int GL_ACTIVE_TEXTURE_ARB = 0x84E0;
+
+        [NativeTypeName("#define GL_CLIENT_ACTIVE_TEXTURE_ARB 0x84E1")]
+        public const int GL_CLIENT_ACTIVE_TEXTURE_ARB = 0x84E1;
+
+        [NativeTypeName("#define GL_MAX_TEXTURE_UNITS_ARB 0x84E2")]
+        public const int GL_MAX_TEXTURE_UNITS_ARB = 0x84E2;
+
         [DllImport("SDL2", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetPixelFormatName", ExactSpelling = true)]
         [return: NativeTypeName("const char *")]
         public static extern sbyte* GetPixelFormatName([NativeTypeName("Uint32")] uint format);
@@ -2833,6 +5360,54 @@ namespace SDL.NET
         [DllImport("SDL2", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_CalculateGammaRamp", ExactSpelling = true)]
         public static extern void CalculateGammaRamp(float gamma, [NativeTypeName("Uint16 *")] ushort* ramp);
 
+        [NativeTypeName("#define SDL_ALPHA_OPAQUE 255")]
+        public const int SDL_ALPHA_OPAQUE = 255;
+
+        [NativeTypeName("#define SDL_ALPHA_TRANSPARENT 0")]
+        public const int SDL_ALPHA_TRANSPARENT = 0;
+
+        [NativeTypeName("#define HAVE_WCSDUP 1")]
+        public const int HAVE_WCSDUP = 1;
+
+        [NativeTypeName("#define HAVE_WCSCASECMP 1")]
+        public const int HAVE_WCSCASECMP = 1;
+
+        [NativeTypeName("#define HAVE_WCSNCASECMP 1")]
+        public const int HAVE_WCSNCASECMP = 1;
+
+        [NativeTypeName("#define HAVE_FSEEKO 1")]
+        public const int HAVE_FSEEKO = 1;
+
+        [NativeTypeName("#define HAVE_FSEEKO64 1")]
+        public const int HAVE_FSEEKO64 = 1;
+
+        [NativeTypeName("#define HAVE_SA_SIGACTION 1")]
+        public const int HAVE_SA_SIGACTION = 1;
+
+        [NativeTypeName("#define HAVE_MPROTECT 1")]
+        public const int HAVE_MPROTECT = 1;
+
+        [NativeTypeName("#define HAVE_ICONV 1")]
+        public const int HAVE_ICONV = 1;
+
+        [NativeTypeName("#define SDL_CPUINFO_DISABLED 1")]
+        public const int SDL_CPUINFO_DISABLED = 1;
+
+        [NativeTypeName("#define SDL_AUDIO_DRIVER_EMSCRIPTEN 1")]
+        public const int SDL_AUDIO_DRIVER_EMSCRIPTEN = 1;
+
+        [NativeTypeName("#define SDL_JOYSTICK_EMSCRIPTEN 1")]
+        public const int SDL_JOYSTICK_EMSCRIPTEN = 1;
+
+        [NativeTypeName("#define SDL_VIDEO_DRIVER_EMSCRIPTEN 1")]
+        public const int SDL_VIDEO_DRIVER_EMSCRIPTEN = 1;
+
+        [NativeTypeName("#define SDL_POWER_EMSCRIPTEN 1")]
+        public const int SDL_POWER_EMSCRIPTEN = 1;
+
+        [NativeTypeName("#define SDL_FILESYSTEM_EMSCRIPTEN 1")]
+        public const int SDL_FILESYSTEM_EMSCRIPTEN = 1;
+
         [DllImport("SDL2", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_Init", ExactSpelling = true)]
         public static extern int Init([NativeTypeName("Uint32")] uint flags);
 
@@ -2848,6 +5423,36 @@ namespace SDL.NET
 
         [DllImport("SDL2", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_Quit", ExactSpelling = true)]
         public static extern void Quit();
+
+        [NativeTypeName("#define SDL_INIT_TIMER 0x00000001u")]
+        public const uint SDL_INIT_TIMER = 0x00000001U;
+
+        [NativeTypeName("#define SDL_INIT_AUDIO 0x00000010u")]
+        public const uint SDL_INIT_AUDIO = 0x00000010U;
+
+        [NativeTypeName("#define SDL_INIT_VIDEO 0x00000020u")]
+        public const uint SDL_INIT_VIDEO = 0x00000020U;
+
+        [NativeTypeName("#define SDL_INIT_JOYSTICK 0x00000200u")]
+        public const uint SDL_INIT_JOYSTICK = 0x00000200U;
+
+        [NativeTypeName("#define SDL_INIT_HAPTIC 0x00001000u")]
+        public const uint SDL_INIT_HAPTIC = 0x00001000U;
+
+        [NativeTypeName("#define SDL_INIT_GAMECONTROLLER 0x00002000u")]
+        public const uint SDL_INIT_GAMECONTROLLER = 0x00002000U;
+
+        [NativeTypeName("#define SDL_INIT_EVENTS 0x00004000u")]
+        public const uint SDL_INIT_EVENTS = 0x00004000U;
+
+        [NativeTypeName("#define SDL_INIT_SENSOR 0x00008000u")]
+        public const uint SDL_INIT_SENSOR = 0x00008000U;
+
+        [NativeTypeName("#define SDL_INIT_NOPARACHUTE 0x00100000u")]
+        public const uint SDL_INIT_NOPARACHUTE = 0x00100000U;
+
+        [NativeTypeName("#define SDL_INIT_EVERYTHING ( \\\n                SDL_INIT_TIMER | SDL_INIT_AUDIO | SDL_INIT_VIDEO | SDL_INIT_EVENTS | \\\n                SDL_INIT_JOYSTICK | SDL_INIT_HAPTIC | SDL_INIT_GAMECONTROLLER | SDL_INIT_SENSOR \\\n            )")]
+        public const uint SDL_INIT_EVERYTHING = (0x00000001U | 0x00000010U | 0x00000020U | 0x00004000U | 0x00000200U | 0x00001000U | 0x00002000U | 0x00008000U);
 
         [DllImport("SDL2", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetNumAudioDrivers", ExactSpelling = true)]
         public static extern int GetNumAudioDrivers();
@@ -2970,6 +5575,171 @@ namespace SDL.NET
         [DllImport("SDL2", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_CloseAudioDevice", ExactSpelling = true)]
         public static extern void CloseAudioDevice([NativeTypeName("SDL_AudioDeviceID")] uint dev);
 
+        [NativeTypeName("#define SDL_AUDIO_MASK_BITSIZE (0xFF)")]
+        public const int SDL_AUDIO_MASK_BITSIZE = (0xFF);
+
+        [NativeTypeName("#define SDL_AUDIO_MASK_DATATYPE (1<<8)")]
+        public const int SDL_AUDIO_MASK_DATATYPE = (1 << 8);
+
+        [NativeTypeName("#define SDL_AUDIO_MASK_ENDIAN (1<<12)")]
+        public const int SDL_AUDIO_MASK_ENDIAN = (1 << 12);
+
+        [NativeTypeName("#define SDL_AUDIO_MASK_SIGNED (1<<15)")]
+        public const int SDL_AUDIO_MASK_SIGNED = (1 << 15);
+
+        [NativeTypeName("#define AUDIO_U8 0x0008")]
+        public const int AUDIO_U8 = 0x0008;
+
+        [NativeTypeName("#define AUDIO_S8 0x8008")]
+        public const int AUDIO_S8 = 0x8008;
+
+        [NativeTypeName("#define AUDIO_U16LSB 0x0010")]
+        public const int AUDIO_U16LSB = 0x0010;
+
+        [NativeTypeName("#define AUDIO_S16LSB 0x8010")]
+        public const int AUDIO_S16LSB = 0x8010;
+
+        [NativeTypeName("#define AUDIO_U16MSB 0x1010")]
+        public const int AUDIO_U16MSB = 0x1010;
+
+        [NativeTypeName("#define AUDIO_S16MSB 0x9010")]
+        public const int AUDIO_S16MSB = 0x9010;
+
+        [NativeTypeName("#define AUDIO_U16 AUDIO_U16LSB")]
+        public const int AUDIO_U16 = 0x0010;
+
+        [NativeTypeName("#define AUDIO_S16 AUDIO_S16LSB")]
+        public const int AUDIO_S16 = 0x8010;
+
+        [NativeTypeName("#define AUDIO_S32LSB 0x8020")]
+        public const int AUDIO_S32LSB = 0x8020;
+
+        [NativeTypeName("#define AUDIO_S32MSB 0x9020")]
+        public const int AUDIO_S32MSB = 0x9020;
+
+        [NativeTypeName("#define AUDIO_S32 AUDIO_S32LSB")]
+        public const int AUDIO_S32 = 0x8020;
+
+        [NativeTypeName("#define AUDIO_F32LSB 0x8120")]
+        public const int AUDIO_F32LSB = 0x8120;
+
+        [NativeTypeName("#define AUDIO_F32MSB 0x9120")]
+        public const int AUDIO_F32MSB = 0x9120;
+
+        [NativeTypeName("#define AUDIO_F32 AUDIO_F32LSB")]
+        public const int AUDIO_F32 = 0x8120;
+
+        [NativeTypeName("#define AUDIO_U16SYS AUDIO_U16LSB")]
+        public const int AUDIO_U16SYS = 0x0010;
+
+        [NativeTypeName("#define AUDIO_S16SYS AUDIO_S16LSB")]
+        public const int AUDIO_S16SYS = 0x8010;
+
+        [NativeTypeName("#define AUDIO_S32SYS AUDIO_S32LSB")]
+        public const int AUDIO_S32SYS = 0x8020;
+
+        [NativeTypeName("#define AUDIO_F32SYS AUDIO_F32LSB")]
+        public const int AUDIO_F32SYS = 0x8120;
+
+        [NativeTypeName("#define SDL_AUDIO_ALLOW_FREQUENCY_CHANGE 0x00000001")]
+        public const int SDL_AUDIO_ALLOW_FREQUENCY_CHANGE = 0x00000001;
+
+        [NativeTypeName("#define SDL_AUDIO_ALLOW_FORMAT_CHANGE 0x00000002")]
+        public const int SDL_AUDIO_ALLOW_FORMAT_CHANGE = 0x00000002;
+
+        [NativeTypeName("#define SDL_AUDIO_ALLOW_CHANNELS_CHANGE 0x00000004")]
+        public const int SDL_AUDIO_ALLOW_CHANNELS_CHANGE = 0x00000004;
+
+        [NativeTypeName("#define SDL_AUDIO_ALLOW_SAMPLES_CHANGE 0x00000008")]
+        public const int SDL_AUDIO_ALLOW_SAMPLES_CHANGE = 0x00000008;
+
+        [NativeTypeName("#define SDL_AUDIO_ALLOW_ANY_CHANGE (SDL_AUDIO_ALLOW_FREQUENCY_CHANGE|SDL_AUDIO_ALLOW_FORMAT_CHANGE|SDL_AUDIO_ALLOW_CHANNELS_CHANGE|SDL_AUDIO_ALLOW_SAMPLES_CHANGE)")]
+        public const int SDL_AUDIO_ALLOW_ANY_CHANGE = (0x00000001 | 0x00000002 | 0x00000004 | 0x00000008);
+
+        [NativeTypeName("#define SDL_AUDIOCVT_MAX_FILTERS 9")]
+        public const int SDL_AUDIOCVT_MAX_FILTERS = 9;
+
+        [NativeTypeName("#define SDL_MIX_MAXVOLUME 128")]
+        public const int SDL_MIX_MAXVOLUME = 128;
+
+        [NativeTypeName("#define SDL_AUDIO_DRIVER_OS2 1")]
+        public const int SDL_AUDIO_DRIVER_OS2 = 1;
+
+        [NativeTypeName("#define SDL_POWER_DISABLED 1")]
+        public const int SDL_POWER_DISABLED = 1;
+
+        [NativeTypeName("#define SDL_VIDEO_DRIVER_OS2 1")]
+        public const int SDL_VIDEO_DRIVER_OS2 = 1;
+
+        [NativeTypeName("#define SDL_JOYSTICK_OS2 1")]
+        public const int SDL_JOYSTICK_OS2 = 1;
+
+        [NativeTypeName("#define SDL_THREAD_OS2 1")]
+        public const int SDL_THREAD_OS2 = 1;
+
+        [NativeTypeName("#define SDL_LOADSO_OS2 1")]
+        public const int SDL_LOADSO_OS2 = 1;
+
+        [NativeTypeName("#define SDL_TIMER_OS2 1")]
+        public const int SDL_TIMER_OS2 = 1;
+
+        [NativeTypeName("#define SDL_FILESYSTEM_OS2 1")]
+        public const int SDL_FILESYSTEM_OS2 = 1;
+
+        [NativeTypeName("#define SDL_LIBSAMPLERATE_DYNAMIC \"SAMPRATE.DLL\"")]
+        public static ReadOnlySpan<byte> SDL_LIBSAMPLERATE_DYNAMIC => new byte[] { 0x53, 0x41, 0x4D, 0x50, 0x52, 0x41, 0x54, 0x45, 0x2E, 0x44, 0x4C, 0x4C, 0x00 };
+
+        [NativeTypeName("#define HAVE_LIBC 1")]
+        public const int HAVE_LIBC = 1;
+
+        [NativeTypeName("#define HAVE_FLOAT_H 1")]
+        public const int HAVE_FLOAT_H = 1;
+
+        [NativeTypeName("#define HAVE_WCSLCPY 1")]
+        public const int HAVE_WCSLCPY = 1;
+
+        [NativeTypeName("#define HAVE_WCSLCAT 1")]
+        public const int HAVE_WCSLCAT = 1;
+
+        [NativeTypeName("#define HAVE__WCSICMP 1")]
+        public const int HAVE__WCSICMP = 1;
+
+        [NativeTypeName("#define HAVE__WCSNICMP 1")]
+        public const int HAVE__WCSNICMP = 1;
+
+        [NativeTypeName("#define HAVE__WCSDUP 1")]
+        public const int HAVE__WCSDUP = 1;
+
+        [NativeTypeName("#define HAVE__STRREV 1")]
+        public const int HAVE__STRREV = 1;
+
+        [NativeTypeName("#define HAVE__STRUPR 1")]
+        public const int HAVE__STRUPR = 1;
+
+        [NativeTypeName("#define HAVE__STRLWR 1")]
+        public const int HAVE__STRLWR = 1;
+
+        [NativeTypeName("#define HAVE_ITOA 1")]
+        public const int HAVE_ITOA = 1;
+
+        [NativeTypeName("#define HAVE__LTOA 1")]
+        public const int HAVE__LTOA = 1;
+
+        [NativeTypeName("#define HAVE__ULTOA 1")]
+        public const int HAVE__ULTOA = 1;
+
+        [NativeTypeName("#define HAVE__I64TOA 1")]
+        public const int HAVE__I64TOA = 1;
+
+        [NativeTypeName("#define HAVE__UI64TOA 1")]
+        public const int HAVE__UI64TOA = 1;
+
+        [NativeTypeName("#define HAVE_STRICMP 1")]
+        public const int HAVE_STRICMP = 1;
+
+        [NativeTypeName("#define HAVE_SNPRINTF 1")]
+        public const int HAVE_SNPRINTF = 1;
+
         [DllImport("SDL2", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_SetHintWithPriority", ExactSpelling = true)]
         public static extern SDL_bool SetHintWithPriority([NativeTypeName("const char *")] sbyte* name, [NativeTypeName("const char *")] sbyte* value, SDL_HintPriority priority);
 
@@ -2997,6 +5767,522 @@ namespace SDL.NET
 
         [DllImport("SDL2", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_ClearHints", ExactSpelling = true)]
         public static extern void ClearHints();
+
+        [NativeTypeName("#define SDL_HINT_ACCELEROMETER_AS_JOYSTICK \"SDL_ACCELEROMETER_AS_JOYSTICK\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_ACCELEROMETER_AS_JOYSTICK => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x41, 0x43, 0x43, 0x45, 0x4C, 0x45, 0x52, 0x4F, 0x4D, 0x45, 0x54, 0x45, 0x52, 0x5F, 0x41, 0x53, 0x5F, 0x4A, 0x4F, 0x59, 0x53, 0x54, 0x49, 0x43, 0x4B, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_ALLOW_ALT_TAB_WHILE_GRABBED \"SDL_ALLOW_ALT_TAB_WHILE_GRABBED\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_ALLOW_ALT_TAB_WHILE_GRABBED => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x41, 0x4C, 0x4C, 0x4F, 0x57, 0x5F, 0x41, 0x4C, 0x54, 0x5F, 0x54, 0x41, 0x42, 0x5F, 0x57, 0x48, 0x49, 0x4C, 0x45, 0x5F, 0x47, 0x52, 0x41, 0x42, 0x42, 0x45, 0x44, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_ALLOW_TOPMOST \"SDL_ALLOW_TOPMOST\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_ALLOW_TOPMOST => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x41, 0x4C, 0x4C, 0x4F, 0x57, 0x5F, 0x54, 0x4F, 0x50, 0x4D, 0x4F, 0x53, 0x54, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_ANDROID_APK_EXPANSION_MAIN_FILE_VERSION \"SDL_ANDROID_APK_EXPANSION_MAIN_FILE_VERSION\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_ANDROID_APK_EXPANSION_MAIN_FILE_VERSION => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x41, 0x4E, 0x44, 0x52, 0x4F, 0x49, 0x44, 0x5F, 0x41, 0x50, 0x4B, 0x5F, 0x45, 0x58, 0x50, 0x41, 0x4E, 0x53, 0x49, 0x4F, 0x4E, 0x5F, 0x4D, 0x41, 0x49, 0x4E, 0x5F, 0x46, 0x49, 0x4C, 0x45, 0x5F, 0x56, 0x45, 0x52, 0x53, 0x49, 0x4F, 0x4E, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_ANDROID_APK_EXPANSION_PATCH_FILE_VERSION \"SDL_ANDROID_APK_EXPANSION_PATCH_FILE_VERSION\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_ANDROID_APK_EXPANSION_PATCH_FILE_VERSION => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x41, 0x4E, 0x44, 0x52, 0x4F, 0x49, 0x44, 0x5F, 0x41, 0x50, 0x4B, 0x5F, 0x45, 0x58, 0x50, 0x41, 0x4E, 0x53, 0x49, 0x4F, 0x4E, 0x5F, 0x50, 0x41, 0x54, 0x43, 0x48, 0x5F, 0x46, 0x49, 0x4C, 0x45, 0x5F, 0x56, 0x45, 0x52, 0x53, 0x49, 0x4F, 0x4E, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_ANDROID_BLOCK_ON_PAUSE \"SDL_ANDROID_BLOCK_ON_PAUSE\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_ANDROID_BLOCK_ON_PAUSE => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x41, 0x4E, 0x44, 0x52, 0x4F, 0x49, 0x44, 0x5F, 0x42, 0x4C, 0x4F, 0x43, 0x4B, 0x5F, 0x4F, 0x4E, 0x5F, 0x50, 0x41, 0x55, 0x53, 0x45, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_ANDROID_BLOCK_ON_PAUSE_PAUSEAUDIO \"SDL_ANDROID_BLOCK_ON_PAUSE_PAUSEAUDIO\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_ANDROID_BLOCK_ON_PAUSE_PAUSEAUDIO => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x41, 0x4E, 0x44, 0x52, 0x4F, 0x49, 0x44, 0x5F, 0x42, 0x4C, 0x4F, 0x43, 0x4B, 0x5F, 0x4F, 0x4E, 0x5F, 0x50, 0x41, 0x55, 0x53, 0x45, 0x5F, 0x50, 0x41, 0x55, 0x53, 0x45, 0x41, 0x55, 0x44, 0x49, 0x4F, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_ANDROID_TRAP_BACK_BUTTON \"SDL_ANDROID_TRAP_BACK_BUTTON\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_ANDROID_TRAP_BACK_BUTTON => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x41, 0x4E, 0x44, 0x52, 0x4F, 0x49, 0x44, 0x5F, 0x54, 0x52, 0x41, 0x50, 0x5F, 0x42, 0x41, 0x43, 0x4B, 0x5F, 0x42, 0x55, 0x54, 0x54, 0x4F, 0x4E, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_APP_NAME \"SDL_APP_NAME\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_APP_NAME => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x41, 0x50, 0x50, 0x5F, 0x4E, 0x41, 0x4D, 0x45, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_APPLE_TV_CONTROLLER_UI_EVENTS \"SDL_APPLE_TV_CONTROLLER_UI_EVENTS\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_APPLE_TV_CONTROLLER_UI_EVENTS => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x41, 0x50, 0x50, 0x4C, 0x45, 0x5F, 0x54, 0x56, 0x5F, 0x43, 0x4F, 0x4E, 0x54, 0x52, 0x4F, 0x4C, 0x4C, 0x45, 0x52, 0x5F, 0x55, 0x49, 0x5F, 0x45, 0x56, 0x45, 0x4E, 0x54, 0x53, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_APPLE_TV_REMOTE_ALLOW_ROTATION \"SDL_APPLE_TV_REMOTE_ALLOW_ROTATION\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_APPLE_TV_REMOTE_ALLOW_ROTATION => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x41, 0x50, 0x50, 0x4C, 0x45, 0x5F, 0x54, 0x56, 0x5F, 0x52, 0x45, 0x4D, 0x4F, 0x54, 0x45, 0x5F, 0x41, 0x4C, 0x4C, 0x4F, 0x57, 0x5F, 0x52, 0x4F, 0x54, 0x41, 0x54, 0x49, 0x4F, 0x4E, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_AUDIO_CATEGORY \"SDL_AUDIO_CATEGORY\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_AUDIO_CATEGORY => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x41, 0x55, 0x44, 0x49, 0x4F, 0x5F, 0x43, 0x41, 0x54, 0x45, 0x47, 0x4F, 0x52, 0x59, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_AUDIO_DEVICE_APP_NAME \"SDL_AUDIO_DEVICE_APP_NAME\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_AUDIO_DEVICE_APP_NAME => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x41, 0x55, 0x44, 0x49, 0x4F, 0x5F, 0x44, 0x45, 0x56, 0x49, 0x43, 0x45, 0x5F, 0x41, 0x50, 0x50, 0x5F, 0x4E, 0x41, 0x4D, 0x45, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_AUDIO_DEVICE_STREAM_NAME \"SDL_AUDIO_DEVICE_STREAM_NAME\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_AUDIO_DEVICE_STREAM_NAME => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x41, 0x55, 0x44, 0x49, 0x4F, 0x5F, 0x44, 0x45, 0x56, 0x49, 0x43, 0x45, 0x5F, 0x53, 0x54, 0x52, 0x45, 0x41, 0x4D, 0x5F, 0x4E, 0x41, 0x4D, 0x45, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_AUDIO_DEVICE_STREAM_ROLE \"SDL_AUDIO_DEVICE_STREAM_ROLE\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_AUDIO_DEVICE_STREAM_ROLE => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x41, 0x55, 0x44, 0x49, 0x4F, 0x5F, 0x44, 0x45, 0x56, 0x49, 0x43, 0x45, 0x5F, 0x53, 0x54, 0x52, 0x45, 0x41, 0x4D, 0x5F, 0x52, 0x4F, 0x4C, 0x45, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_AUDIO_RESAMPLING_MODE \"SDL_AUDIO_RESAMPLING_MODE\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_AUDIO_RESAMPLING_MODE => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x41, 0x55, 0x44, 0x49, 0x4F, 0x5F, 0x52, 0x45, 0x53, 0x41, 0x4D, 0x50, 0x4C, 0x49, 0x4E, 0x47, 0x5F, 0x4D, 0x4F, 0x44, 0x45, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_AUTO_UPDATE_JOYSTICKS \"SDL_AUTO_UPDATE_JOYSTICKS\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_AUTO_UPDATE_JOYSTICKS => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x41, 0x55, 0x54, 0x4F, 0x5F, 0x55, 0x50, 0x44, 0x41, 0x54, 0x45, 0x5F, 0x4A, 0x4F, 0x59, 0x53, 0x54, 0x49, 0x43, 0x4B, 0x53, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_AUTO_UPDATE_SENSORS \"SDL_AUTO_UPDATE_SENSORS\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_AUTO_UPDATE_SENSORS => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x41, 0x55, 0x54, 0x4F, 0x5F, 0x55, 0x50, 0x44, 0x41, 0x54, 0x45, 0x5F, 0x53, 0x45, 0x4E, 0x53, 0x4F, 0x52, 0x53, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_BMP_SAVE_LEGACY_FORMAT \"SDL_BMP_SAVE_LEGACY_FORMAT\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_BMP_SAVE_LEGACY_FORMAT => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x42, 0x4D, 0x50, 0x5F, 0x53, 0x41, 0x56, 0x45, 0x5F, 0x4C, 0x45, 0x47, 0x41, 0x43, 0x59, 0x5F, 0x46, 0x4F, 0x52, 0x4D, 0x41, 0x54, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_DISPLAY_USABLE_BOUNDS \"SDL_DISPLAY_USABLE_BOUNDS\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_DISPLAY_USABLE_BOUNDS => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x44, 0x49, 0x53, 0x50, 0x4C, 0x41, 0x59, 0x5F, 0x55, 0x53, 0x41, 0x42, 0x4C, 0x45, 0x5F, 0x42, 0x4F, 0x55, 0x4E, 0x44, 0x53, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_EMSCRIPTEN_ASYNCIFY \"SDL_EMSCRIPTEN_ASYNCIFY\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_EMSCRIPTEN_ASYNCIFY => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x45, 0x4D, 0x53, 0x43, 0x52, 0x49, 0x50, 0x54, 0x45, 0x4E, 0x5F, 0x41, 0x53, 0x59, 0x4E, 0x43, 0x49, 0x46, 0x59, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_EMSCRIPTEN_KEYBOARD_ELEMENT \"SDL_EMSCRIPTEN_KEYBOARD_ELEMENT\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_EMSCRIPTEN_KEYBOARD_ELEMENT => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x45, 0x4D, 0x53, 0x43, 0x52, 0x49, 0x50, 0x54, 0x45, 0x4E, 0x5F, 0x4B, 0x45, 0x59, 0x42, 0x4F, 0x41, 0x52, 0x44, 0x5F, 0x45, 0x4C, 0x45, 0x4D, 0x45, 0x4E, 0x54, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_ENABLE_STEAM_CONTROLLERS \"SDL_ENABLE_STEAM_CONTROLLERS\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_ENABLE_STEAM_CONTROLLERS => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x45, 0x4E, 0x41, 0x42, 0x4C, 0x45, 0x5F, 0x53, 0x54, 0x45, 0x41, 0x4D, 0x5F, 0x43, 0x4F, 0x4E, 0x54, 0x52, 0x4F, 0x4C, 0x4C, 0x45, 0x52, 0x53, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_EVENT_LOGGING \"SDL_EVENT_LOGGING\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_EVENT_LOGGING => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x45, 0x56, 0x45, 0x4E, 0x54, 0x5F, 0x4C, 0x4F, 0x47, 0x47, 0x49, 0x4E, 0x47, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_FORCE_RAISEWINDOW \"SDL_HINT_FORCE_RAISEWINDOW\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_FORCE_RAISEWINDOW => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x48, 0x49, 0x4E, 0x54, 0x5F, 0x46, 0x4F, 0x52, 0x43, 0x45, 0x5F, 0x52, 0x41, 0x49, 0x53, 0x45, 0x57, 0x49, 0x4E, 0x44, 0x4F, 0x57, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_FRAMEBUFFER_ACCELERATION \"SDL_FRAMEBUFFER_ACCELERATION\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_FRAMEBUFFER_ACCELERATION => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x46, 0x52, 0x41, 0x4D, 0x45, 0x42, 0x55, 0x46, 0x46, 0x45, 0x52, 0x5F, 0x41, 0x43, 0x43, 0x45, 0x4C, 0x45, 0x52, 0x41, 0x54, 0x49, 0x4F, 0x4E, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_GAMECONTROLLERCONFIG \"SDL_GAMECONTROLLERCONFIG\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_GAMECONTROLLERCONFIG => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x47, 0x41, 0x4D, 0x45, 0x43, 0x4F, 0x4E, 0x54, 0x52, 0x4F, 0x4C, 0x4C, 0x45, 0x52, 0x43, 0x4F, 0x4E, 0x46, 0x49, 0x47, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_GAMECONTROLLERCONFIG_FILE \"SDL_GAMECONTROLLERCONFIG_FILE\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_GAMECONTROLLERCONFIG_FILE => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x47, 0x41, 0x4D, 0x45, 0x43, 0x4F, 0x4E, 0x54, 0x52, 0x4F, 0x4C, 0x4C, 0x45, 0x52, 0x43, 0x4F, 0x4E, 0x46, 0x49, 0x47, 0x5F, 0x46, 0x49, 0x4C, 0x45, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_GAMECONTROLLERTYPE \"SDL_GAMECONTROLLERTYPE\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_GAMECONTROLLERTYPE => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x47, 0x41, 0x4D, 0x45, 0x43, 0x4F, 0x4E, 0x54, 0x52, 0x4F, 0x4C, 0x4C, 0x45, 0x52, 0x54, 0x59, 0x50, 0x45, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_GAMECONTROLLER_IGNORE_DEVICES \"SDL_GAMECONTROLLER_IGNORE_DEVICES\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_GAMECONTROLLER_IGNORE_DEVICES => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x47, 0x41, 0x4D, 0x45, 0x43, 0x4F, 0x4E, 0x54, 0x52, 0x4F, 0x4C, 0x4C, 0x45, 0x52, 0x5F, 0x49, 0x47, 0x4E, 0x4F, 0x52, 0x45, 0x5F, 0x44, 0x45, 0x56, 0x49, 0x43, 0x45, 0x53, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_GAMECONTROLLER_IGNORE_DEVICES_EXCEPT \"SDL_GAMECONTROLLER_IGNORE_DEVICES_EXCEPT\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_GAMECONTROLLER_IGNORE_DEVICES_EXCEPT => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x47, 0x41, 0x4D, 0x45, 0x43, 0x4F, 0x4E, 0x54, 0x52, 0x4F, 0x4C, 0x4C, 0x45, 0x52, 0x5F, 0x49, 0x47, 0x4E, 0x4F, 0x52, 0x45, 0x5F, 0x44, 0x45, 0x56, 0x49, 0x43, 0x45, 0x53, 0x5F, 0x45, 0x58, 0x43, 0x45, 0x50, 0x54, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_GAMECONTROLLER_USE_BUTTON_LABELS \"SDL_GAMECONTROLLER_USE_BUTTON_LABELS\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_GAMECONTROLLER_USE_BUTTON_LABELS => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x47, 0x41, 0x4D, 0x45, 0x43, 0x4F, 0x4E, 0x54, 0x52, 0x4F, 0x4C, 0x4C, 0x45, 0x52, 0x5F, 0x55, 0x53, 0x45, 0x5F, 0x42, 0x55, 0x54, 0x54, 0x4F, 0x4E, 0x5F, 0x4C, 0x41, 0x42, 0x45, 0x4C, 0x53, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_GRAB_KEYBOARD \"SDL_GRAB_KEYBOARD\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_GRAB_KEYBOARD => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x47, 0x52, 0x41, 0x42, 0x5F, 0x4B, 0x45, 0x59, 0x42, 0x4F, 0x41, 0x52, 0x44, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_HIDAPI_IGNORE_DEVICES \"SDL_HIDAPI_IGNORE_DEVICES\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_HIDAPI_IGNORE_DEVICES => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x48, 0x49, 0x44, 0x41, 0x50, 0x49, 0x5F, 0x49, 0x47, 0x4E, 0x4F, 0x52, 0x45, 0x5F, 0x44, 0x45, 0x56, 0x49, 0x43, 0x45, 0x53, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_IDLE_TIMER_DISABLED \"SDL_IOS_IDLE_TIMER_DISABLED\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_IDLE_TIMER_DISABLED => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x49, 0x4F, 0x53, 0x5F, 0x49, 0x44, 0x4C, 0x45, 0x5F, 0x54, 0x49, 0x4D, 0x45, 0x52, 0x5F, 0x44, 0x49, 0x53, 0x41, 0x42, 0x4C, 0x45, 0x44, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_IME_INTERNAL_EDITING \"SDL_IME_INTERNAL_EDITING\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_IME_INTERNAL_EDITING => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x49, 0x4D, 0x45, 0x5F, 0x49, 0x4E, 0x54, 0x45, 0x52, 0x4E, 0x41, 0x4C, 0x5F, 0x45, 0x44, 0x49, 0x54, 0x49, 0x4E, 0x47, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_IME_SHOW_UI \"SDL_IME_SHOW_UI\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_IME_SHOW_UI => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x49, 0x4D, 0x45, 0x5F, 0x53, 0x48, 0x4F, 0x57, 0x5F, 0x55, 0x49, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_IME_SUPPORT_EXTENDED_TEXT \"SDL_IME_SUPPORT_EXTENDED_TEXT\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_IME_SUPPORT_EXTENDED_TEXT => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x49, 0x4D, 0x45, 0x5F, 0x53, 0x55, 0x50, 0x50, 0x4F, 0x52, 0x54, 0x5F, 0x45, 0x58, 0x54, 0x45, 0x4E, 0x44, 0x45, 0x44, 0x5F, 0x54, 0x45, 0x58, 0x54, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_IOS_HIDE_HOME_INDICATOR \"SDL_IOS_HIDE_HOME_INDICATOR\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_IOS_HIDE_HOME_INDICATOR => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x49, 0x4F, 0x53, 0x5F, 0x48, 0x49, 0x44, 0x45, 0x5F, 0x48, 0x4F, 0x4D, 0x45, 0x5F, 0x49, 0x4E, 0x44, 0x49, 0x43, 0x41, 0x54, 0x4F, 0x52, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS \"SDL_JOYSTICK_ALLOW_BACKGROUND_EVENTS\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x4A, 0x4F, 0x59, 0x53, 0x54, 0x49, 0x43, 0x4B, 0x5F, 0x41, 0x4C, 0x4C, 0x4F, 0x57, 0x5F, 0x42, 0x41, 0x43, 0x4B, 0x47, 0x52, 0x4F, 0x55, 0x4E, 0x44, 0x5F, 0x45, 0x56, 0x45, 0x4E, 0x54, 0x53, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI \"SDL_JOYSTICK_HIDAPI\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_JOYSTICK_HIDAPI => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x4A, 0x4F, 0x59, 0x53, 0x54, 0x49, 0x43, 0x4B, 0x5F, 0x48, 0x49, 0x44, 0x41, 0x50, 0x49, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_GAMECUBE \"SDL_JOYSTICK_HIDAPI_GAMECUBE\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_JOYSTICK_HIDAPI_GAMECUBE => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x4A, 0x4F, 0x59, 0x53, 0x54, 0x49, 0x43, 0x4B, 0x5F, 0x48, 0x49, 0x44, 0x41, 0x50, 0x49, 0x5F, 0x47, 0x41, 0x4D, 0x45, 0x43, 0x55, 0x42, 0x45, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_GAMECUBE_RUMBLE_BRAKE \"SDL_JOYSTICK_GAMECUBE_RUMBLE_BRAKE\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_JOYSTICK_GAMECUBE_RUMBLE_BRAKE => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x4A, 0x4F, 0x59, 0x53, 0x54, 0x49, 0x43, 0x4B, 0x5F, 0x47, 0x41, 0x4D, 0x45, 0x43, 0x55, 0x42, 0x45, 0x5F, 0x52, 0x55, 0x4D, 0x42, 0x4C, 0x45, 0x5F, 0x42, 0x52, 0x41, 0x4B, 0x45, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_JOY_CONS \"SDL_JOYSTICK_HIDAPI_JOY_CONS\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_JOYSTICK_HIDAPI_JOY_CONS => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x4A, 0x4F, 0x59, 0x53, 0x54, 0x49, 0x43, 0x4B, 0x5F, 0x48, 0x49, 0x44, 0x41, 0x50, 0x49, 0x5F, 0x4A, 0x4F, 0x59, 0x5F, 0x43, 0x4F, 0x4E, 0x53, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_COMBINE_JOY_CONS \"SDL_JOYSTICK_HIDAPI_COMBINE_JOY_CONS\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_JOYSTICK_HIDAPI_COMBINE_JOY_CONS => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x4A, 0x4F, 0x59, 0x53, 0x54, 0x49, 0x43, 0x4B, 0x5F, 0x48, 0x49, 0x44, 0x41, 0x50, 0x49, 0x5F, 0x43, 0x4F, 0x4D, 0x42, 0x49, 0x4E, 0x45, 0x5F, 0x4A, 0x4F, 0x59, 0x5F, 0x43, 0x4F, 0x4E, 0x53, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_VERTICAL_JOY_CONS \"SDL_JOYSTICK_HIDAPI_VERTICAL_JOY_CONS\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_JOYSTICK_HIDAPI_VERTICAL_JOY_CONS => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x4A, 0x4F, 0x59, 0x53, 0x54, 0x49, 0x43, 0x4B, 0x5F, 0x48, 0x49, 0x44, 0x41, 0x50, 0x49, 0x5F, 0x56, 0x45, 0x52, 0x54, 0x49, 0x43, 0x41, 0x4C, 0x5F, 0x4A, 0x4F, 0x59, 0x5F, 0x43, 0x4F, 0x4E, 0x53, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_LUNA \"SDL_JOYSTICK_HIDAPI_LUNA\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_JOYSTICK_HIDAPI_LUNA => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x4A, 0x4F, 0x59, 0x53, 0x54, 0x49, 0x43, 0x4B, 0x5F, 0x48, 0x49, 0x44, 0x41, 0x50, 0x49, 0x5F, 0x4C, 0x55, 0x4E, 0x41, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_NINTENDO_CLASSIC \"SDL_JOYSTICK_HIDAPI_NINTENDO_CLASSIC\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_JOYSTICK_HIDAPI_NINTENDO_CLASSIC => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x4A, 0x4F, 0x59, 0x53, 0x54, 0x49, 0x43, 0x4B, 0x5F, 0x48, 0x49, 0x44, 0x41, 0x50, 0x49, 0x5F, 0x4E, 0x49, 0x4E, 0x54, 0x45, 0x4E, 0x44, 0x4F, 0x5F, 0x43, 0x4C, 0x41, 0x53, 0x53, 0x49, 0x43, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_SHIELD \"SDL_JOYSTICK_HIDAPI_SHIELD\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_JOYSTICK_HIDAPI_SHIELD => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x4A, 0x4F, 0x59, 0x53, 0x54, 0x49, 0x43, 0x4B, 0x5F, 0x48, 0x49, 0x44, 0x41, 0x50, 0x49, 0x5F, 0x53, 0x48, 0x49, 0x45, 0x4C, 0x44, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_PS3 \"SDL_JOYSTICK_HIDAPI_PS3\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_JOYSTICK_HIDAPI_PS3 => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x4A, 0x4F, 0x59, 0x53, 0x54, 0x49, 0x43, 0x4B, 0x5F, 0x48, 0x49, 0x44, 0x41, 0x50, 0x49, 0x5F, 0x50, 0x53, 0x33, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_PS4 \"SDL_JOYSTICK_HIDAPI_PS4\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_JOYSTICK_HIDAPI_PS4 => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x4A, 0x4F, 0x59, 0x53, 0x54, 0x49, 0x43, 0x4B, 0x5F, 0x48, 0x49, 0x44, 0x41, 0x50, 0x49, 0x5F, 0x50, 0x53, 0x34, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_PS4_RUMBLE \"SDL_JOYSTICK_HIDAPI_PS4_RUMBLE\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_JOYSTICK_HIDAPI_PS4_RUMBLE => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x4A, 0x4F, 0x59, 0x53, 0x54, 0x49, 0x43, 0x4B, 0x5F, 0x48, 0x49, 0x44, 0x41, 0x50, 0x49, 0x5F, 0x50, 0x53, 0x34, 0x5F, 0x52, 0x55, 0x4D, 0x42, 0x4C, 0x45, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_PS5 \"SDL_JOYSTICK_HIDAPI_PS5\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_JOYSTICK_HIDAPI_PS5 => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x4A, 0x4F, 0x59, 0x53, 0x54, 0x49, 0x43, 0x4B, 0x5F, 0x48, 0x49, 0x44, 0x41, 0x50, 0x49, 0x5F, 0x50, 0x53, 0x35, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_PS5_PLAYER_LED \"SDL_JOYSTICK_HIDAPI_PS5_PLAYER_LED\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_JOYSTICK_HIDAPI_PS5_PLAYER_LED => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x4A, 0x4F, 0x59, 0x53, 0x54, 0x49, 0x43, 0x4B, 0x5F, 0x48, 0x49, 0x44, 0x41, 0x50, 0x49, 0x5F, 0x50, 0x53, 0x35, 0x5F, 0x50, 0x4C, 0x41, 0x59, 0x45, 0x52, 0x5F, 0x4C, 0x45, 0x44, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_PS5_RUMBLE \"SDL_JOYSTICK_HIDAPI_PS5_RUMBLE\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_JOYSTICK_HIDAPI_PS5_RUMBLE => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x4A, 0x4F, 0x59, 0x53, 0x54, 0x49, 0x43, 0x4B, 0x5F, 0x48, 0x49, 0x44, 0x41, 0x50, 0x49, 0x5F, 0x50, 0x53, 0x35, 0x5F, 0x52, 0x55, 0x4D, 0x42, 0x4C, 0x45, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_STADIA \"SDL_JOYSTICK_HIDAPI_STADIA\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_JOYSTICK_HIDAPI_STADIA => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x4A, 0x4F, 0x59, 0x53, 0x54, 0x49, 0x43, 0x4B, 0x5F, 0x48, 0x49, 0x44, 0x41, 0x50, 0x49, 0x5F, 0x53, 0x54, 0x41, 0x44, 0x49, 0x41, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_STEAM \"SDL_JOYSTICK_HIDAPI_STEAM\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_JOYSTICK_HIDAPI_STEAM => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x4A, 0x4F, 0x59, 0x53, 0x54, 0x49, 0x43, 0x4B, 0x5F, 0x48, 0x49, 0x44, 0x41, 0x50, 0x49, 0x5F, 0x53, 0x54, 0x45, 0x41, 0x4D, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_SWITCH \"SDL_JOYSTICK_HIDAPI_SWITCH\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_JOYSTICK_HIDAPI_SWITCH => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x4A, 0x4F, 0x59, 0x53, 0x54, 0x49, 0x43, 0x4B, 0x5F, 0x48, 0x49, 0x44, 0x41, 0x50, 0x49, 0x5F, 0x53, 0x57, 0x49, 0x54, 0x43, 0x48, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_SWITCH_HOME_LED \"SDL_JOYSTICK_HIDAPI_SWITCH_HOME_LED\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_JOYSTICK_HIDAPI_SWITCH_HOME_LED => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x4A, 0x4F, 0x59, 0x53, 0x54, 0x49, 0x43, 0x4B, 0x5F, 0x48, 0x49, 0x44, 0x41, 0x50, 0x49, 0x5F, 0x53, 0x57, 0x49, 0x54, 0x43, 0x48, 0x5F, 0x48, 0x4F, 0x4D, 0x45, 0x5F, 0x4C, 0x45, 0x44, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_JOYCON_HOME_LED \"SDL_JOYSTICK_HIDAPI_JOYCON_HOME_LED\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_JOYSTICK_HIDAPI_JOYCON_HOME_LED => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x4A, 0x4F, 0x59, 0x53, 0x54, 0x49, 0x43, 0x4B, 0x5F, 0x48, 0x49, 0x44, 0x41, 0x50, 0x49, 0x5F, 0x4A, 0x4F, 0x59, 0x43, 0x4F, 0x4E, 0x5F, 0x48, 0x4F, 0x4D, 0x45, 0x5F, 0x4C, 0x45, 0x44, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_SWITCH_PLAYER_LED \"SDL_JOYSTICK_HIDAPI_SWITCH_PLAYER_LED\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_JOYSTICK_HIDAPI_SWITCH_PLAYER_LED => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x4A, 0x4F, 0x59, 0x53, 0x54, 0x49, 0x43, 0x4B, 0x5F, 0x48, 0x49, 0x44, 0x41, 0x50, 0x49, 0x5F, 0x53, 0x57, 0x49, 0x54, 0x43, 0x48, 0x5F, 0x50, 0x4C, 0x41, 0x59, 0x45, 0x52, 0x5F, 0x4C, 0x45, 0x44, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_WII \"SDL_JOYSTICK_HIDAPI_WII\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_JOYSTICK_HIDAPI_WII => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x4A, 0x4F, 0x59, 0x53, 0x54, 0x49, 0x43, 0x4B, 0x5F, 0x48, 0x49, 0x44, 0x41, 0x50, 0x49, 0x5F, 0x57, 0x49, 0x49, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_WII_PLAYER_LED \"SDL_JOYSTICK_HIDAPI_WII_PLAYER_LED\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_JOYSTICK_HIDAPI_WII_PLAYER_LED => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x4A, 0x4F, 0x59, 0x53, 0x54, 0x49, 0x43, 0x4B, 0x5F, 0x48, 0x49, 0x44, 0x41, 0x50, 0x49, 0x5F, 0x57, 0x49, 0x49, 0x5F, 0x50, 0x4C, 0x41, 0x59, 0x45, 0x52, 0x5F, 0x4C, 0x45, 0x44, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_XBOX \"SDL_JOYSTICK_HIDAPI_XBOX\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_JOYSTICK_HIDAPI_XBOX => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x4A, 0x4F, 0x59, 0x53, 0x54, 0x49, 0x43, 0x4B, 0x5F, 0x48, 0x49, 0x44, 0x41, 0x50, 0x49, 0x5F, 0x58, 0x42, 0x4F, 0x58, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_XBOX_360 \"SDL_JOYSTICK_HIDAPI_XBOX_360\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_JOYSTICK_HIDAPI_XBOX_360 => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x4A, 0x4F, 0x59, 0x53, 0x54, 0x49, 0x43, 0x4B, 0x5F, 0x48, 0x49, 0x44, 0x41, 0x50, 0x49, 0x5F, 0x58, 0x42, 0x4F, 0x58, 0x5F, 0x33, 0x36, 0x30, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_XBOX_360_PLAYER_LED \"SDL_JOYSTICK_HIDAPI_XBOX_360_PLAYER_LED\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_JOYSTICK_HIDAPI_XBOX_360_PLAYER_LED => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x4A, 0x4F, 0x59, 0x53, 0x54, 0x49, 0x43, 0x4B, 0x5F, 0x48, 0x49, 0x44, 0x41, 0x50, 0x49, 0x5F, 0x58, 0x42, 0x4F, 0x58, 0x5F, 0x33, 0x36, 0x30, 0x5F, 0x50, 0x4C, 0x41, 0x59, 0x45, 0x52, 0x5F, 0x4C, 0x45, 0x44, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_XBOX_360_WIRELESS \"SDL_JOYSTICK_HIDAPI_XBOX_360_WIRELESS\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_JOYSTICK_HIDAPI_XBOX_360_WIRELESS => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x4A, 0x4F, 0x59, 0x53, 0x54, 0x49, 0x43, 0x4B, 0x5F, 0x48, 0x49, 0x44, 0x41, 0x50, 0x49, 0x5F, 0x58, 0x42, 0x4F, 0x58, 0x5F, 0x33, 0x36, 0x30, 0x5F, 0x57, 0x49, 0x52, 0x45, 0x4C, 0x45, 0x53, 0x53, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_XBOX_ONE \"SDL_JOYSTICK_HIDAPI_XBOX_ONE\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_JOYSTICK_HIDAPI_XBOX_ONE => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x4A, 0x4F, 0x59, 0x53, 0x54, 0x49, 0x43, 0x4B, 0x5F, 0x48, 0x49, 0x44, 0x41, 0x50, 0x49, 0x5F, 0x58, 0x42, 0x4F, 0x58, 0x5F, 0x4F, 0x4E, 0x45, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_HIDAPI_XBOX_ONE_HOME_LED \"SDL_JOYSTICK_HIDAPI_XBOX_ONE_HOME_LED\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_JOYSTICK_HIDAPI_XBOX_ONE_HOME_LED => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x4A, 0x4F, 0x59, 0x53, 0x54, 0x49, 0x43, 0x4B, 0x5F, 0x48, 0x49, 0x44, 0x41, 0x50, 0x49, 0x5F, 0x58, 0x42, 0x4F, 0x58, 0x5F, 0x4F, 0x4E, 0x45, 0x5F, 0x48, 0x4F, 0x4D, 0x45, 0x5F, 0x4C, 0x45, 0x44, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_RAWINPUT \"SDL_JOYSTICK_RAWINPUT\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_JOYSTICK_RAWINPUT => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x4A, 0x4F, 0x59, 0x53, 0x54, 0x49, 0x43, 0x4B, 0x5F, 0x52, 0x41, 0x57, 0x49, 0x4E, 0x50, 0x55, 0x54, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_RAWINPUT_CORRELATE_XINPUT \"SDL_JOYSTICK_RAWINPUT_CORRELATE_XINPUT\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_JOYSTICK_RAWINPUT_CORRELATE_XINPUT => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x4A, 0x4F, 0x59, 0x53, 0x54, 0x49, 0x43, 0x4B, 0x5F, 0x52, 0x41, 0x57, 0x49, 0x4E, 0x50, 0x55, 0x54, 0x5F, 0x43, 0x4F, 0x52, 0x52, 0x45, 0x4C, 0x41, 0x54, 0x45, 0x5F, 0x58, 0x49, 0x4E, 0x50, 0x55, 0x54, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_ROG_CHAKRAM \"SDL_JOYSTICK_ROG_CHAKRAM\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_JOYSTICK_ROG_CHAKRAM => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x4A, 0x4F, 0x59, 0x53, 0x54, 0x49, 0x43, 0x4B, 0x5F, 0x52, 0x4F, 0x47, 0x5F, 0x43, 0x48, 0x41, 0x4B, 0x52, 0x41, 0x4D, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_THREAD \"SDL_JOYSTICK_THREAD\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_JOYSTICK_THREAD => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x4A, 0x4F, 0x59, 0x53, 0x54, 0x49, 0x43, 0x4B, 0x5F, 0x54, 0x48, 0x52, 0x45, 0x41, 0x44, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_KMSDRM_REQUIRE_DRM_MASTER \"SDL_KMSDRM_REQUIRE_DRM_MASTER\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_KMSDRM_REQUIRE_DRM_MASTER => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x4B, 0x4D, 0x53, 0x44, 0x52, 0x4D, 0x5F, 0x52, 0x45, 0x51, 0x55, 0x49, 0x52, 0x45, 0x5F, 0x44, 0x52, 0x4D, 0x5F, 0x4D, 0x41, 0x53, 0x54, 0x45, 0x52, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_JOYSTICK_DEVICE \"SDL_JOYSTICK_DEVICE\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_JOYSTICK_DEVICE => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x4A, 0x4F, 0x59, 0x53, 0x54, 0x49, 0x43, 0x4B, 0x5F, 0x44, 0x45, 0x56, 0x49, 0x43, 0x45, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_LINUX_DIGITAL_HATS \"SDL_LINUX_DIGITAL_HATS\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_LINUX_DIGITAL_HATS => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x4C, 0x49, 0x4E, 0x55, 0x58, 0x5F, 0x44, 0x49, 0x47, 0x49, 0x54, 0x41, 0x4C, 0x5F, 0x48, 0x41, 0x54, 0x53, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_LINUX_HAT_DEADZONES \"SDL_LINUX_HAT_DEADZONES\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_LINUX_HAT_DEADZONES => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x4C, 0x49, 0x4E, 0x55, 0x58, 0x5F, 0x48, 0x41, 0x54, 0x5F, 0x44, 0x45, 0x41, 0x44, 0x5A, 0x4F, 0x4E, 0x45, 0x53, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_LINUX_JOYSTICK_CLASSIC \"SDL_LINUX_JOYSTICK_CLASSIC\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_LINUX_JOYSTICK_CLASSIC => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x4C, 0x49, 0x4E, 0x55, 0x58, 0x5F, 0x4A, 0x4F, 0x59, 0x53, 0x54, 0x49, 0x43, 0x4B, 0x5F, 0x43, 0x4C, 0x41, 0x53, 0x53, 0x49, 0x43, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_LINUX_JOYSTICK_DEADZONES \"SDL_LINUX_JOYSTICK_DEADZONES\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_LINUX_JOYSTICK_DEADZONES => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x4C, 0x49, 0x4E, 0x55, 0x58, 0x5F, 0x4A, 0x4F, 0x59, 0x53, 0x54, 0x49, 0x43, 0x4B, 0x5F, 0x44, 0x45, 0x41, 0x44, 0x5A, 0x4F, 0x4E, 0x45, 0x53, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_MAC_BACKGROUND_APP \"SDL_MAC_BACKGROUND_APP\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_MAC_BACKGROUND_APP => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x4D, 0x41, 0x43, 0x5F, 0x42, 0x41, 0x43, 0x4B, 0x47, 0x52, 0x4F, 0x55, 0x4E, 0x44, 0x5F, 0x41, 0x50, 0x50, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_MAC_CTRL_CLICK_EMULATE_RIGHT_CLICK \"SDL_MAC_CTRL_CLICK_EMULATE_RIGHT_CLICK\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_MAC_CTRL_CLICK_EMULATE_RIGHT_CLICK => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x4D, 0x41, 0x43, 0x5F, 0x43, 0x54, 0x52, 0x4C, 0x5F, 0x43, 0x4C, 0x49, 0x43, 0x4B, 0x5F, 0x45, 0x4D, 0x55, 0x4C, 0x41, 0x54, 0x45, 0x5F, 0x52, 0x49, 0x47, 0x48, 0x54, 0x5F, 0x43, 0x4C, 0x49, 0x43, 0x4B, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_MAC_OPENGL_ASYNC_DISPATCH \"SDL_MAC_OPENGL_ASYNC_DISPATCH\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_MAC_OPENGL_ASYNC_DISPATCH => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x4D, 0x41, 0x43, 0x5F, 0x4F, 0x50, 0x45, 0x4E, 0x47, 0x4C, 0x5F, 0x41, 0x53, 0x59, 0x4E, 0x43, 0x5F, 0x44, 0x49, 0x53, 0x50, 0x41, 0x54, 0x43, 0x48, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_MOUSE_DOUBLE_CLICK_RADIUS \"SDL_MOUSE_DOUBLE_CLICK_RADIUS\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_MOUSE_DOUBLE_CLICK_RADIUS => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x4D, 0x4F, 0x55, 0x53, 0x45, 0x5F, 0x44, 0x4F, 0x55, 0x42, 0x4C, 0x45, 0x5F, 0x43, 0x4C, 0x49, 0x43, 0x4B, 0x5F, 0x52, 0x41, 0x44, 0x49, 0x55, 0x53, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_MOUSE_DOUBLE_CLICK_TIME \"SDL_MOUSE_DOUBLE_CLICK_TIME\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_MOUSE_DOUBLE_CLICK_TIME => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x4D, 0x4F, 0x55, 0x53, 0x45, 0x5F, 0x44, 0x4F, 0x55, 0x42, 0x4C, 0x45, 0x5F, 0x43, 0x4C, 0x49, 0x43, 0x4B, 0x5F, 0x54, 0x49, 0x4D, 0x45, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_MOUSE_FOCUS_CLICKTHROUGH \"SDL_MOUSE_FOCUS_CLICKTHROUGH\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_MOUSE_FOCUS_CLICKTHROUGH => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x4D, 0x4F, 0x55, 0x53, 0x45, 0x5F, 0x46, 0x4F, 0x43, 0x55, 0x53, 0x5F, 0x43, 0x4C, 0x49, 0x43, 0x4B, 0x54, 0x48, 0x52, 0x4F, 0x55, 0x47, 0x48, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_MOUSE_NORMAL_SPEED_SCALE \"SDL_MOUSE_NORMAL_SPEED_SCALE\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_MOUSE_NORMAL_SPEED_SCALE => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x4D, 0x4F, 0x55, 0x53, 0x45, 0x5F, 0x4E, 0x4F, 0x52, 0x4D, 0x41, 0x4C, 0x5F, 0x53, 0x50, 0x45, 0x45, 0x44, 0x5F, 0x53, 0x43, 0x41, 0x4C, 0x45, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_MOUSE_RELATIVE_MODE_CENTER \"SDL_MOUSE_RELATIVE_MODE_CENTER\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_MOUSE_RELATIVE_MODE_CENTER => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x4D, 0x4F, 0x55, 0x53, 0x45, 0x5F, 0x52, 0x45, 0x4C, 0x41, 0x54, 0x49, 0x56, 0x45, 0x5F, 0x4D, 0x4F, 0x44, 0x45, 0x5F, 0x43, 0x45, 0x4E, 0x54, 0x45, 0x52, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_MOUSE_RELATIVE_MODE_WARP \"SDL_MOUSE_RELATIVE_MODE_WARP\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_MOUSE_RELATIVE_MODE_WARP => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x4D, 0x4F, 0x55, 0x53, 0x45, 0x5F, 0x52, 0x45, 0x4C, 0x41, 0x54, 0x49, 0x56, 0x45, 0x5F, 0x4D, 0x4F, 0x44, 0x45, 0x5F, 0x57, 0x41, 0x52, 0x50, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_MOUSE_RELATIVE_SCALING \"SDL_MOUSE_RELATIVE_SCALING\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_MOUSE_RELATIVE_SCALING => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x4D, 0x4F, 0x55, 0x53, 0x45, 0x5F, 0x52, 0x45, 0x4C, 0x41, 0x54, 0x49, 0x56, 0x45, 0x5F, 0x53, 0x43, 0x41, 0x4C, 0x49, 0x4E, 0x47, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_MOUSE_RELATIVE_SPEED_SCALE \"SDL_MOUSE_RELATIVE_SPEED_SCALE\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_MOUSE_RELATIVE_SPEED_SCALE => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x4D, 0x4F, 0x55, 0x53, 0x45, 0x5F, 0x52, 0x45, 0x4C, 0x41, 0x54, 0x49, 0x56, 0x45, 0x5F, 0x53, 0x50, 0x45, 0x45, 0x44, 0x5F, 0x53, 0x43, 0x41, 0x4C, 0x45, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_MOUSE_RELATIVE_SYSTEM_SCALE \"SDL_MOUSE_RELATIVE_SYSTEM_SCALE\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_MOUSE_RELATIVE_SYSTEM_SCALE => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x4D, 0x4F, 0x55, 0x53, 0x45, 0x5F, 0x52, 0x45, 0x4C, 0x41, 0x54, 0x49, 0x56, 0x45, 0x5F, 0x53, 0x59, 0x53, 0x54, 0x45, 0x4D, 0x5F, 0x53, 0x43, 0x41, 0x4C, 0x45, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_MOUSE_RELATIVE_WARP_MOTION \"SDL_MOUSE_RELATIVE_WARP_MOTION\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_MOUSE_RELATIVE_WARP_MOTION => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x4D, 0x4F, 0x55, 0x53, 0x45, 0x5F, 0x52, 0x45, 0x4C, 0x41, 0x54, 0x49, 0x56, 0x45, 0x5F, 0x57, 0x41, 0x52, 0x50, 0x5F, 0x4D, 0x4F, 0x54, 0x49, 0x4F, 0x4E, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_MOUSE_TOUCH_EVENTS \"SDL_MOUSE_TOUCH_EVENTS\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_MOUSE_TOUCH_EVENTS => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x4D, 0x4F, 0x55, 0x53, 0x45, 0x5F, 0x54, 0x4F, 0x55, 0x43, 0x48, 0x5F, 0x45, 0x56, 0x45, 0x4E, 0x54, 0x53, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_MOUSE_AUTO_CAPTURE \"SDL_MOUSE_AUTO_CAPTURE\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_MOUSE_AUTO_CAPTURE => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x4D, 0x4F, 0x55, 0x53, 0x45, 0x5F, 0x41, 0x55, 0x54, 0x4F, 0x5F, 0x43, 0x41, 0x50, 0x54, 0x55, 0x52, 0x45, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_NO_SIGNAL_HANDLERS \"SDL_NO_SIGNAL_HANDLERS\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_NO_SIGNAL_HANDLERS => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x4E, 0x4F, 0x5F, 0x53, 0x49, 0x47, 0x4E, 0x41, 0x4C, 0x5F, 0x48, 0x41, 0x4E, 0x44, 0x4C, 0x45, 0x52, 0x53, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_OPENGL_ES_DRIVER \"SDL_OPENGL_ES_DRIVER\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_OPENGL_ES_DRIVER => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x4F, 0x50, 0x45, 0x4E, 0x47, 0x4C, 0x5F, 0x45, 0x53, 0x5F, 0x44, 0x52, 0x49, 0x56, 0x45, 0x52, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_ORIENTATIONS \"SDL_IOS_ORIENTATIONS\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_ORIENTATIONS => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x49, 0x4F, 0x53, 0x5F, 0x4F, 0x52, 0x49, 0x45, 0x4E, 0x54, 0x41, 0x54, 0x49, 0x4F, 0x4E, 0x53, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_POLL_SENTINEL \"SDL_POLL_SENTINEL\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_POLL_SENTINEL => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x50, 0x4F, 0x4C, 0x4C, 0x5F, 0x53, 0x45, 0x4E, 0x54, 0x49, 0x4E, 0x45, 0x4C, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_PREFERRED_LOCALES \"SDL_PREFERRED_LOCALES\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_PREFERRED_LOCALES => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x50, 0x52, 0x45, 0x46, 0x45, 0x52, 0x52, 0x45, 0x44, 0x5F, 0x4C, 0x4F, 0x43, 0x41, 0x4C, 0x45, 0x53, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_QTWAYLAND_CONTENT_ORIENTATION \"SDL_QTWAYLAND_CONTENT_ORIENTATION\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_QTWAYLAND_CONTENT_ORIENTATION => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x51, 0x54, 0x57, 0x41, 0x59, 0x4C, 0x41, 0x4E, 0x44, 0x5F, 0x43, 0x4F, 0x4E, 0x54, 0x45, 0x4E, 0x54, 0x5F, 0x4F, 0x52, 0x49, 0x45, 0x4E, 0x54, 0x41, 0x54, 0x49, 0x4F, 0x4E, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_QTWAYLAND_WINDOW_FLAGS \"SDL_QTWAYLAND_WINDOW_FLAGS\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_QTWAYLAND_WINDOW_FLAGS => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x51, 0x54, 0x57, 0x41, 0x59, 0x4C, 0x41, 0x4E, 0x44, 0x5F, 0x57, 0x49, 0x4E, 0x44, 0x4F, 0x57, 0x5F, 0x46, 0x4C, 0x41, 0x47, 0x53, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_RENDER_BATCHING \"SDL_RENDER_BATCHING\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_RENDER_BATCHING => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x52, 0x45, 0x4E, 0x44, 0x45, 0x52, 0x5F, 0x42, 0x41, 0x54, 0x43, 0x48, 0x49, 0x4E, 0x47, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_RENDER_LINE_METHOD \"SDL_RENDER_LINE_METHOD\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_RENDER_LINE_METHOD => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x52, 0x45, 0x4E, 0x44, 0x45, 0x52, 0x5F, 0x4C, 0x49, 0x4E, 0x45, 0x5F, 0x4D, 0x45, 0x54, 0x48, 0x4F, 0x44, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_RENDER_DIRECT3D11_DEBUG \"SDL_RENDER_DIRECT3D11_DEBUG\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_RENDER_DIRECT3D11_DEBUG => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x52, 0x45, 0x4E, 0x44, 0x45, 0x52, 0x5F, 0x44, 0x49, 0x52, 0x45, 0x43, 0x54, 0x33, 0x44, 0x31, 0x31, 0x5F, 0x44, 0x45, 0x42, 0x55, 0x47, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_RENDER_DIRECT3D_THREADSAFE \"SDL_RENDER_DIRECT3D_THREADSAFE\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_RENDER_DIRECT3D_THREADSAFE => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x52, 0x45, 0x4E, 0x44, 0x45, 0x52, 0x5F, 0x44, 0x49, 0x52, 0x45, 0x43, 0x54, 0x33, 0x44, 0x5F, 0x54, 0x48, 0x52, 0x45, 0x41, 0x44, 0x53, 0x41, 0x46, 0x45, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_RENDER_DRIVER \"SDL_RENDER_DRIVER\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_RENDER_DRIVER => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x52, 0x45, 0x4E, 0x44, 0x45, 0x52, 0x5F, 0x44, 0x52, 0x49, 0x56, 0x45, 0x52, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_RENDER_LOGICAL_SIZE_MODE \"SDL_RENDER_LOGICAL_SIZE_MODE\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_RENDER_LOGICAL_SIZE_MODE => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x52, 0x45, 0x4E, 0x44, 0x45, 0x52, 0x5F, 0x4C, 0x4F, 0x47, 0x49, 0x43, 0x41, 0x4C, 0x5F, 0x53, 0x49, 0x5A, 0x45, 0x5F, 0x4D, 0x4F, 0x44, 0x45, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_RENDER_OPENGL_SHADERS \"SDL_RENDER_OPENGL_SHADERS\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_RENDER_OPENGL_SHADERS => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x52, 0x45, 0x4E, 0x44, 0x45, 0x52, 0x5F, 0x4F, 0x50, 0x45, 0x4E, 0x47, 0x4C, 0x5F, 0x53, 0x48, 0x41, 0x44, 0x45, 0x52, 0x53, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_RENDER_SCALE_QUALITY \"SDL_RENDER_SCALE_QUALITY\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_RENDER_SCALE_QUALITY => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x52, 0x45, 0x4E, 0x44, 0x45, 0x52, 0x5F, 0x53, 0x43, 0x41, 0x4C, 0x45, 0x5F, 0x51, 0x55, 0x41, 0x4C, 0x49, 0x54, 0x59, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_RENDER_VSYNC \"SDL_RENDER_VSYNC\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_RENDER_VSYNC => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x52, 0x45, 0x4E, 0x44, 0x45, 0x52, 0x5F, 0x56, 0x53, 0x59, 0x4E, 0x43, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_PS2_DYNAMIC_VSYNC \"SDL_PS2_DYNAMIC_VSYNC\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_PS2_DYNAMIC_VSYNC => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x50, 0x53, 0x32, 0x5F, 0x44, 0x59, 0x4E, 0x41, 0x4D, 0x49, 0x43, 0x5F, 0x56, 0x53, 0x59, 0x4E, 0x43, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_RETURN_KEY_HIDES_IME \"SDL_RETURN_KEY_HIDES_IME\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_RETURN_KEY_HIDES_IME => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x52, 0x45, 0x54, 0x55, 0x52, 0x4E, 0x5F, 0x4B, 0x45, 0x59, 0x5F, 0x48, 0x49, 0x44, 0x45, 0x53, 0x5F, 0x49, 0x4D, 0x45, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_RPI_VIDEO_LAYER \"SDL_RPI_VIDEO_LAYER\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_RPI_VIDEO_LAYER => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x52, 0x50, 0x49, 0x5F, 0x56, 0x49, 0x44, 0x45, 0x4F, 0x5F, 0x4C, 0x41, 0x59, 0x45, 0x52, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_SCREENSAVER_INHIBIT_ACTIVITY_NAME \"SDL_SCREENSAVER_INHIBIT_ACTIVITY_NAME\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_SCREENSAVER_INHIBIT_ACTIVITY_NAME => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x53, 0x43, 0x52, 0x45, 0x45, 0x4E, 0x53, 0x41, 0x56, 0x45, 0x52, 0x5F, 0x49, 0x4E, 0x48, 0x49, 0x42, 0x49, 0x54, 0x5F, 0x41, 0x43, 0x54, 0x49, 0x56, 0x49, 0x54, 0x59, 0x5F, 0x4E, 0x41, 0x4D, 0x45, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_THREAD_FORCE_REALTIME_TIME_CRITICAL \"SDL_THREAD_FORCE_REALTIME_TIME_CRITICAL\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_THREAD_FORCE_REALTIME_TIME_CRITICAL => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x54, 0x48, 0x52, 0x45, 0x41, 0x44, 0x5F, 0x46, 0x4F, 0x52, 0x43, 0x45, 0x5F, 0x52, 0x45, 0x41, 0x4C, 0x54, 0x49, 0x4D, 0x45, 0x5F, 0x54, 0x49, 0x4D, 0x45, 0x5F, 0x43, 0x52, 0x49, 0x54, 0x49, 0x43, 0x41, 0x4C, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_THREAD_PRIORITY_POLICY \"SDL_THREAD_PRIORITY_POLICY\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_THREAD_PRIORITY_POLICY => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x54, 0x48, 0x52, 0x45, 0x41, 0x44, 0x5F, 0x50, 0x52, 0x49, 0x4F, 0x52, 0x49, 0x54, 0x59, 0x5F, 0x50, 0x4F, 0x4C, 0x49, 0x43, 0x59, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_THREAD_STACK_SIZE \"SDL_THREAD_STACK_SIZE\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_THREAD_STACK_SIZE => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x54, 0x48, 0x52, 0x45, 0x41, 0x44, 0x5F, 0x53, 0x54, 0x41, 0x43, 0x4B, 0x5F, 0x53, 0x49, 0x5A, 0x45, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_TIMER_RESOLUTION \"SDL_TIMER_RESOLUTION\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_TIMER_RESOLUTION => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x54, 0x49, 0x4D, 0x45, 0x52, 0x5F, 0x52, 0x45, 0x53, 0x4F, 0x4C, 0x55, 0x54, 0x49, 0x4F, 0x4E, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_TOUCH_MOUSE_EVENTS \"SDL_TOUCH_MOUSE_EVENTS\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_TOUCH_MOUSE_EVENTS => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x54, 0x4F, 0x55, 0x43, 0x48, 0x5F, 0x4D, 0x4F, 0x55, 0x53, 0x45, 0x5F, 0x45, 0x56, 0x45, 0x4E, 0x54, 0x53, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_VITA_TOUCH_MOUSE_DEVICE \"SDL_HINT_VITA_TOUCH_MOUSE_DEVICE\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_VITA_TOUCH_MOUSE_DEVICE => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x48, 0x49, 0x4E, 0x54, 0x5F, 0x56, 0x49, 0x54, 0x41, 0x5F, 0x54, 0x4F, 0x55, 0x43, 0x48, 0x5F, 0x4D, 0x4F, 0x55, 0x53, 0x45, 0x5F, 0x44, 0x45, 0x56, 0x49, 0x43, 0x45, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_TV_REMOTE_AS_JOYSTICK \"SDL_TV_REMOTE_AS_JOYSTICK\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_TV_REMOTE_AS_JOYSTICK => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x54, 0x56, 0x5F, 0x52, 0x45, 0x4D, 0x4F, 0x54, 0x45, 0x5F, 0x41, 0x53, 0x5F, 0x4A, 0x4F, 0x59, 0x53, 0x54, 0x49, 0x43, 0x4B, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_VIDEO_ALLOW_SCREENSAVER \"SDL_VIDEO_ALLOW_SCREENSAVER\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_VIDEO_ALLOW_SCREENSAVER => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x56, 0x49, 0x44, 0x45, 0x4F, 0x5F, 0x41, 0x4C, 0x4C, 0x4F, 0x57, 0x5F, 0x53, 0x43, 0x52, 0x45, 0x45, 0x4E, 0x53, 0x41, 0x56, 0x45, 0x52, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_VIDEO_DOUBLE_BUFFER \"SDL_VIDEO_DOUBLE_BUFFER\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_VIDEO_DOUBLE_BUFFER => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x56, 0x49, 0x44, 0x45, 0x4F, 0x5F, 0x44, 0x4F, 0x55, 0x42, 0x4C, 0x45, 0x5F, 0x42, 0x55, 0x46, 0x46, 0x45, 0x52, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_VIDEO_EGL_ALLOW_TRANSPARENCY \"SDL_VIDEO_EGL_ALLOW_TRANSPARENCY\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_VIDEO_EGL_ALLOW_TRANSPARENCY => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x56, 0x49, 0x44, 0x45, 0x4F, 0x5F, 0x45, 0x47, 0x4C, 0x5F, 0x41, 0x4C, 0x4C, 0x4F, 0x57, 0x5F, 0x54, 0x52, 0x41, 0x4E, 0x53, 0x50, 0x41, 0x52, 0x45, 0x4E, 0x43, 0x59, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_VIDEO_EXTERNAL_CONTEXT \"SDL_VIDEO_EXTERNAL_CONTEXT\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_VIDEO_EXTERNAL_CONTEXT => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x56, 0x49, 0x44, 0x45, 0x4F, 0x5F, 0x45, 0x58, 0x54, 0x45, 0x52, 0x4E, 0x41, 0x4C, 0x5F, 0x43, 0x4F, 0x4E, 0x54, 0x45, 0x58, 0x54, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_VIDEO_HIGHDPI_DISABLED \"SDL_VIDEO_HIGHDPI_DISABLED\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_VIDEO_HIGHDPI_DISABLED => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x56, 0x49, 0x44, 0x45, 0x4F, 0x5F, 0x48, 0x49, 0x47, 0x48, 0x44, 0x50, 0x49, 0x5F, 0x44, 0x49, 0x53, 0x41, 0x42, 0x4C, 0x45, 0x44, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_VIDEO_MAC_FULLSCREEN_SPACES \"SDL_VIDEO_MAC_FULLSCREEN_SPACES\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_VIDEO_MAC_FULLSCREEN_SPACES => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x56, 0x49, 0x44, 0x45, 0x4F, 0x5F, 0x4D, 0x41, 0x43, 0x5F, 0x46, 0x55, 0x4C, 0x4C, 0x53, 0x43, 0x52, 0x45, 0x45, 0x4E, 0x5F, 0x53, 0x50, 0x41, 0x43, 0x45, 0x53, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS \"SDL_VIDEO_MINIMIZE_ON_FOCUS_LOSS\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x56, 0x49, 0x44, 0x45, 0x4F, 0x5F, 0x4D, 0x49, 0x4E, 0x49, 0x4D, 0x49, 0x5A, 0x45, 0x5F, 0x4F, 0x4E, 0x5F, 0x46, 0x4F, 0x43, 0x55, 0x53, 0x5F, 0x4C, 0x4F, 0x53, 0x53, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_VIDEO_WAYLAND_ALLOW_LIBDECOR \"SDL_VIDEO_WAYLAND_ALLOW_LIBDECOR\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_VIDEO_WAYLAND_ALLOW_LIBDECOR => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x56, 0x49, 0x44, 0x45, 0x4F, 0x5F, 0x57, 0x41, 0x59, 0x4C, 0x41, 0x4E, 0x44, 0x5F, 0x41, 0x4C, 0x4C, 0x4F, 0x57, 0x5F, 0x4C, 0x49, 0x42, 0x44, 0x45, 0x43, 0x4F, 0x52, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_VIDEO_WAYLAND_PREFER_LIBDECOR \"SDL_VIDEO_WAYLAND_PREFER_LIBDECOR\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_VIDEO_WAYLAND_PREFER_LIBDECOR => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x56, 0x49, 0x44, 0x45, 0x4F, 0x5F, 0x57, 0x41, 0x59, 0x4C, 0x41, 0x4E, 0x44, 0x5F, 0x50, 0x52, 0x45, 0x46, 0x45, 0x52, 0x5F, 0x4C, 0x49, 0x42, 0x44, 0x45, 0x43, 0x4F, 0x52, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_VIDEO_WAYLAND_MODE_EMULATION \"SDL_VIDEO_WAYLAND_MODE_EMULATION\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_VIDEO_WAYLAND_MODE_EMULATION => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x56, 0x49, 0x44, 0x45, 0x4F, 0x5F, 0x57, 0x41, 0x59, 0x4C, 0x41, 0x4E, 0x44, 0x5F, 0x4D, 0x4F, 0x44, 0x45, 0x5F, 0x45, 0x4D, 0x55, 0x4C, 0x41, 0x54, 0x49, 0x4F, 0x4E, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_VIDEO_WAYLAND_EMULATE_MOUSE_WARP \"SDL_VIDEO_WAYLAND_EMULATE_MOUSE_WARP\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_VIDEO_WAYLAND_EMULATE_MOUSE_WARP => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x56, 0x49, 0x44, 0x45, 0x4F, 0x5F, 0x57, 0x41, 0x59, 0x4C, 0x41, 0x4E, 0x44, 0x5F, 0x45, 0x4D, 0x55, 0x4C, 0x41, 0x54, 0x45, 0x5F, 0x4D, 0x4F, 0x55, 0x53, 0x45, 0x5F, 0x57, 0x41, 0x52, 0x50, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_VIDEO_WINDOW_SHARE_PIXEL_FORMAT \"SDL_VIDEO_WINDOW_SHARE_PIXEL_FORMAT\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_VIDEO_WINDOW_SHARE_PIXEL_FORMAT => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x56, 0x49, 0x44, 0x45, 0x4F, 0x5F, 0x57, 0x49, 0x4E, 0x44, 0x4F, 0x57, 0x5F, 0x53, 0x48, 0x41, 0x52, 0x45, 0x5F, 0x50, 0x49, 0x58, 0x45, 0x4C, 0x5F, 0x46, 0x4F, 0x52, 0x4D, 0x41, 0x54, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_VIDEO_FOREIGN_WINDOW_OPENGL \"SDL_VIDEO_FOREIGN_WINDOW_OPENGL\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_VIDEO_FOREIGN_WINDOW_OPENGL => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x56, 0x49, 0x44, 0x45, 0x4F, 0x5F, 0x46, 0x4F, 0x52, 0x45, 0x49, 0x47, 0x4E, 0x5F, 0x57, 0x49, 0x4E, 0x44, 0x4F, 0x57, 0x5F, 0x4F, 0x50, 0x45, 0x4E, 0x47, 0x4C, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_VIDEO_FOREIGN_WINDOW_VULKAN \"SDL_VIDEO_FOREIGN_WINDOW_VULKAN\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_VIDEO_FOREIGN_WINDOW_VULKAN => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x56, 0x49, 0x44, 0x45, 0x4F, 0x5F, 0x46, 0x4F, 0x52, 0x45, 0x49, 0x47, 0x4E, 0x5F, 0x57, 0x49, 0x4E, 0x44, 0x4F, 0x57, 0x5F, 0x56, 0x55, 0x4C, 0x4B, 0x41, 0x4E, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_VIDEO_WIN_D3DCOMPILER \"SDL_VIDEO_WIN_D3DCOMPILER\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_VIDEO_WIN_D3DCOMPILER => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x56, 0x49, 0x44, 0x45, 0x4F, 0x5F, 0x57, 0x49, 0x4E, 0x5F, 0x44, 0x33, 0x44, 0x43, 0x4F, 0x4D, 0x50, 0x49, 0x4C, 0x45, 0x52, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_VIDEO_X11_FORCE_EGL \"SDL_VIDEO_X11_FORCE_EGL\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_VIDEO_X11_FORCE_EGL => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x56, 0x49, 0x44, 0x45, 0x4F, 0x5F, 0x58, 0x31, 0x31, 0x5F, 0x46, 0x4F, 0x52, 0x43, 0x45, 0x5F, 0x45, 0x47, 0x4C, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR \"SDL_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x56, 0x49, 0x44, 0x45, 0x4F, 0x5F, 0x58, 0x31, 0x31, 0x5F, 0x4E, 0x45, 0x54, 0x5F, 0x57, 0x4D, 0x5F, 0x42, 0x59, 0x50, 0x41, 0x53, 0x53, 0x5F, 0x43, 0x4F, 0x4D, 0x50, 0x4F, 0x53, 0x49, 0x54, 0x4F, 0x52, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_VIDEO_X11_NET_WM_PING \"SDL_VIDEO_X11_NET_WM_PING\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_VIDEO_X11_NET_WM_PING => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x56, 0x49, 0x44, 0x45, 0x4F, 0x5F, 0x58, 0x31, 0x31, 0x5F, 0x4E, 0x45, 0x54, 0x5F, 0x57, 0x4D, 0x5F, 0x50, 0x49, 0x4E, 0x47, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_VIDEO_X11_WINDOW_VISUALID \"SDL_VIDEO_X11_WINDOW_VISUALID\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_VIDEO_X11_WINDOW_VISUALID => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x56, 0x49, 0x44, 0x45, 0x4F, 0x5F, 0x58, 0x31, 0x31, 0x5F, 0x57, 0x49, 0x4E, 0x44, 0x4F, 0x57, 0x5F, 0x56, 0x49, 0x53, 0x55, 0x41, 0x4C, 0x49, 0x44, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_VIDEO_X11_XINERAMA \"SDL_VIDEO_X11_XINERAMA\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_VIDEO_X11_XINERAMA => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x56, 0x49, 0x44, 0x45, 0x4F, 0x5F, 0x58, 0x31, 0x31, 0x5F, 0x58, 0x49, 0x4E, 0x45, 0x52, 0x41, 0x4D, 0x41, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_VIDEO_X11_XRANDR \"SDL_VIDEO_X11_XRANDR\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_VIDEO_X11_XRANDR => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x56, 0x49, 0x44, 0x45, 0x4F, 0x5F, 0x58, 0x31, 0x31, 0x5F, 0x58, 0x52, 0x41, 0x4E, 0x44, 0x52, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_VIDEO_X11_XVIDMODE \"SDL_VIDEO_X11_XVIDMODE\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_VIDEO_X11_XVIDMODE => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x56, 0x49, 0x44, 0x45, 0x4F, 0x5F, 0x58, 0x31, 0x31, 0x5F, 0x58, 0x56, 0x49, 0x44, 0x4D, 0x4F, 0x44, 0x45, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_WAVE_FACT_CHUNK \"SDL_WAVE_FACT_CHUNK\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_WAVE_FACT_CHUNK => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x57, 0x41, 0x56, 0x45, 0x5F, 0x46, 0x41, 0x43, 0x54, 0x5F, 0x43, 0x48, 0x55, 0x4E, 0x4B, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_WAVE_RIFF_CHUNK_SIZE \"SDL_WAVE_RIFF_CHUNK_SIZE\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_WAVE_RIFF_CHUNK_SIZE => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x57, 0x41, 0x56, 0x45, 0x5F, 0x52, 0x49, 0x46, 0x46, 0x5F, 0x43, 0x48, 0x55, 0x4E, 0x4B, 0x5F, 0x53, 0x49, 0x5A, 0x45, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_WAVE_TRUNCATION \"SDL_WAVE_TRUNCATION\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_WAVE_TRUNCATION => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x57, 0x41, 0x56, 0x45, 0x5F, 0x54, 0x52, 0x55, 0x4E, 0x43, 0x41, 0x54, 0x49, 0x4F, 0x4E, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_WINDOWS_DISABLE_THREAD_NAMING \"SDL_WINDOWS_DISABLE_THREAD_NAMING\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_WINDOWS_DISABLE_THREAD_NAMING => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x57, 0x49, 0x4E, 0x44, 0x4F, 0x57, 0x53, 0x5F, 0x44, 0x49, 0x53, 0x41, 0x42, 0x4C, 0x45, 0x5F, 0x54, 0x48, 0x52, 0x45, 0x41, 0x44, 0x5F, 0x4E, 0x41, 0x4D, 0x49, 0x4E, 0x47, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_WINDOWS_ENABLE_MESSAGELOOP \"SDL_WINDOWS_ENABLE_MESSAGELOOP\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_WINDOWS_ENABLE_MESSAGELOOP => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x57, 0x49, 0x4E, 0x44, 0x4F, 0x57, 0x53, 0x5F, 0x45, 0x4E, 0x41, 0x42, 0x4C, 0x45, 0x5F, 0x4D, 0x45, 0x53, 0x53, 0x41, 0x47, 0x45, 0x4C, 0x4F, 0x4F, 0x50, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_WINDOWS_FORCE_MUTEX_CRITICAL_SECTIONS \"SDL_WINDOWS_FORCE_MUTEX_CRITICAL_SECTIONS\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_WINDOWS_FORCE_MUTEX_CRITICAL_SECTIONS => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x57, 0x49, 0x4E, 0x44, 0x4F, 0x57, 0x53, 0x5F, 0x46, 0x4F, 0x52, 0x43, 0x45, 0x5F, 0x4D, 0x55, 0x54, 0x45, 0x58, 0x5F, 0x43, 0x52, 0x49, 0x54, 0x49, 0x43, 0x41, 0x4C, 0x5F, 0x53, 0x45, 0x43, 0x54, 0x49, 0x4F, 0x4E, 0x53, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_WINDOWS_FORCE_SEMAPHORE_KERNEL \"SDL_WINDOWS_FORCE_SEMAPHORE_KERNEL\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_WINDOWS_FORCE_SEMAPHORE_KERNEL => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x57, 0x49, 0x4E, 0x44, 0x4F, 0x57, 0x53, 0x5F, 0x46, 0x4F, 0x52, 0x43, 0x45, 0x5F, 0x53, 0x45, 0x4D, 0x41, 0x50, 0x48, 0x4F, 0x52, 0x45, 0x5F, 0x4B, 0x45, 0x52, 0x4E, 0x45, 0x4C, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_WINDOWS_INTRESOURCE_ICON \"SDL_WINDOWS_INTRESOURCE_ICON\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_WINDOWS_INTRESOURCE_ICON => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x57, 0x49, 0x4E, 0x44, 0x4F, 0x57, 0x53, 0x5F, 0x49, 0x4E, 0x54, 0x52, 0x45, 0x53, 0x4F, 0x55, 0x52, 0x43, 0x45, 0x5F, 0x49, 0x43, 0x4F, 0x4E, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_WINDOWS_INTRESOURCE_ICON_SMALL \"SDL_WINDOWS_INTRESOURCE_ICON_SMALL\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_WINDOWS_INTRESOURCE_ICON_SMALL => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x57, 0x49, 0x4E, 0x44, 0x4F, 0x57, 0x53, 0x5F, 0x49, 0x4E, 0x54, 0x52, 0x45, 0x53, 0x4F, 0x55, 0x52, 0x43, 0x45, 0x5F, 0x49, 0x43, 0x4F, 0x4E, 0x5F, 0x53, 0x4D, 0x41, 0x4C, 0x4C, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_WINDOWS_NO_CLOSE_ON_ALT_F4 \"SDL_WINDOWS_NO_CLOSE_ON_ALT_F4\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_WINDOWS_NO_CLOSE_ON_ALT_F4 => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x57, 0x49, 0x4E, 0x44, 0x4F, 0x57, 0x53, 0x5F, 0x4E, 0x4F, 0x5F, 0x43, 0x4C, 0x4F, 0x53, 0x45, 0x5F, 0x4F, 0x4E, 0x5F, 0x41, 0x4C, 0x54, 0x5F, 0x46, 0x34, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_WINDOWS_USE_D3D9EX \"SDL_WINDOWS_USE_D3D9EX\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_WINDOWS_USE_D3D9EX => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x57, 0x49, 0x4E, 0x44, 0x4F, 0x57, 0x53, 0x5F, 0x55, 0x53, 0x45, 0x5F, 0x44, 0x33, 0x44, 0x39, 0x45, 0x58, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_WINDOWS_DPI_AWARENESS \"SDL_WINDOWS_DPI_AWARENESS\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_WINDOWS_DPI_AWARENESS => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x57, 0x49, 0x4E, 0x44, 0x4F, 0x57, 0x53, 0x5F, 0x44, 0x50, 0x49, 0x5F, 0x41, 0x57, 0x41, 0x52, 0x45, 0x4E, 0x45, 0x53, 0x53, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_WINDOWS_DPI_SCALING \"SDL_WINDOWS_DPI_SCALING\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_WINDOWS_DPI_SCALING => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x57, 0x49, 0x4E, 0x44, 0x4F, 0x57, 0x53, 0x5F, 0x44, 0x50, 0x49, 0x5F, 0x53, 0x43, 0x41, 0x4C, 0x49, 0x4E, 0x47, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_WINDOW_FRAME_USABLE_WHILE_CURSOR_HIDDEN \"SDL_WINDOW_FRAME_USABLE_WHILE_CURSOR_HIDDEN\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_WINDOW_FRAME_USABLE_WHILE_CURSOR_HIDDEN => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x57, 0x49, 0x4E, 0x44, 0x4F, 0x57, 0x5F, 0x46, 0x52, 0x41, 0x4D, 0x45, 0x5F, 0x55, 0x53, 0x41, 0x42, 0x4C, 0x45, 0x5F, 0x57, 0x48, 0x49, 0x4C, 0x45, 0x5F, 0x43, 0x55, 0x52, 0x53, 0x4F, 0x52, 0x5F, 0x48, 0x49, 0x44, 0x44, 0x45, 0x4E, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_WINDOW_NO_ACTIVATION_WHEN_SHOWN \"SDL_WINDOW_NO_ACTIVATION_WHEN_SHOWN\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_WINDOW_NO_ACTIVATION_WHEN_SHOWN => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x57, 0x49, 0x4E, 0x44, 0x4F, 0x57, 0x5F, 0x4E, 0x4F, 0x5F, 0x41, 0x43, 0x54, 0x49, 0x56, 0x41, 0x54, 0x49, 0x4F, 0x4E, 0x5F, 0x57, 0x48, 0x45, 0x4E, 0x5F, 0x53, 0x48, 0x4F, 0x57, 0x4E, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_WINRT_HANDLE_BACK_BUTTON \"SDL_WINRT_HANDLE_BACK_BUTTON\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_WINRT_HANDLE_BACK_BUTTON => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x57, 0x49, 0x4E, 0x52, 0x54, 0x5F, 0x48, 0x41, 0x4E, 0x44, 0x4C, 0x45, 0x5F, 0x42, 0x41, 0x43, 0x4B, 0x5F, 0x42, 0x55, 0x54, 0x54, 0x4F, 0x4E, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_WINRT_PRIVACY_POLICY_LABEL \"SDL_WINRT_PRIVACY_POLICY_LABEL\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_WINRT_PRIVACY_POLICY_LABEL => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x57, 0x49, 0x4E, 0x52, 0x54, 0x5F, 0x50, 0x52, 0x49, 0x56, 0x41, 0x43, 0x59, 0x5F, 0x50, 0x4F, 0x4C, 0x49, 0x43, 0x59, 0x5F, 0x4C, 0x41, 0x42, 0x45, 0x4C, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_WINRT_PRIVACY_POLICY_URL \"SDL_WINRT_PRIVACY_POLICY_URL\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_WINRT_PRIVACY_POLICY_URL => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x57, 0x49, 0x4E, 0x52, 0x54, 0x5F, 0x50, 0x52, 0x49, 0x56, 0x41, 0x43, 0x59, 0x5F, 0x50, 0x4F, 0x4C, 0x49, 0x43, 0x59, 0x5F, 0x55, 0x52, 0x4C, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_X11_FORCE_OVERRIDE_REDIRECT \"SDL_X11_FORCE_OVERRIDE_REDIRECT\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_X11_FORCE_OVERRIDE_REDIRECT => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x58, 0x31, 0x31, 0x5F, 0x46, 0x4F, 0x52, 0x43, 0x45, 0x5F, 0x4F, 0x56, 0x45, 0x52, 0x52, 0x49, 0x44, 0x45, 0x5F, 0x52, 0x45, 0x44, 0x49, 0x52, 0x45, 0x43, 0x54, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_XINPUT_ENABLED \"SDL_XINPUT_ENABLED\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_XINPUT_ENABLED => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x58, 0x49, 0x4E, 0x50, 0x55, 0x54, 0x5F, 0x45, 0x4E, 0x41, 0x42, 0x4C, 0x45, 0x44, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_DIRECTINPUT_ENABLED \"SDL_DIRECTINPUT_ENABLED\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_DIRECTINPUT_ENABLED => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x44, 0x49, 0x52, 0x45, 0x43, 0x54, 0x49, 0x4E, 0x50, 0x55, 0x54, 0x5F, 0x45, 0x4E, 0x41, 0x42, 0x4C, 0x45, 0x44, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_XINPUT_USE_OLD_JOYSTICK_MAPPING \"SDL_XINPUT_USE_OLD_JOYSTICK_MAPPING\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_XINPUT_USE_OLD_JOYSTICK_MAPPING => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x58, 0x49, 0x4E, 0x50, 0x55, 0x54, 0x5F, 0x55, 0x53, 0x45, 0x5F, 0x4F, 0x4C, 0x44, 0x5F, 0x4A, 0x4F, 0x59, 0x53, 0x54, 0x49, 0x43, 0x4B, 0x5F, 0x4D, 0x41, 0x50, 0x50, 0x49, 0x4E, 0x47, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_AUDIO_INCLUDE_MONITORS \"SDL_AUDIO_INCLUDE_MONITORS\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_AUDIO_INCLUDE_MONITORS => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x41, 0x55, 0x44, 0x49, 0x4F, 0x5F, 0x49, 0x4E, 0x43, 0x4C, 0x55, 0x44, 0x45, 0x5F, 0x4D, 0x4F, 0x4E, 0x49, 0x54, 0x4F, 0x52, 0x53, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_X11_WINDOW_TYPE \"SDL_X11_WINDOW_TYPE\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_X11_WINDOW_TYPE => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x58, 0x31, 0x31, 0x5F, 0x57, 0x49, 0x4E, 0x44, 0x4F, 0x57, 0x5F, 0x54, 0x59, 0x50, 0x45, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_QUIT_ON_LAST_WINDOW_CLOSE \"SDL_QUIT_ON_LAST_WINDOW_CLOSE\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_QUIT_ON_LAST_WINDOW_CLOSE => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x51, 0x55, 0x49, 0x54, 0x5F, 0x4F, 0x4E, 0x5F, 0x4C, 0x41, 0x53, 0x54, 0x5F, 0x57, 0x49, 0x4E, 0x44, 0x4F, 0x57, 0x5F, 0x43, 0x4C, 0x4F, 0x53, 0x45, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_VIDEODRIVER \"SDL_VIDEODRIVER\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_VIDEODRIVER => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x56, 0x49, 0x44, 0x45, 0x4F, 0x44, 0x52, 0x49, 0x56, 0x45, 0x52, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_AUDIODRIVER \"SDL_AUDIODRIVER\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_AUDIODRIVER => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x41, 0x55, 0x44, 0x49, 0x4F, 0x44, 0x52, 0x49, 0x56, 0x45, 0x52, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_KMSDRM_DEVICE_INDEX \"SDL_KMSDRM_DEVICE_INDEX\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_KMSDRM_DEVICE_INDEX => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x4B, 0x4D, 0x53, 0x44, 0x52, 0x4D, 0x5F, 0x44, 0x45, 0x56, 0x49, 0x43, 0x45, 0x5F, 0x49, 0x4E, 0x44, 0x45, 0x58, 0x00 };
+
+        [NativeTypeName("#define SDL_HINT_TRACKPAD_IS_TOUCH_ONLY \"SDL_TRACKPAD_IS_TOUCH_ONLY\"")]
+        public static ReadOnlySpan<byte> SDL_HINT_TRACKPAD_IS_TOUCH_ONLY => new byte[] { 0x53, 0x44, 0x4C, 0x5F, 0x54, 0x52, 0x41, 0x43, 0x4B, 0x50, 0x41, 0x44, 0x5F, 0x49, 0x53, 0x5F, 0x54, 0x4F, 0x55, 0x43, 0x48, 0x5F, 0x4F, 0x4E, 0x4C, 0x59, 0x00 };
 
         [DllImport("SDL2", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_SetClipboardText", ExactSpelling = true)]
         public static extern int SetClipboardText([NativeTypeName("const char *")] sbyte* text);
@@ -3056,6 +6342,12 @@ namespace SDL.NET
         [DllImport("SDL2", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GUIDFromString", ExactSpelling = true)]
         public static extern SDL_GUID GUIDFromString([NativeTypeName("const char *")] sbyte* pchGUID);
 
+        [NativeTypeName("#define SDL_REVISION \"\"")]
+        public static ReadOnlySpan<byte> SDL_REVISION => new byte[] { 0x00 };
+
+        [NativeTypeName("#define SDL_REVISION_NUMBER 0")]
+        public const int SDL_REVISION_NUMBER = 0;
+
         [DllImport("SDL2", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetNumTouchDevices", ExactSpelling = true)]
         public static extern int GetNumTouchDevices();
 
@@ -3076,9 +6368,18 @@ namespace SDL.NET
         [DllImport("SDL2", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetTouchFinger", ExactSpelling = true)]
         public static extern SDL_Finger* GetTouchFinger([NativeTypeName("SDL_TouchID")] nint touchID, int index);
 
+        [NativeTypeName("#define SDL_TOUCH_MOUSEID ((Uint32)-1)")]
+        public const uint SDL_TOUCH_MOUSEID = unchecked((uint)(-1));
+
+        [NativeTypeName("#define SDL_MOUSE_TOUCHID ((Sint64)-1)")]
+        public static readonly nint SDL_MOUSE_TOUCHID = ((nint)(-1));
+
         [DllImport("SDL2", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetPlatform", ExactSpelling = true)]
         [return: NativeTypeName("const char *")]
         public static extern sbyte* GetPlatform();
+
+        [NativeTypeName("#define __LINUX__ 1")]
+        public const int __LINUX__ = 1;
 
         [DllImport("SDL2", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_RWFromFile", ExactSpelling = true)]
         public static extern SDL_RWops* RWFromFile([NativeTypeName("const char *")] sbyte* file, [NativeTypeName("const char *")] sbyte* mode);
@@ -3183,6 +6484,33 @@ namespace SDL.NET
         [return: NativeTypeName("size_t")]
         public static extern nuint WriteBE64(SDL_RWops* dst, [NativeTypeName("Uint64")] nuint value);
 
+        [NativeTypeName("#define SDL_RWOPS_UNKNOWN 0U")]
+        public const uint SDL_RWOPS_UNKNOWN = 0U;
+
+        [NativeTypeName("#define SDL_RWOPS_WINFILE 1U")]
+        public const uint SDL_RWOPS_WINFILE = 1U;
+
+        [NativeTypeName("#define SDL_RWOPS_STDFILE 2U")]
+        public const uint SDL_RWOPS_STDFILE = 2U;
+
+        [NativeTypeName("#define SDL_RWOPS_JNIFILE 3U")]
+        public const uint SDL_RWOPS_JNIFILE = 3U;
+
+        [NativeTypeName("#define SDL_RWOPS_MEMORY 4U")]
+        public const uint SDL_RWOPS_MEMORY = 4U;
+
+        [NativeTypeName("#define SDL_RWOPS_MEMORY_RO 5U")]
+        public const uint SDL_RWOPS_MEMORY_RO = 5U;
+
+        [NativeTypeName("#define RW_SEEK_SET 0")]
+        public const int RW_SEEK_SET = 0;
+
+        [NativeTypeName("#define RW_SEEK_CUR 1")]
+        public const int RW_SEEK_CUR = 1;
+
+        [NativeTypeName("#define RW_SEEK_END 2")]
+        public const int RW_SEEK_END = 2;
+
         [DllImport("SDL2", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetVersion", ExactSpelling = true)]
         public static extern void GetVersion(SDL_version* ver);
 
@@ -3193,6 +6521,36 @@ namespace SDL.NET
         [DllImport("SDL2", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetRevisionNumber", ExactSpelling = true)]
         [Obsolete]
         public static extern int GetRevisionNumber();
+
+        [NativeTypeName("#define SDL_MAJOR_VERSION 2")]
+        public const int SDL_MAJOR_VERSION = 2;
+
+        [NativeTypeName("#define SDL_MINOR_VERSION 26")]
+        public const int SDL_MINOR_VERSION = 26;
+
+        [NativeTypeName("#define SDL_PATCHLEVEL 5")]
+        public const int SDL_PATCHLEVEL = 5;
+
+        [NativeTypeName("#define SDL_COMPILEDVERSION SDL_VERSIONNUM(SDL_MAJOR_VERSION, SDL_MINOR_VERSION, SDL_PATCHLEVEL)")]
+        public const int SDL_COMPILEDVERSION = ((2) * 1000 + (26) * 100 + (5));
+
+        [NativeTypeName("#define SDLK_SCANCODE_MASK (1<<30)")]
+        public const int SDLK_SCANCODE_MASK = (1 << 30);
+
+        [NativeTypeName("#define SDL_MAIN_NEEDED 1")]
+        public const int SDL_MAIN_NEEDED = 1;
+
+        [NativeTypeName("#define LACKS_SYS_MMAN_H 1")]
+        public const int LACKS_SYS_MMAN_H = 1;
+
+        [NativeTypeName("#define SDL_THREAD_NGAGE 1")]
+        public const int SDL_THREAD_NGAGE = 1;
+
+        [NativeTypeName("#define SDL_TIMER_NGAGE 1")]
+        public const int SDL_TIMER_NGAGE = 1;
+
+        [NativeTypeName("#define SDL_VIDEO_DRIVER_NGAGE 1")]
+        public const int SDL_VIDEO_DRIVER_NGAGE = 1;
 
         [DllImport("SDL2", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_CreateShapedWindow", ExactSpelling = true)]
         public static extern SDL_Window* CreateShapedWindow([NativeTypeName("const char *")] sbyte* title, [NativeTypeName("unsigned int")] uint x, [NativeTypeName("unsigned int")] uint y, [NativeTypeName("unsigned int")] uint w, [NativeTypeName("unsigned int")] uint h, [NativeTypeName("Uint32")] uint flags);
@@ -3205,6 +6563,15 @@ namespace SDL.NET
 
         [DllImport("SDL2", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetShapedWindowMode", ExactSpelling = true)]
         public static extern int GetShapedWindowMode(SDL_Window* window, SDL_WindowShapeMode* shape_mode);
+
+        [NativeTypeName("#define SDL_NONSHAPEABLE_WINDOW -1")]
+        public const int SDL_NONSHAPEABLE_WINDOW = -1;
+
+        [NativeTypeName("#define SDL_INVALID_SHAPE_ARGUMENT -2")]
+        public const int SDL_INVALID_SHAPE_ARGUMENT = -2;
+
+        [NativeTypeName("#define SDL_WINDOW_LACKS_SHAPE -3")]
+        public const int SDL_WINDOW_LACKS_SHAPE = -3;
 
         [DllImport("SDL2", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_PumpEvents", ExactSpelling = true)]
         public static extern void PumpEvents();
@@ -3259,6 +6626,30 @@ namespace SDL.NET
         [return: NativeTypeName("Uint32")]
         public static extern uint RegisterEvents(int numevents);
 
+        [NativeTypeName("#define SDL_RELEASED 0")]
+        public const int SDL_RELEASED = 0;
+
+        [NativeTypeName("#define SDL_PRESSED 1")]
+        public const int SDL_PRESSED = 1;
+
+        [NativeTypeName("#define SDL_TEXTEDITINGEVENT_TEXT_SIZE (32)")]
+        public const int SDL_TEXTEDITINGEVENT_TEXT_SIZE = (32);
+
+        [NativeTypeName("#define SDL_TEXTINPUTEVENT_TEXT_SIZE (32)")]
+        public const int SDL_TEXTINPUTEVENT_TEXT_SIZE = (32);
+
+        [NativeTypeName("#define SDL_QUERY -1")]
+        public const int SDL_QUERY = -1;
+
+        [NativeTypeName("#define SDL_IGNORE 0")]
+        public const int SDL_IGNORE = 0;
+
+        [NativeTypeName("#define SDL_DISABLE 0")]
+        public const int SDL_DISABLE = 0;
+
+        [NativeTypeName("#define SDL_ENABLE 1")]
+        public const int SDL_ENABLE = 1;
+
         [DllImport("SDL2", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetMouseFocus", ExactSpelling = true)]
         public static extern SDL_Window* GetMouseFocus();
 
@@ -3312,6 +6703,36 @@ namespace SDL.NET
 
         [DllImport("SDL2", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_ShowCursor", ExactSpelling = true)]
         public static extern int ShowCursor(int toggle);
+
+        [NativeTypeName("#define SDL_BUTTON_LEFT 1")]
+        public const int SDL_BUTTON_LEFT = 1;
+
+        [NativeTypeName("#define SDL_BUTTON_MIDDLE 2")]
+        public const int SDL_BUTTON_MIDDLE = 2;
+
+        [NativeTypeName("#define SDL_BUTTON_RIGHT 3")]
+        public const int SDL_BUTTON_RIGHT = 3;
+
+        [NativeTypeName("#define SDL_BUTTON_X1 4")]
+        public const int SDL_BUTTON_X1 = 4;
+
+        [NativeTypeName("#define SDL_BUTTON_X2 5")]
+        public const int SDL_BUTTON_X2 = 5;
+
+        [NativeTypeName("#define SDL_BUTTON_LMASK SDL_BUTTON(SDL_BUTTON_LEFT)")]
+        public const int SDL_BUTTON_LMASK = (1 << ((1) - 1));
+
+        [NativeTypeName("#define SDL_BUTTON_MMASK SDL_BUTTON(SDL_BUTTON_MIDDLE)")]
+        public const int SDL_BUTTON_MMASK = (1 << ((2) - 1));
+
+        [NativeTypeName("#define SDL_BUTTON_RMASK SDL_BUTTON(SDL_BUTTON_RIGHT)")]
+        public const int SDL_BUTTON_RMASK = (1 << ((3) - 1));
+
+        [NativeTypeName("#define SDL_BUTTON_X1MASK SDL_BUTTON(SDL_BUTTON_X1)")]
+        public const int SDL_BUTTON_X1MASK = (1 << ((4) - 1));
+
+        [NativeTypeName("#define SDL_BUTTON_X2MASK SDL_BUTTON(SDL_BUTTON_X2)")]
+        public const int SDL_BUTTON_X2MASK = (1 << ((5) - 1));
 
         [DllImport("SDL2", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetNumRenderDrivers", ExactSpelling = true)]
         public static extern int GetNumRenderDrivers();
@@ -3556,6 +6977,42 @@ namespace SDL.NET
         [DllImport("SDL2", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_RenderSetVSync", ExactSpelling = true)]
         public static extern int RenderSetVSync(SDL_Renderer* renderer, int vsync);
 
+        [NativeTypeName("#define HAVE_SYSCTLBYNAME 1")]
+        public const int HAVE_SYSCTLBYNAME = 1;
+
+        [NativeTypeName("#define HAVE_O_CLOEXEC 1")]
+        public const int HAVE_O_CLOEXEC = 1;
+
+        [NativeTypeName("#define SDL_AUDIO_DRIVER_COREAUDIO 1")]
+        public const int SDL_AUDIO_DRIVER_COREAUDIO = 1;
+
+        [NativeTypeName("#define SDL_HAPTIC_DUMMY 1")]
+        public const int SDL_HAPTIC_DUMMY = 1;
+
+        [NativeTypeName("#define SDL_JOYSTICK_MFI 1")]
+        public const int SDL_JOYSTICK_MFI = 1;
+
+        [NativeTypeName("#define SDL_SENSOR_COREMOTION 1")]
+        public const int SDL_SENSOR_COREMOTION = 1;
+
+        [NativeTypeName("#define SDL_VIDEO_DRIVER_UIKIT 1")]
+        public const int SDL_VIDEO_DRIVER_UIKIT = 1;
+
+        [NativeTypeName("#define SDL_PLATFORM_SUPPORTS_METAL 0")]
+        public const int SDL_PLATFORM_SUPPORTS_METAL = 0;
+
+        [NativeTypeName("#define SDL_POWER_UIKIT 1")]
+        public const int SDL_POWER_UIKIT = 1;
+
+        [NativeTypeName("#define SDL_IPHONE_KEYBOARD 1")]
+        public const int SDL_IPHONE_KEYBOARD = 1;
+
+        [NativeTypeName("#define SDL_IPHONE_LAUNCHSCREEN 1")]
+        public const int SDL_IPHONE_LAUNCHSCREEN = 1;
+
+        [NativeTypeName("#define SDL_FILESYSTEM_COCOA 1")]
+        public const int SDL_FILESYSTEM_COCOA = 1;
+
         [DllImport("SDL2", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetKeyboardFocus", ExactSpelling = true)]
         public static extern SDL_Window* GetKeyboardFocus();
 
@@ -3617,6 +7074,30 @@ namespace SDL.NET
 
         [DllImport("SDL2", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_IsScreenKeyboardShown", ExactSpelling = true)]
         public static extern SDL_bool IsScreenKeyboardShown(SDL_Window* window);
+
+        [NativeTypeName("#define SDL_AUDIO_DRIVER_OSS 1")]
+        public const int SDL_AUDIO_DRIVER_OSS = 1;
+
+        [NativeTypeName("#define SDL_INPUT_LINUXEV 1")]
+        public const int SDL_INPUT_LINUXEV = 1;
+
+        [NativeTypeName("#define SDL_JOYSTICK_LINUX 1")]
+        public const int SDL_JOYSTICK_LINUX = 1;
+
+        [NativeTypeName("#define SDL_HAPTIC_LINUX 1")]
+        public const int SDL_HAPTIC_LINUX = 1;
+
+        [NativeTypeName("#define SDL_THREAD_PTHREAD_RECURSIVE_MUTEX_NP 1")]
+        public const int SDL_THREAD_PTHREAD_RECURSIVE_MUTEX_NP = 1;
+
+        [NativeTypeName("#define SDL_FILESYSTEM_UNIX 1")]
+        public const int SDL_FILESYSTEM_UNIX = 1;
+
+        [NativeTypeName("#define SDL_VIDEO_DRIVER_X11 1")]
+        public const int SDL_VIDEO_DRIVER_X11 = 1;
+
+        [NativeTypeName("#define SDL_VIDEO_DRIVER_PANDORA 1")]
+        public const int SDL_VIDEO_DRIVER_PANDORA = 1;
 
         [DllImport("SDL2", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_Metal_CreateView", ExactSpelling = true)]
         [return: NativeTypeName("SDL_MetalView")]
@@ -3926,9 +7407,42 @@ namespace SDL.NET
         [DllImport("SDL2", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GL_DeleteContext", ExactSpelling = true)]
         public static extern void GL_DeleteContext([NativeTypeName("SDL_GLContext")] void* context);
 
+        [NativeTypeName("#define SDL_WINDOWPOS_UNDEFINED_MASK 0x1FFF0000u")]
+        public const uint SDL_WINDOWPOS_UNDEFINED_MASK = 0x1FFF0000U;
+
+        [NativeTypeName("#define SDL_WINDOWPOS_UNDEFINED SDL_WINDOWPOS_UNDEFINED_DISPLAY(0)")]
+        public const uint SDL_WINDOWPOS_UNDEFINED = (0x1FFF0000U | (0));
+
+        [NativeTypeName("#define SDL_WINDOWPOS_CENTERED_MASK 0x2FFF0000u")]
+        public const uint SDL_WINDOWPOS_CENTERED_MASK = 0x2FFF0000U;
+
+        [NativeTypeName("#define SDL_WINDOWPOS_CENTERED SDL_WINDOWPOS_CENTERED_DISPLAY(0)")]
+        public const uint SDL_WINDOWPOS_CENTERED = (0x2FFF0000U | (0));
+
         [DllImport("SDL2", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("unsigned int")]
         public static extern uint __builtin_bswap32([NativeTypeName("unsigned int")] uint param0);
+
+        [NativeTypeName("#define SDL_LIL_ENDIAN 1234")]
+        public const int SDL_LIL_ENDIAN = 1234;
+
+        [NativeTypeName("#define SDL_BIG_ENDIAN 4321")]
+        public const int SDL_BIG_ENDIAN = 4321;
+
+        [NativeTypeName("#define SDL_FLOATWORDORDER SDL_BYTEORDER")]
+        public const int SDL_FLOATWORDORDER = 1234;
+
+        [NativeTypeName("#define HAS_BUILTIN_BSWAP16 (_SDL_HAS_BUILTIN(__builtin_bswap16)) || \\\n        (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 8))")]
+        public const bool HAS_BUILTIN_BSWAP16 = (1) != 0 || (4 > 4 || (4 == 4 && 2 >= 8));
+
+        [NativeTypeName("#define HAS_BUILTIN_BSWAP32 (_SDL_HAS_BUILTIN(__builtin_bswap32)) || \\\n        (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 3))")]
+        public const bool HAS_BUILTIN_BSWAP32 = (1) != 0 || (4 > 4 || (4 == 4 && 2 >= 3));
+
+        [NativeTypeName("#define HAS_BUILTIN_BSWAP64 (_SDL_HAS_BUILTIN(__builtin_bswap64)) || \\\n        (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 3))")]
+        public const bool HAS_BUILTIN_BSWAP64 = (1) != 0 || (4 > 4 || (4 == 4 && 2 >= 3));
+
+        [NativeTypeName("#define HAS_BROKEN_BSWAP (__GNUC__ == 2 && __GNUC_MINOR__ <= 95)")]
+        public const bool HAS_BROKEN_BSWAP = (4 == 2 && 2 <= 95);
 
         [DllImport("SDL2", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_ReportAssertion", ExactSpelling = true)]
         public static extern SDL_AssertState ReportAssertion(SDL_AssertData* param0, [NativeTypeName("const char *")] sbyte* param1, [NativeTypeName("const char *")] sbyte* param2, int param3);
@@ -3951,6 +7465,18 @@ namespace SDL.NET
         [DllImport("SDL2", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_ResetAssertionReport", ExactSpelling = true)]
         public static extern void ResetAssertionReport();
 
+        [NativeTypeName("#define SDL_ASSERT_LEVEL 2")]
+        public const int SDL_ASSERT_LEVEL = 2;
+
+        [NativeTypeName("#define SDL_FILE __FILE__")]
+        public static ReadOnlySpan<byte> SDL_FILE => new byte[] { 0x2E, 0x2E, 0x2F, 0x53, 0x44, 0x4C, 0x2F, 0x69, 0x6E, 0x63, 0x6C, 0x75, 0x64, 0x65, 0x2F, 0x53, 0x44, 0x4C, 0x5F, 0x61, 0x73, 0x73, 0x65, 0x72, 0x74, 0x2E, 0x68, 0x00 };
+
+        [NativeTypeName("#define SDL_LINE __LINE__")]
+        public const int SDL_LINE = 326;
+
+        [NativeTypeName("#define SDL_NULL_WHILE_LOOP_CONDITION (0)")]
+        public const int SDL_NULL_WHILE_LOOP_CONDITION = (0);
+
         [DllImport("SDL2", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_Vulkan_LoadLibrary", ExactSpelling = true)]
         public static extern int Vulkan_LoadLibrary([NativeTypeName("const char *")] sbyte* path);
 
@@ -3972,6 +7498,9 @@ namespace SDL.NET
         [DllImport("SDL2", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetPowerInfo", ExactSpelling = true)]
         public static extern SDL_PowerState GetPowerInfo(int* secs, int* pct);
 
+        [NativeTypeName("#define NeedFunctionPrototypes 1")]
+        public const int NeedFunctionPrototypes = 1;
+
         [DllImport("SDL2", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_LoadObject", ExactSpelling = true)]
         public static extern void* LoadObject([NativeTypeName("const char *")] sbyte* sofile);
 
@@ -3986,6 +7515,30 @@ namespace SDL.NET
 
         [DllImport("SDL2", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_ShowSimpleMessageBox", ExactSpelling = true)]
         public static extern int ShowSimpleMessageBox([NativeTypeName("Uint32")] uint flags, [NativeTypeName("const char *")] sbyte* title, [NativeTypeName("const char *")] sbyte* message, SDL_Window* window);
+
+        [NativeTypeName("#define HAVE_WINDOWS_GAMING_INPUT_H 1")]
+        public const int HAVE_WINDOWS_GAMING_INPUT_H = 1;
+
+        [NativeTypeName("#define HAVE_D3D11_H 1")]
+        public const int HAVE_D3D11_H = 1;
+
+        [NativeTypeName("#define HAVE_ROAPI_H 1")]
+        public const int HAVE_ROAPI_H = 1;
+
+        [NativeTypeName("#define HAVE_SHELLSCALINGAPI_H 1")]
+        public const int HAVE_SHELLSCALINGAPI_H = 1;
+
+        [NativeTypeName("#define SDL_JOYSTICK_WGI 1")]
+        public const int SDL_JOYSTICK_WGI = 1;
+
+        [NativeTypeName("#define SDL_VIDEO_RENDER_D3D11 1")]
+        public const int SDL_VIDEO_RENDER_D3D11 = 1;
+
+        [NativeTypeName("#define NULL 0")]
+        public const int NULL = 0;
+
+        [NativeTypeName("#define _HAS_FALLTHROUGH )")]
+        public const int _HAS_FALLTHROUGH = 1;
 
         [DllImport("SDL2", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_LogSetAllPriority", ExactSpelling = true)]
         public static extern void LogSetAllPriority(SDL_LogPriority priority);
@@ -4028,6 +7581,9 @@ namespace SDL.NET
 
         [DllImport("SDL2", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_LogSetOutputFunction", ExactSpelling = true)]
         public static extern void LogSetOutputFunction([NativeTypeName("SDL_LogOutputFunction")] delegate* unmanaged[Cdecl]<void*, int, SDL_LogPriority, sbyte*, void> callback, void* userdata);
+
+        [NativeTypeName("#define SDL_MAX_LOG_MESSAGE 4096")]
+        public const int SDL_MAX_LOG_MESSAGE = 4096;
 
         [DllImport("SDL2", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_hid_init", ExactSpelling = true)]
         public static extern int hid_init();

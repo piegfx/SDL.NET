@@ -6,7 +6,7 @@ namespace SDL.NET
     {
         public SDL_GameControllerBindType bindType;
 
-        [NativeTypeName("union (anonymous union at ../SDL/include/SDL_gamecontroller.h:93:5)")]
+        [NativeTypeName("__AnonymousRecord_SDL_gamecontroller_L93_C5")]
         public _value_e__Union value;
 
         [StructLayout(LayoutKind.Explicit)]
@@ -19,7 +19,7 @@ namespace SDL.NET
             public int axis;
 
             [FieldOffset(0)]
-            [NativeTypeName("struct (anonymous struct at ../SDL/include/SDL_gamecontroller.h:97:9)")]
+            [NativeTypeName("__AnonymousRecord_SDL_gamecontroller_L97_C9")]
             public _hat_e__Struct hat;
 
             public partial struct _hat_e__Struct

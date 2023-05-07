@@ -22,18 +22,18 @@ namespace SDL.NET
         [NativeTypeName("Uint32")]
         public uint type;
 
-        [NativeTypeName("union (anonymous union at ../SDL/include/SDL_rwops.h:94:5)")]
+        [NativeTypeName("__AnonymousRecord_SDL_rwops_L94_C5")]
         public _hidden_e__Union hidden;
 
         [StructLayout(LayoutKind.Explicit)]
         public partial struct _hidden_e__Union
         {
             [FieldOffset(0)]
-            [NativeTypeName("struct (anonymous struct at ../SDL/include/SDL_rwops.h:122:9)")]
+            [NativeTypeName("__AnonymousRecord_SDL_rwops_L122_C9")]
             public _mem_e__Struct mem;
 
             [FieldOffset(0)]
-            [NativeTypeName("struct (anonymous struct at ../SDL/include/SDL_rwops.h:128:9)")]
+            [NativeTypeName("__AnonymousRecord_SDL_rwops_L128_C9")]
             public _unknown_e__Struct unknown;
 
             public unsafe partial struct _mem_e__Struct

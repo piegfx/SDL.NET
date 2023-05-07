@@ -8,7 +8,7 @@ namespace SDL.NET
 
         public SDL_SYSWM_TYPE subsystem;
 
-        [NativeTypeName("union (anonymous union at ../SDL/include/SDL_syswm.h:230:5)")]
+        [NativeTypeName("__AnonymousRecord_SDL_syswm_L230_C5")]
         public _info_e__Union info;
 
         [StructLayout(LayoutKind.Explicit)]
